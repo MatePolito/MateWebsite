@@ -4,31 +4,34 @@
 
 
 {% block body %}
-        {% block navbar %}
-        <div class="navbar navbar-light" role="navigation" style="background-color: #e6e6e6">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ url_for('about') }}">
-                        <img src="static/Logo_M.png" >
-                    </a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ url_for('index') }}">Home</a></li>
-                        <li><a href="{{ url_for('contacts') }}">Contacts</a></li>
 
-                        {% if current_user.is_authenticated %}
-                            <li><a href="{{ url_for('about') }}">About</a></li>
-                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
-
-                        {% else %}
-                            <li><a href="{{ url_for('index') }}">Login</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
+    {% block navbar %}
+    <div class="navbar navbar-light" role="navigation" style="border-bottom-color: deepskyblue; background-color: ghostwhite">
+            <div class="navbar-header pull-left">
+                <a class="navbar-left" href="{{ url_for('index') }}" style="margin: 5px; margin-left: 30px">
+                    <img src="static/logo.png" width="100.5" height="45">
+                </a>
             </div>
-        </div>
+            <div class="navbar-collapse collapse pull-right">
+                <ul class="nav navbar-nav">
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('logout') }}">
+                        </a>
+                    {% endif %}
+                     <a class="navbar-brand" href="{{ url_for('user') }}" style="align-content: left">
+                        <span class="glyphicon glyphicon-user" style="color: deepskyblue"></span>
+                     </a>
+                     <a class="navbar-brand" href="{{ url_for('about') }}" style="align-content: left">
+                        <span class="glyphicon glyphicon-info-sign" style="color: deepskyblue"></span>
+                     </a>
+                     <a class="navbar-brand" href="{{ url_for('about') }}" style="align-content: left">
+                        <span class="glyphicon glyphicon-question-sign" style="color: deepskyblue"></span>
+                     </a>
+                </ul>
+            </div>
+    </div>
     {% endblock %}
+
     {% block content %}
         <div class="container">
             <div class="container">
