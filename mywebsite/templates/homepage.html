@@ -4,7 +4,22 @@
     Homepage
 {% endblock %}
 
+
+{% block head %}
+       <style>
+        html {
+              background: url(static/logo.png) no-repeat center center fixed;
+              -webkit-background-size: cover;
+              -moz-background-size: cover;
+              -o-background-size: cover;
+              background-size: cover;
+        }
+        </style>
+{% endblock %}
+
+
 {% block body %}
+
         {% block navbar %} {{ super() }} {% endblock %}
         {% block myContent %}
             {% if not current_user.is_anonymous %}
