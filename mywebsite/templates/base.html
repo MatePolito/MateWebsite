@@ -1,0 +1,50 @@
+{% extends "bootstrap/base.html" %}
+<html>
+{% block title %}Flask Example TTTTTTTRRRRRRRRRYYYYYYYYYYY{% endblock %}
+
+
+{% block body %}
+        {% block navbar %}
+        <div class="navbar navbar-light" role="navigation" style="background-color: #e6e6e6">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{ url_for('about') }}">
+                        <img src="static/Logo_M.png" >
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ url_for('index') }}">Home</a></li>
+                        <li><a href="{{ url_for('contacts') }}">Contacts</a></li>
+
+                        {% if current_user.is_authenticated %}
+                            <li><a href="{{ url_for('about') }}">About</a></li>
+                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+
+                        {% else %}
+                            <li><a href="{{ url_for('index') }}">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    {% block content %}
+        <div class="container">
+            <div class="container">
+                {% for category, message in get_flashed_messages(True) %}
+                    <div class="alert alert-{{ category }}">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="container">
+                {% block myContent %}{% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+
+</html>
