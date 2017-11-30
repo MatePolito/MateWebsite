@@ -1,11 +1,9 @@
 {% extends "bootstrap/base.html" %}
 
-<html>
+{% block html %}
     {% block title %}Flask Example{% endblock %}
 
-    {% block head %}
-
-    {% endblock %}
+    {% block head %}{% endblock %}
 
     {% block body %}
 
@@ -53,4 +51,4 @@
             </div>
         {% endblock %}
     {% endblock %}
-</html>
+{% endblock %}

@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-<html>
-
-    <!-- >
+{% block html %}
     {% block title %}
         Homepage
     {% endblock %}
 
-    <!-- >
-
     {% block head %}
-        {{ super() }}
+        <style>
+        html {
+              background: url(static/background2.jpg) no-repeat center center fixed;
+              -webkit-background-size: cover;
+              -moz-background-size: cover;
+              -o-background-size: cover;
+              background-size: cover;
+        }</style>
     {% endblock %}
-
-
-    <!-- >
 
 
     {% block body %}
@@ -35,5 +35,4 @@
             {% endblock %}
 
     {% endblock %}
-
- </html>
+{% endblock %}
