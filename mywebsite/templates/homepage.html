@@ -6,21 +6,14 @@
 
 
 {% block head %}
-       <style>
-        html {
-              background: url(static/logo.png) no-repeat center center fixed;
-              -webkit-background-size: cover;
-              -moz-background-size: cover;
-              -o-background-size: cover;
-              background-size: cover;
-        }
-        </style>
+    {{ super() }}
 {% endblock %}
 
 
 {% block body %}
 
         {% block navbar %} {{ super() }} {% endblock %}
+
         {% block myContent %}
             {% if not current_user.is_anonymous %}
                 <h1>Hello {{ current_user.first_name }} {{ current_user.last_name }}</h1>
