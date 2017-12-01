@@ -22,14 +22,11 @@
                 {{ super() }}
         {% endblock %}
         {% block myContent %}
-            <style>
-                .body {
-                    padding-top: 150px;
-                }
-            </style>
-            {% if not current_user.is_authenticated %}
-                {{ wtf.quick_form(form) }}
-            {% endif %}
+            <div class="container" style="padding-top: 100px; width: 400px; text-align: center">
+                {% if not current_user.is_authenticated %}
+                    {{ wtf.quick_form(form) }}
+                {% endif %}
+            </div>
         {% endblock %}
 
 
