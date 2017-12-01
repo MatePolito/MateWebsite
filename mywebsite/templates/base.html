@@ -1,9 +1,11 @@
 {% extends "bootstrap/base.html" %}
 
 {% block html %}
-    {% block title %}Flask Example{% endblock %}
 
-    {% block head %}{% endblock %}
+
+    {% block head %}
+        {% block title %}Flask Example{% endblock %}
+    {% endblock %}
 
     {% block body %}
 
@@ -45,6 +47,7 @@
                         </div>
                     {% endfor %}
                 </div>
+
                 <div class="container">
                     {% block myContent %}{% endblock %}
                 </div>

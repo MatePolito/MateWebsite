@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 <!DOCTYPE html>
-<html>
+{% block html %}
     {% block head %}
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,7 +62,7 @@
             position: fixed;
             left: 0;
             bottom: 0;
-            height: 85vh;
+            height: 91.47vh;
             z-index: 999;
             background: #7386D5;
             color: #fff;
@@ -196,6 +196,7 @@
             {{ super() }}
 
         {% endblock %}
+
         <div class="wrapper">
             <!-- Sidebar Holder -->
             <nav id="sidebar">
@@ -238,6 +239,10 @@
 
             <!-- Page Content Holder -->
             <div id="content">
+                <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                <span>Toggle Sidebar</span>
+                </button>
 
                 <h2>Collapsible Sidebar Using Bootstrap 3</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -285,4 +290,4 @@
             });
         </script>
     {% endblock %}
-</html>
+{% endblock %}

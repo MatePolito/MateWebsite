@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+{% block html %}
+    {% block head %}
+
+    {% endblock %}
+
+    {% block body %}
+        {% block navbar %}
+            {{ super() }}
+        {% endblock %}
+    {% endblock %}
+{% endblock %}
