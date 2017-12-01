@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+{% block html %}
+    {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        {% block title %}{{ current_user.username }}{% endblock %}
+
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Our Custom CSS -->
+
+        <!-- Scrollbar Custom CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+
+
+    {% endblock %}
+    {% block body %}
+        {% block navbar %}
+            {{ super() }}
+
+        {% endblock %}
+
+        <div class="wrapper">
+            <!-- Page Content Holder -->
+            <div id="content">
+                <div style="margin-top:1cm; margin-bottom:3cm;">
+                    <a style="width: 30cm; height:3.2cm; background-color: blue;margin-top:-3cm;  position:fixed">
+                        <h1 style="text-align: center;  resize: both;  ">Services asking to be supplied</h1>
+                    </a>
+                </div>
+
+                <div>
+                    <button  type="button" class="col-lg-3 btn btn-default center-block" style="margin-top: 0cm; margin-left:0cm; position:fixed">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                Rechercher un service
+
+                    </button>
+                </div>
+
+                <div style="margin-top: 4.5cm;">
+                    <table class="table table-responsive    ">
+                    <thead>
+                        <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Date of Due service</th>
+                              <th scope="col">Type of Service</th>
+                              <th scope="col">Service description</th>
+                                <th scope="col">City</th>
+                                <th scope="col">Remuneration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in [1,2,3,4,5,6,7,8,9,9,9,9] %}
+                        <tr>
+                              <th scope="row">{%  print i %}</th>
+                              <td>{%  print i %}/0{%  print i %}/2017</td>
+                              <td> Going to the SuperMarket </td>
+                                <td>Help shopping for everyday expense</td>
+                                <td>Torino</td>
+                                <td>15€ the service</td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- jQuery CDN -->
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <!-- Bootstrap Js CDN -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- jQuery Custom Scroller CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#sidebar").mCustomScrollbar({
+                    theme: "minimal"
+                });
+
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar, #content').toggleClass('active');
+                    $('.collapse.in').toggleClass('in');
+                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                });
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

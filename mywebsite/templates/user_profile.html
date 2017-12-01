@@ -244,11 +244,22 @@
                     <li style="width: 30cm; height:1.1cm; background-color: white; position:fixed">
                         <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                                     <i class="glyphicon glyphicon-align-left"></i>
-                                    <span>Toggle Sidebar</span>
+                                    <span>Your informations</span>
                         </button>
                     </li>
-                    <a style="width: 30cm; height:3.2cm; background-color: blue; top:2.2cm; position:fixed">
-                        <h1 style=" margin-left:9cm; ">Your previous services</h1>
+                    <a href="{{ url_for('listservice') }}">
+
+                        <button  type="button" class="col-lg-2 btn btn-default center-block" style="margin-top: 0.5cm; margin-left:9cm; position:fixed">
+                            <i class="glyphicon glyphicon-align-left"></i>
+                            Service existing list
+
+                        </button>
+                    </a>
+
+                </div>
+                <div>
+                    <a style="width: 30cm; height:3.2cm; background-color: blue; margin-top:1.5cm; position:fixed">
+                        <h1 style="text-align: center;  resize: both;  ">Your previous services</h1>
                     </a>
                 </div>
 

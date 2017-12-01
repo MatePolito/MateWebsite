@@ -43,7 +43,7 @@ def loginmate():
             # login the user, then redirect to his user page
             login_user(user)
             flash('Mate logged in!', 'success')
-            return redirect(url_for('user'))
+            return redirect(url_for('mate'))
         else:
             flash('Incorrect password!', 'danger')
 
@@ -62,6 +62,19 @@ def contacts():
 def user():
     '''You need to be logged in to access this page'''
     return render_template('user_profile.html')
+
+@app.route('/mate')
+@login_required
+def mate():
+    '''You need to be logged in to access this page'''
+    return render_template('mate_profile.html')
+
+@app.route('/listservice')
+@login_required
+def listservice():
+    '''You need to be logged in to access this page'''
+    return render_template('liste_service.html')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -83,4 +96,4 @@ def register():
 def logout():
     logout_user()
     flash('User logged out!', 'success')
-    return redirect(url_for('loginuser'))
+    return render_template('homepage.html')
