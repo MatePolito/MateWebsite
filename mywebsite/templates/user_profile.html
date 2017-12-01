@@ -207,7 +207,7 @@
 
                 <ul class="list-unstyled components">
                     <li class="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Username</a>
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"  style="background-color: transparent;">Username</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <li>{{ current_user.username }}</li>
                         </ul>
@@ -240,46 +240,39 @@
 
             <!-- Page Content Holder -->
             <div id="content">
-                <div style="width: 30cm; background-color: blue ">
+                <div>
                     <li style="width: 30cm; height:1.1cm; background-color: white; position:fixed">
                         <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                                     <i class="glyphicon glyphicon-align-left"></i>
                                     <span>Toggle Sidebar</span>
                         </button>
                     </li>
+                    <a style="width: 30cm; height:3.2cm; background-color: blue; top:2.2cm; position:fixed">
+                        <h1 style=" margin-left:9cm; ">Your previous services</h1>
+                    </a>
                 </div>
 
-                <div style="margin-top: 1cm;">
+                <div style="margin-top: 4cm;">
                     <table class="table table-responsive    ">
                     <thead>
                         <tr>
                               <th scope="col">#</th>
-                              <th scope="col">First Name</th>
-                              <th scope="col">Last Name</th>
-                              <th scope="col">Username</th>
+                              <th scope="col">Date of the service</th>
+                              <th scope="col">Your mate name</th>
+                              <th scope="col">Type of Service</th>
+                              <th scope="col">Service description</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for i in [1,2,3,4,5,6,7,8,9,9,9,9,10] %}
+                        {% for i in [1,2,3,4,5,6,7,8,9,9,9,9] %}
                         <tr>
-                              <th scope="row">1</th>
-                              <td>Mark</td>
-                              <td>Otto</td>
-                              <td>@mdo</td>
+                              <th scope="row">{%  print i %}</th>
+                              <td>{%  print i %}/0{%  print i %}/2017</td>
+                              <td>Carlo DiAntonio</td>
+                              <td> Going to the SuperMarket </td>
+                                <td>Help shopping for everyday expense</td>
                         </tr>
                         {% endfor %}
-                        <tr>
-                        <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
                     </tbody>
                     </table>
                 </div>
