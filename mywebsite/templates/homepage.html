@@ -6,7 +6,8 @@
 
     {% block head %}
         <!-- Bootstrap CSS CDN -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              xmlns="http://www.w3.org/1999/html">
         <!-- Our Custom CSS -->
 
         <!-- Scrollbar Custom CSS -->
@@ -23,19 +24,19 @@
         {% endblock %}
 
         {% block myContent %}
-            <div class="container" style="padding-top: 100px; text-align: center; color: white; text-effect: bold">
-                <div class="container" style="width:400px; padding: 10px; text-align: center; margin: 10px; background-color: deepskyblue; vertical-align: middle">
-                    <a class="navbar-brand" href="{{ url_for('loginuser') }}">
-                        <span class="glyphicon glyphicon-user" style="color: white"></span>
-                    </a>
-                    You're a User
-                </div>
-                <div class="container" style="width:400px; padding: 10px; text-align: center; margin: 10px; background-color: deepskyblue; vertical-align: middle">
-                    <a class="navbar-brand" href="{{ url_for('loginmate') }}">
-                        <span class="glyphicon glyphicon-user" style="color: white"></span>
-                    </a>
-                    You're a Mate
-                </div>
+            <div class="container" style="padding-top: 100px; width: 400px; text-align: center">
+                <a href="{{ url_for('loginuser') }}">
+                 <div class="container" style="width:400px; padding: 10px; text-align: center; margin-top: 10px; background-color: deepskyblue">
+                     <span class="glyphicon glyphicon-user" style="color: white"></span>
+                     <font color="white"><font size="4"><font face="Gill sans MT"><b>You're a User</b></font></font></font>
+                 </div>
+                </a>
+                <a href="{{ url_for('loginmate') }}">
+                 <div class="container" style="width:400px; padding: 10px; text-align: center; margin-top: 10px; background-color: deepskyblue">
+                     <span class="glyphicon glyphicon-user" style="color: white"></span>
+                     <font color="white"><font size="4"><font face="Gill sans MT"><b>You're a Mate</b></font></font></font>
+                 </div>
+                </a>
             </div>
         {% endblock %}
 
