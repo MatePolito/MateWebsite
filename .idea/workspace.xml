@@ -12,7 +12,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Mate_Website$flask_example.coverage" NAME="flask_example Coverage Results" MODIFIED="1511975011551" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/flask_example$flask_example.coverage" NAME="flask_example Coverage Results" MODIFIED="1511970626633" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/MateWebsite$mate_website.coverage" NAME="mate_website Coverage Results" MODIFIED="1512148655239" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/MateWebsite$mate_website.coverage" NAME="mate_website Coverage Results" MODIFIED="1512149713487" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -53,10 +53,11 @@
       <file leaf-file-name="user_profile.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mywebsite/templates/user_profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
-              <caret line="265" column="43" lean-forward="true" selection-start-line="245" selection-start-column="63" selection-end-line="265" selection-end-column="43" />
+            <state relative-caret-position="101">
+              <caret line="243" column="81" lean-forward="false" selection-start-line="243" selection-start-column="81" selection-end-line="243" selection-end-column="81" />
               <folding>
-                <element signature="e#7300#7324#0#HTML" expanded="true" />
+                <element signature="e#6981#7025#0#HTML" expanded="true" />
+                <element signature="e#7479#7503#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -558,7 +559,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286219" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36824876" sideWeight="0.49707174" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36824876" sideWeight="0.49707174" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286219" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -620,7 +621,8 @@
         <state relative-caret-position="119">
           <caret line="7" column="14" lean-forward="false" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
           <folding>
-            <element signature="e#7300#7324#0#HTML" expanded="true" />
+            <element signature="e#6981#7025#0#HTML" expanded="true" />
+            <element signature="e#7479#7503#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -703,7 +705,8 @@
         <state relative-caret-position="119">
           <caret line="7" column="14" lean-forward="false" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
           <folding>
-            <element signature="e#7300#7324#0#HTML" expanded="true" />
+            <element signature="e#6981#7025#0#HTML" expanded="true" />
+            <element signature="e#7479#7503#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -743,7 +746,8 @@
         <state relative-caret-position="189">
           <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
           <folding>
-            <element signature="e#7300#7324#0#HTML" expanded="true" />
+            <element signature="e#6981#7025#0#HTML" expanded="true" />
+            <element signature="e#7479#7503#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -852,7 +856,8 @@
         <state relative-caret-position="68">
           <caret line="4" column="16" lean-forward="false" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="16" />
           <folding>
-            <element signature="e#7300#7324#0#HTML" expanded="true" />
+            <element signature="e#6981#7025#0#HTML" expanded="true" />
+            <element signature="e#7479#7503#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -950,10 +955,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mywebsite/templates/user_profile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="265" column="43" lean-forward="true" selection-start-line="245" selection-start-column="63" selection-end-line="265" selection-end-column="43" />
+        <state relative-caret-position="101">
+          <caret line="243" column="81" lean-forward="false" selection-start-line="243" selection-start-column="81" selection-end-line="243" selection-end-column="81" />
           <folding>
-            <element signature="e#7300#7324#0#HTML" expanded="true" />
+            <element signature="e#6981#7025#0#HTML" expanded="true" />
+            <element signature="e#7479#7503#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
