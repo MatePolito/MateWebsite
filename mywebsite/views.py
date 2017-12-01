@@ -18,7 +18,7 @@ def setup_db():
 def home():
     return render_template('homepage.html')
 
-@app.route('/loginuser')
+@app.route('/loginuser' , methods=['GET', 'POST'])
 def loginuser():
     myForm = LoginUserForm()
     if myForm.validate_on_submit():
@@ -31,10 +31,9 @@ def loginuser():
             return redirect(url_for('user'))
         else:
             flash('Incorrect password!', 'danger')
-
     return render_template('loginuser.html', form=myForm)
 
-@app.route('/loginmate')
+@app.route('/loginmate', methods=['GET', 'POST'])
 def loginmate():
     myForm = LoginMateForm()
     if myForm.validate_on_submit():
