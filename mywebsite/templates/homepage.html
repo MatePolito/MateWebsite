@@ -21,11 +21,21 @@
         {% block navbar %}
                 {{ super() }}
         {% endblock %}
+
         {% block myContent %}
-            <div class="container" style="padding-top: 100px; width: 400px; text-align: center">
-                {% if not current_user.is_authenticated %}
-                    {{ wtf.quick_form(form) }}
-                {% endif %}
+            <div class="container" style="padding-top: 100px; text-align: center; color: white; text-effect: bold">
+                <div class="container" style="width:400px; padding: 10px; text-align: center; margin: 10px; background-color: deepskyblue; vertical-align: middle">
+                    <a class="navbar-brand" href="{{ url_for('loginuser') }}">
+                        <span class="glyphicon glyphicon-user" style="color: white"></span>
+                    </a>
+                    You're a User
+                </div>
+                <div class="container" style="width:400px; padding: 10px; text-align: center; margin: 10px; background-color: deepskyblue; vertical-align: middle">
+                    <a class="navbar-brand" href="{{ url_for('loginmate') }}">
+                        <span class="glyphicon glyphicon-user" style="color: white"></span>
+                    </a>
+                    You're a Mate
+                </div>
             </div>
         {% endblock %}
 

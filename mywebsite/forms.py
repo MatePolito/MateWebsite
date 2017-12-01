@@ -23,12 +23,22 @@ class RegistrationForm(Form):
             raise ValidationError('Username already exists')
 
 
-class LoginForm(Form):
-    username = StringField('Username', validators=[DataRequired()])
+class LoginUserForm(Form):
+    username = StringField('User name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Login')
+    submit = SubmitField('Login as User')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is None:
-            raise ValidationError('Username does not exist')
+            raise ValidationError('User name does not exist')
+
+class LoginMateForm(Form):
+    username = StringField('Mate name', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login as Mate')
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user is None:
+            raise ValidationError('Mate name does not exist')

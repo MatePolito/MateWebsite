@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginUserForm, RegistrationForm, LoginMateForm
 from .models import User
 
 from . import app, db, login_manager
@@ -14,9 +14,13 @@ def get_user(username):
 def setup_db():
     db.create_all()
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    myForm = LoginForm()
+@app.route('/')
+def home():
+    return render_template('homepage.html')
+
+@app.route('/loginuser')
+def loginuser():
+    myForm = LoginUserForm()
     if myForm.validate_on_submit():
         # we are certain user exists because of the username validator of LoginForm
         user = get_user(myForm.username.data)
@@ -28,7 +32,23 @@ def index():
         else:
             flash('Incorrect password!', 'danger')
 
-    return render_template('homepage.html', form=myForm)
+    return render_template('loginuser.html', form=myForm)
+
+@app.route('/loginmate')
+def loginmate():
+    myForm = LoginMateForm()
+    if myForm.validate_on_submit():
+        # we are certain user exists because of the username validator of LoginForm
+        user = get_user(myForm.username.data)
+        if user.check_password(myForm.password.data):
+            # login the user, then redirect to his user page
+            login_user(user)
+            flash('Mate logged in!', 'success')
+            return redirect(url_for('user'))
+        else:
+            flash('Incorrect password!', 'danger')
+
+    return render_template('loginmate.html', form=myForm)
 
 @app.route('/about')
 def about():
@@ -55,7 +75,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('User succesfully registered', 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('loginuser'))
 
     return render_template('register.html', form=form)
 
@@ -64,4 +84,4 @@ def register():
 def logout():
     logout_user()
     flash('User logged out!', 'success')
-    return redirect(url_for('index'))
+    return redirect(url_for('loginuser'))
