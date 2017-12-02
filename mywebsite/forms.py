@@ -19,6 +19,11 @@ class RegistrationForm(Form):
     first_name = StringField('First name', validators=[DataRequired()])
     last_name = StringField('Last name', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired(), Length(min=4)])
+    '''birthdate = DateField('Birthdate', validators=[DataRequired()])'''
+    phone_number = StringField('Phonenumber', validators=[DataRequired()])
+    mail = StringField('Phonenumber', validators=[DataRequired()])
+    address = StringField('Address', validators=[DataRequired()])
+
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
     password2 = PasswordField('Repeat password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')

@@ -82,7 +82,11 @@ def register():
     if form.validate_on_submit():
         user = User(first_name=form.first_name.data,
                     last_name=form.last_name.data,
-                    username=form.username.data)
+                    username=form.username.data,
+                    phone_number=form.phone_number.data,
+                    mail=form.mail.data,
+                    address=form.address.data
+                    )
         user.password = form.password.data
         db.session.add(user)
         db.session.commit()
