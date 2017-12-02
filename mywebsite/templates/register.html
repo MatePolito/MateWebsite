@@ -17,7 +17,7 @@
         header.masthead {
           position: relative;
           width: 100%;
-          padding-top: 150px;
+          padding-top: 100px;
           padding-bottom: 50px;
           color: white;
           background: url("static/bg-pattern.png"), white;
@@ -37,8 +37,8 @@
               border-radius: 3px; }
           @media (min-width: 992px) {
             header.masthead {
-              height: 100vh;
-              min-height: 775px;
+              height: 120vh;
+              min-height: 900px;
               padding-top: 0;
               padding-bottom: 0; }
               header.masthead .header-content {
@@ -59,9 +59,10 @@
                 {{ super() }}
         {% endblock %}
         {% block myContent %}
-            <header class="masthead" style="padding-top: 140px">
+            <header class="masthead" style="padding-top: 80px">
               <div class="container h-100">
                 <div class="row h-100">
+                    <h1 style="color: white"><b>Registration</b></h1>
                   <div class="container-fluid">
                       {{ wtf.quick_form(form) }}
                   </div>
