@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 <!DOCTYPE html>
 {% block html %}
     {% block head %}
@@ -10,12 +11,116 @@
 
         <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <!-- Our Custom CSS -->
+
+        <!-- DatePicker -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.js">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+           <!-- jQuery CDN -->
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <!-- Bootstrap Js CDN -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- jQuery Custom Scroller CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
         <!-- Scrollbar Custom CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
+        <style>
+        .custom-dropdown--large {
+            font-size: 1.5em;
 
+        }
+
+        .custom-dropdown--small {
+            font-size: .7em;
+        }
+
+        .custom-dropdown__select{
+            font-size: inherit; /* inherit size from .custom-dropdown */
+            padding: .5em; /* add some space*/
+            margin: 0; /* remove default margins */
+        }
+
+        .custom-dropdown__select--white {
+            background-color: white;
+            color: #444;
+        }
+
+        @supports (pointer-events: none) and
+              ((-webkit-appearance: none) or
+              (-moz-appearance: none) or
+              (appearance: none)) {
+
+            .custom-dropdown {
+                position: relative;
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .custom-dropdown__select {
+                padding-right: 2.5em; /* accommodate with the pseudo elements for the dropdown arrow */
+                border: 10px;
+                border-radius: 3px;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+
+            }
+
+            .custom-dropdown::before,
+            .custom-dropdown::after {
+                content: "";
+                position: absolute;
+                pointer-events: none;
+            }
+
+            .custom-dropdown::after { /*  Custom dropdown arrow */
+                content: "\25BC";
+                height: 1em;
+                font-size: .625em;
+                line-height: 1;
+                right: 1.2em;
+                top: 50%; margin-top: -.5em;
+            }
+
+            .custom-dropdown::before { /*  Custom dropdown arrow cover */
+                width: 2em;
+                right: 0; top: 0; bottom: 0;
+                border-radius: 0 3px 3px 0;
+
+            }
+
+            .custom-dropdown__select[disabled] {
+                color: rgba(0,0,0,.3);
+            }
+
+            .custom-dropdown.custom-dropdown--disabled::after {
+                color: rgba(0,0,0,.1);
+            }
+
+            /* White dropdown style */
+            .custom-dropdown--white::before {
+                top: .5em; bottom: .5em;
+                background-color: #fff;
+                border-left: 1px solid rgba(0,0,0,.1);
+
+            }
+
+            .custom-dropdown--white::after {
+                color: rgba(0,0,0,.9);
+            }
+
+            /* FF only temp fix */
+            @-moz-document url-prefix() {
+                .custom-dropdown__select              { padding-right: .9em }
+                .custom-dropdown--large .custom-dropdown__select { padding-right: 1.3em }
+                .custom-dropdown--small .custom-dropdown__select { padding-right: .5em }
+            }
+        }
+
+        </style>
 
     {% endblock %}
     {% block body %}
@@ -27,26 +132,65 @@
         <div class="wrapper">
             <!-- Page Content Holder -->
             <div id="content">
-                <div style="margin-top:1cm; margin-bottom:3cm;">
-                    <a style="width: 30cm; height:3.2cm; background-color: blue;margin-top:-3cm;  position:fixed">
+
+                <div class="row" style="margin-top:1cm;">
+                    <a style="width: 30cm; height:3.2cm; background-color: blue;  position:fixed">
                         <h1 style="text-align: center;  resize: both;  ">Services asking to be supplied</h1>
                     </a>
                 </div>
 
-                <div>
-                    <button  type="button" class="col-lg-3 btn btn-default center-block" style="margin-top: 0cm; margin-left:0cm; position:fixed">
-                                <i class="glyphicon glyphicon-align-left"></i>
-                                Rechercher un service
+                <div class="row" style="margin-top:4cm;" position="fixed">
+                    <div class="col-lg-2 col-lg-offset-1">
 
-                    </button>
+                        <span class="custom-dropdown custom-dropdown--white ">
+                            <select class="custom-dropdown__select custom-dropdown__select--white">
+                                <option> -Select the Category- </option>
+                                <option> Home task </option>
+                                <option> Shopping task </option>
+                                <option> Car fare </option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="col-lg-2 col-lg-offset-1" >
+                        <span class="custom-dropdown custom-dropdown--white" >
+                            <select class="custom-dropdown__select custom-dropdown__select--white" >
+                                <option> -Select the City- </option>
+                                <option> Turin </option>
+                                <option> Paris </option>
+                                <option> Milano </option>
+                                <option> London </option>
+                            </select>
+                        </span>
+                    </div>
+
+                    <div class='col-lg-3 col-lg-offset-1" '>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker1'>
+
+                                <input type='text' class="form-control" placeholder="02/12/2017"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
+                <div class="row">
 
-                <div style="margin-top: 4.5cm;">
+                            <button type="button" class="col-lg-2 col-lg-offset-8">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                Recherch
+                            </button>
+                </div>
+                <div class="row" style="margin-top: 0.5cm;">
                     <table class="table table-responsive    ">
                     <thead>
                         <tr>
                               <th scope="col">#</th>
                               <th scope="col">Date of Due service</th>
+                                <th scope="col">Beginning Hour</th>
                               <th scope="col">Type of Service</th>
                               <th scope="col">Service description</th>
                                 <th scope="col">City</th>
@@ -58,6 +202,7 @@
                         <tr>
                               <th scope="row">{%  print i %}</th>
                               <td>{%  print i %}/0{%  print i %}/2017</td>
+                                <td>13h20</td>
                               <td> Going to the SuperMarket </td>
                                 <td>Help shopping for everyday expense</td>
                                 <td>Torino</td>
@@ -71,29 +216,10 @@
             </div>
         </div>
 
-
-
-
-
-        <!-- jQuery CDN -->
-        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-        <!-- Bootstrap Js CDN -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <!-- jQuery Custom Scroller CDN -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $("#sidebar").mCustomScrollbar({
-                    theme: "minimal"
-                });
-
-                $('#sidebarCollapse').on('click', function () {
-                    $('#sidebar, #content').toggleClass('active');
-                    $('.collapse.in').toggleClass('in');
-                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                });
+         <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
             });
-        </script>
+         </script>
     {% endblock %}
 {% endblock %}

@@ -1,13 +1,19 @@
 from flask_wtf import Form
-from wtforms import StringField, IntegerField, SubmitField, PasswordField
+from wtforms import StringField, IntegerField, SubmitField, PasswordField, DateField
 from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, ValidationError
 from .models import User
+from flask import Flask, render_template
+from flask_wtf import Form
+from wtforms import DateField
+from datetime import date
 
 class NameForm(Form):
     first_name = StringField('First name', validators=[DataRequired()])
     last_name = StringField('Last name', validators=[DataRequired()])
     age = IntegerField('Age', validators=[NumberRange(min=18)])
     submit = SubmitField('Submit')
+
+
 
 class RegistrationForm(Form):
     first_name = StringField('First name', validators=[DataRequired()])
