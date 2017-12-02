@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import StringField, IntegerField, SubmitField, PasswordField, DateField
+from wtforms import StringField, IntegerField, SubmitField, PasswordField, DateField, TextAreaField
 from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, ValidationError
 from .models import User
 from flask import Flask, render_template
@@ -13,6 +13,7 @@ class NameForm(Form):
     last_name = StringField('Last name', validators=[DataRequired()])
     age = IntegerField('Age', validators=[NumberRange(min=18)])
     submit = SubmitField('Submit')
+
 
 
 
@@ -34,6 +35,9 @@ class RegistrationForm(Form):
         if user is not None:
             raise ValidationError('Username already exists')
 
+class ModifyInformationForm(Form):
+    last_name = StringField('Last name')
+    submit = SubmitField('Login as Mate')
 
 
 class LoginUserForm(Form):
@@ -57,15 +61,3 @@ class LoginMateForm(Form):
             raise ValidationError('Mate name does not exist')
 
 
-class ModifyInformationForm(Form):
-
-    first_name = StringField('First name')
-    last_name = StringField('Last name')
-    username = StringField('Username')
-    phone_number = StringField('Phonenumber')
-    mail = StringField('Mail')
-    address = StringField('Address')
-    birthdate = DateField('Birthdate')
-    submit = SubmitField('Modify')
-    def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first()

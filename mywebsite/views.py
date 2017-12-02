@@ -1,7 +1,9 @@
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user
+from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInformationForm
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm
 from .models import User
+from flask_login import current_user
 
 from . import app, db, login_manager
 
@@ -104,12 +106,13 @@ def logout():
 @app.route('/modifyinformation', methods=['GET', 'POST'])
 @login_required
 def modifyinformation():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        current_user.last_name = form.last_name.data
+    myForm = ModifyInformationForm()
+    if myForm.validate_on_submit():
+        current_user.last_name = myForm.last_name.data
 
         db.session.add(user)
         flash('Your profile has been updated.')
         return redirect(url_for('user', username=current_user.username))
-    form.last_name.data = current_user.last_name
-    return render_template('modify_information.html', form=form)
+
+    myForm.last_name.data = current_user.last_name
+    return render_template('modifyinformation.html', form=myForm)
