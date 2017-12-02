@@ -76,6 +76,28 @@ def listservice():
     return render_template('liste_service.html')
 
 
+@app.route('/modifyinformation' , methods=['GET', 'POST'])
+def modifyinformation():
+    myForm = RegistrationForm()
+    
+    User.query.filter_by(username=user_role).all()
+    if myForm.validate_on_submit():
+        user = User(first_name=form.first_name.data,
+                    last_name=form.last_name.data,
+                    username=form.username.data,
+                    phone_number=form.phone_number.data,
+                    mail=form.mail.data,
+                    address=form.address.data,
+                    birthdate=form.birthdate.data
+
+                    )
+        last_name=form.last_name.data
+
+        return redirect(url_for('loginuser'))
+    return render_template('modify_information.html', form=myForm)
+
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()

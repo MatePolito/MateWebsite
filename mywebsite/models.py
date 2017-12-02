@@ -20,6 +20,9 @@ class User(db.Model, UserMixin):
     def get_id(self):
         return self.username
 
+    def set_last_name(self, new_last_name):
+        self.last_name=new_last_name
+
     @property
     def password(self):
         raise StandardError('Password is write-only')
