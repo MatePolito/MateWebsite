@@ -6,6 +6,7 @@ from flask import Flask, render_template
 from flask_wtf import Form
 from wtforms import DateField
 from datetime import date
+from wtforms import fields, widgets
 
 class NameForm(Form):
     first_name = StringField('First name', validators=[DataRequired()])
@@ -21,8 +22,9 @@ class RegistrationForm(Form):
     username = StringField('Username', validators=[DataRequired(), Length(min=4)])
     '''birthdate = DateField('Birthdate', validators=[DataRequired()])'''
     phone_number = StringField('Phonenumber', validators=[DataRequired()])
-    mail = StringField('Phonenumber', validators=[DataRequired()])
+    mail = StringField('Mail', validators=[DataRequired()])
     address = StringField('Address', validators=[DataRequired()])
+    birthdate=DateField('Birthdate', validators=[DataRequired()], render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
 
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
     password2 = PasswordField('Repeat password', validators=[DataRequired(), EqualTo('password')])
