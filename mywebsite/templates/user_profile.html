@@ -221,7 +221,7 @@
                         <ul class="collapse list-unstyled" id="pageSubmenu" style="color: white">
                             <li>First name: {{ current_user.first_name }}</li>
                             <li>Last name:{{ current_user.last_name }}</li>
-                            <li>Date of birth: {{ current_user.birthdate }}<li>
+                            <li>Date of birth: {{ (current_user.birthdate).strftime("%d/%m/%Y") }}<li>
                         </ul>
                     </li>
                     <li>
