@@ -108,11 +108,23 @@ def logout():
 def modifyinformation():
     myForm = ModifyInformationForm()
     if myForm.validate_on_submit():
+        current_user.first_name = myForm.first_name.data
         current_user.last_name = myForm.last_name.data
+        current_user.phone_number = myForm.phone_number.data
+        current_user.mail = myForm.mail.data
+        current_user.address = myForm.address.data
 
-        db.session.add(user)
+        db.session.add(current_user)
+        db.session.commit()
+
         flash('Your profile has been updated.')
         return redirect(url_for('user', username=current_user.username))
 
+    myForm.first_name.data= current_user.first_name
     myForm.last_name.data = current_user.last_name
+    myForm.phone_number.data = current_user.phone_number
+    myForm.mail.data = current_user.mail
+    myForm.address.data = current_user.address
+
+
     return render_template('modifyinformation.html', form=myForm)

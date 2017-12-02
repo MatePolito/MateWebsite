@@ -36,8 +36,14 @@ class RegistrationForm(Form):
             raise ValidationError('Username already exists')
 
 class ModifyInformationForm(Form):
+    first_name = StringField('First name')
     last_name = StringField('Last name')
-    submit = SubmitField('Login as Mate')
+    phone_number = StringField('Phonenumber')
+    mail = StringField('Mail')
+    address = StringField('Address')
+    '''birthdate = DateField('Birthdate', validators=[DataRequired()],
+                          render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})'''
+    submit = SubmitField('Modify')
 
 
 class LoginUserForm(Form):
