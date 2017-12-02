@@ -9,9 +9,9 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
     phone_number = db.Column(db.String)
-    '''birthdate= db.Column(db.Date)'''
     mail = db.Column(db.String)
     address = db.Column(db.String)
+    birthdate= db.Column(db.Date)
 
 
     username = db.Column(db.String, nullable=False, unique=True, index=True)
