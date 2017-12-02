@@ -19,15 +19,15 @@
 
 
         p {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Gill Sans MT', sans-serif;
             font-size: 1.1em;
             font-weight: 300;
             line-height: 1.7em;
-            color: #999;
+            color: white;
         }
 
         a, a:hover, a:focus {
-            color: inherit;
+            color: dodgerblue;
             text-decoration: none;
             transition: all 0.3s;
         }
@@ -65,8 +65,8 @@
             bottom: 0;
             height: 91.47vh;
             z-index: 999;
-            background: #7386D5;
-            color: #fff;
+            background: lightskyblue;
+            color: dodgerblue;
             transition: all 0.3s;
         }
 
@@ -76,12 +76,12 @@
 
         #sidebar .sidebar-header {
             padding: 20px;
-            background: #6d7fcc;
+            background: dodgerblue;
         }
 
         #sidebar ul.components {
             padding: 20px 0;
-            border-bottom: 1px solid #47748b;
+            border-bottom: 1px solid dodgerblue;
         }
 
         #sidebar ul p {
@@ -93,15 +93,16 @@
             padding: 10px;
             font-size: 1.1em;
             display: block;
+            color: white;
         }
         #sidebar ul li a:hover {
-            color: #7386D5;
+            color: dodgerblue;
             background: #fff;
         }
 
         #sidebar ul li.active > a, a[aria-expanded="true"] {
             color: #fff;
-            background: #6d7fcc;
+            background: dodgerblue;
         }
 
 
@@ -125,7 +126,7 @@
         ul ul a {
             font-size: 0.9em !important;
             padding-left: 30px !important;
-            background: #6d7fcc;
+            background: dodgerblue;
         }
 
         ul.CTAs {
@@ -141,10 +142,10 @@
         }
         a.download {
             background: #fff;
-            color: #7386D5;
+            color: dodgerblue;
         }
         a.article, a.article:hover {
-            background: #6d7fcc !important;
+            background: dodgerblue !important;
             color: #fff !important;
         }
 
@@ -202,30 +203,30 @@
             <!-- Sidebar Holder -->
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <h3> Your informations </h3>
+                    <h3><font color="white"><b> Your informations </b></font></h3>
                 </div>
 
                 <ul class="list-unstyled components">
-                    <li class="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"  style="background-color: transparent;">Username</a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li>
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false""><b>Username</b></a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu" style="color: white">
                             <li>{{ current_user.username }}</li>
                         </ul>
                     </li>
                     <ul class="list-unstyled CTAs">
-                        <li><a href="modifpassword.html" class="download"> Change password </a></li>
+                        <li><a href="modifpassword.html" class="download"><font color=#1e90ff>Change password</font></a></li>
                     </ul>
                     <li>
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">General informations</a>
-                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"><b>General informations</b></a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu" style="color: white">
                             <li>First name: {{ current_user.first_name }}</li>
                             <li>Last name:{{ current_user.last_name }}</li>
                             <li>Date of birth: <li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#accountSubmenu" data-toggle="collapse" aria-expanded="false"> Account Informations </a>
-                        <ul class="collapse list-unstyled" id="accountSubmenu">
+                        <a href="#accountSubmenu" data-toggle="collapse" aria-expanded="false"><b>Account Informations</b></a>
+                        <ul class="collapse list-unstyled" id="accountSubmenu" style="color: white">
                             <li> Address: </li>
                             <li> Phone number:</li>
                             <li> Mail: <li>
@@ -234,7 +235,7 @@
                 </ul>
 
                 <ul class="list-unstyled CTAs">
-                    <li><a href="modifprofile.html" class="download"> Modify your Informations</a></li>
+                    <li><a href="modifprofile.html" class="download"><font color="#1e90ff">Modify your Informations</font></a></li>
                 </ul>
             </nav>
 
@@ -258,8 +259,8 @@
 
                 </div>
                 <div>
-                    <a style="width: 30cm; height:3.2cm; background-color: blue; margin-top:1.5cm; position:fixed">
-                        <h1 style="text-align: center;  resize: both;  ">Your previous services</h1>
+                    <a style="width: 30cm; height:3.2cm; background-color: white; margin-top:1.5cm; position:fixed; margin-left: 15px">
+                        <h1 style="resize: both"><font face="Arenq"><b>Your previous services</b></font></h1>
                     </a>
                 </div>
 
