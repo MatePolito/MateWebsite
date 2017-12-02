@@ -49,9 +49,13 @@ def loginmate():
 
     return render_template('loginmate.html', form=myForm)
 
-@app.route('/help')
-def help():
-    return render_template('help.html')
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contacts')
+def contacts():
+    return redirect(url_for('about'))
 
 @app.route('/user')
 @login_required
