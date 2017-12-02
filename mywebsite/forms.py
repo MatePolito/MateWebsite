@@ -20,7 +20,6 @@ class RegistrationForm(Form):
     first_name = StringField('First name', validators=[DataRequired()])
     last_name = StringField('Last name', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired(), Length(min=4)])
-    '''birthdate = DateField('Birthdate', validators=[DataRequired()])'''
     phone_number = StringField('Phonenumber', validators=[DataRequired()])
     mail = StringField('Mail', validators=[DataRequired()])
     address = StringField('Address', validators=[DataRequired()])
@@ -34,6 +33,7 @@ class RegistrationForm(Form):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError('Username already exists')
+
 
 
 class LoginUserForm(Form):
@@ -55,3 +55,17 @@ class LoginMateForm(Form):
         user = User.query.filter_by(username=username.data).first()
         if user is None:
             raise ValidationError('Mate name does not exist')
+
+
+class ModifyInformationForm(Form):
+
+    first_name = StringField('First name')
+    last_name = StringField('Last name')
+    username = StringField('Username')
+    phone_number = StringField('Phonenumber')
+    mail = StringField('Mail')
+    address = StringField('Address')
+    birthdate = DateField('Birthdate')
+    submit = SubmitField('Modify')
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
