@@ -72,6 +72,27 @@ def listservice():
     return render_template('liste_service.html')
 
 
+@app.route('/modifyinformation' , methods=['GET', 'POST'])
+def modifyinformation():
+    myForm = RegistrationForm()
+    
+    User.query.filter_by(username=user_role).all()
+    if myForm.validate_on_submit():
+        user = User(first_name=form.first_name.data,
+                    last_name=form.last_name.data,
+                    username=form.username.data,
+                    phone_number=form.phone_number.data,
+                    mail=form.mail.data,
+                    address=form.address.data,
+                    birthdate=form.birthdate.data
+
+                    )
+        last_name=form.last_name.data
+
+        return redirect(url_for('loginuser'))
+    return render_template('modify_information.html', form=myForm)
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -100,16 +121,3 @@ def logout():
     logout_user()
     flash('User logged out!', 'success')
     return render_template('homepage.html')
-
-@app.route('/modifyinformation', methods=['GET', 'POST'])
-@login_required
-def modifyinformation():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        current_user.last_name = form.last_name.data
-
-        db.session.add(user)
-        flash('Your profile has been updated.')
-        return redirect(url_for('user', username=current_user.username))
-    form.last_name.data = current_user.last_name
-    return render_template('modify_information.html', form=form)
