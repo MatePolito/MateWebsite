@@ -18,12 +18,12 @@ class NameForm(Form):
 
 
 class RegistrationForm(Form):
-    first_name = StringField('First name', validators=[DataRequired()])
-    last_name = StringField('Last name', validators=[DataRequired()])
-    username = StringField('Username', validators=[DataRequired(), Length(min=4)])
-    phone_number = StringField('Phonenumber', validators=[DataRequired()])
-    mail = StringField('Mail', validators=[DataRequired()])
-    address = StringField('Address', validators=[DataRequired()])
+    first_name = StringField('First name', validators=[DataRequired()], render_kw={"placeholder": "Carlo"})
+    last_name = StringField('Last name', validators=[DataRequired()], render_kw={"placeholder": "D'Ambrosio"})
+    username = StringField('Username', validators=[DataRequired(), Length(min=4)], render_kw={"placeholder": "Carlo1995"})
+    phone_number = StringField('Phonenumber', validators=[DataRequired()], render_kw={"placeholder": "+39610101010"})
+    mail = StringField('Mail', validators=[DataRequired()], render_kw={"placeholder": "carlo.dambrosio@gmail.com"})
+    address = StringField('Address', validators=[DataRequired()], render_kw={"placeholder": "Torino"})
     birthdate=DateField('Birthdate', validators=[DataRequired()], render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
 
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
@@ -36,12 +36,12 @@ class RegistrationForm(Form):
             raise ValidationError('Username already exists')
 
 class ModifyInformationForm(Form):
-    first_name = StringField('First name')
-    last_name = StringField('Last name')
-    phone_number = StringField('Phonenumber')
-    mail = StringField('Mail')
-    address = StringField('Address')
-    birthdate = DateField('Birthdate')
+    first_name = StringField('First name', render_kw={"placeholder": "Carlo"})
+    last_name = StringField('Last name', render_kw={"placeholder": "D'Ambrosio"})
+    phone_number = StringField('Phonenumber', render_kw={"placeholder": "+39610101010"})
+    mail = StringField('Mail', render_kw={"placeholder": "carlo.dambrosio@gmail.com"})
+    address = StringField('Address', render_kw={"placeholder": "carlo.dambrosio@gmail.com"})
+    birthdate = DateField('Birthdate', render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
     submit = SubmitField('Modify')
 
 

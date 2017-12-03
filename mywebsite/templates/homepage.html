@@ -152,22 +152,24 @@
                         <h1 class="mb-5"><font face="Myriad pro"><b>Mate is an application which links generations allowing people in need to benefit of healthy people skills.</b></font></h1>
                     </div>
                   </div>
-                  <div class="col-lg-5 my-auto">
-                      <div class="container" style="padding-top: 100px; width: 400px; text-align: center;margin-bottom: 10px">
-                          <a href="{{ url_for('loginuser') }}">
-                              <div class="container" style="width:400px; padding: 20px; text-align: center; margin-top: 10px; background-color: deepskyblue; border-radius: 300px">
-                                  <span class="glyphicon glyphicon-user" style="color: white"></span>
-                                  <font color="white"><font size="4"><font face="Gill sans MT"><b>You're a User</b></font></font></font>
-                              </div>
-                          </a>
-                          <a href="{{ url_for('loginmate') }}">
-                              <div class="container" style="width:400px; padding: 20px; text-align: center; margin-top: 50px; background-color: deepskyblue; border-radius: 300px">
-                                  <span class="glyphicon glyphicon-user" style="color: white"></span>
-                                  <font color="white"><font size="4"><font face="Gill sans MT"><b>You're a Mate</b></font></font></font>
-                              </div>
-                          </a>
+                  {% if not current_user.is_authenticated %}
+                      <div class="col-lg-5 my-auto">
+                          <div class="container" style="padding-top: 100px; width: 400px; text-align: center;margin-bottom: 10px">
+                              <a href="{{ url_for('loginuser') }}">
+                                  <div class="container" style="width:400px; padding: 20px; text-align: center; margin-top: 10px; background-color: deepskyblue; border-radius: 300px">
+                                      <span class="glyphicon glyphicon-user" style="color: white"></span>
+                                      <font color="white"><font size="4"><font face="Gill sans MT"><b>You're a User</b></font></font></font>
+                                  </div>
+                              </a>
+                              <a href="{{ url_for('loginmate') }}">
+                                  <div class="container" style="width:400px; padding: 20px; text-align: center; margin-top: 50px; background-color: deepskyblue; border-radius: 300px">
+                                      <span class="glyphicon glyphicon-user" style="color: white"></span>
+                                      <font color="white"><font size="4"><font face="Gill sans MT"><b>You're a Mate</b></font></font></font>
+                                  </div>
+                              </a>
+                          </div>
                       </div>
-                  </div>
+                  {% endif %}
                 </div>
               </div>
             </header>
