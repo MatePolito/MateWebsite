@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <link href="jquery-ui.css" rel="stylesheet">
            <!-- jQuery CDN -->
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <!-- Bootstrap Js CDN -->
@@ -176,17 +177,8 @@
                             </select>
                         </span>
                     </div>
-                    <div class='col-lg-3 col-lg-offset-1" '>
-                        <div class="form-group">
-                            <div class='input-group date' id='datetimepicker1'>
-
-                                <input type='text' class="form-control" placeholder="02/12/2017"/>
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar" ></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    <div class='col-lg-3 col-lg-offset-1" '><input type="date" class="form-control" name="anniversaire"></div>
+                    
                     <div class="row">
                         <button type="button" class="col-lg-2 col-lg-offset-1">
                             <i class="glyphicon glyphicon-search"></i>
@@ -230,11 +222,25 @@
                 </div>
             </div>
         </div>
-
          <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker();
-            });
+
+
+        $(function() {
+        $( "#datepicker" ).datepicker({
+        altField: "#datepicker",
+        closeText: 'Fermer',
+        prevText: 'Précédent',
+        nextText: 'Suivant',
+        currentText: 'Aujourd\'hui',
+        monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+        monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+        dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+        dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+        dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+        weekHeader: 'Sem.',
+        dateFormat: 'yy-mm-dd'
+        });
+        });
          </script>
     {% endblock %}
 {% endblock %}
