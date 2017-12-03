@@ -241,37 +241,32 @@
 
             <!-- Page Content Holder -->
             <div id="content">
-                <div>
-                    <li style="width: 30cm; height:1.1cm; background-color: white; position:fixed">
+                <div style="background-color: white">
+                    <div class="container-fluid" style="height:1.1cm; background-color: white; position:fixed">
                         <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                                    <i class="glyphicon glyphicon-align-left"></i>
+                                    <i class="glyphicon glyphicon-user"></i>
                                     <span>Your informations</span>
                         </button>
-                    </li>
-                    <a class="col-lg-5" href="{{ url_for('listservice') }}">
-
-                        <button  type="button" class="col-lg-2 btn btn-default center-block" style="margin-top: 0.5cm; margin-left:9cm; position:fixed">
-                            <i class="glyphicon glyphicon-align-left"></i>
-                            Service existing list
-
-                        </button>
-                    </a>
-                    <a href="{{ url_for('createservice') }}"    class="col-lg-3" >
-
-                        <button  type="button" class="col-lg-2 btn btn-default center-block" style="margin-top: 0.5cm; margin-left:9cm; position:fixed">
-                            <i class="glyphicon glyphicon-align-left"></i>
-                            Create a service
-
-                        </button>
-                    </a>
-
+                        <a class="col-lg-2" href="{{ url_for('listservice') }}" style="background-color: white;">
+                            <button  type="button" class="btn btn-default center-block" style="margin-left: 50%; margin-top: 0.5cm; position:fixed">
+                                <i class="glyphicon glyphicon-list"></i>
+                                Service existing list
+                            </button>
+                        </a>
+                        <a class="col-lg-2" href="{{ url_for('createservice') }}" style="background-color: white">
+                            <button  type="button" class="btn btn-default center-block" style="margin-left: 60%; margin-top: 0.5cm; position:fixed">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                                Create a service
+                            </button>
+                        </a>
+                    </div>
                 </div>
+                <hr>
                 <div>
-                    <a style="width: 30cm; height:3.2cm; background-color: white; margin-top:1.5cm; position:fixed; margin-left: 0px">
-                        <h1 style="resize: both"><font face="Arenq"><b>Your previous services</b></font></h1>
+                    <a style="width: 100%; height:3.2cm; background-color: white; margin-top:0.5cm; position:fixed; margin-left: 0px">
+                        <h1 style="resize: both; text-align: center"><font face="Gill sans MT"><b>Your previous services</b></font></h1>
                     </a>
                 </div>
-
                 <div style="margin-top: 5cm;">
                     <table class="table table-responsive    ">
                     <thead>
