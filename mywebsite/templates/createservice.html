@@ -12,6 +12,43 @@
         <!-- Scrollbar Custom CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
+        <style>
+
+        header.masthead {
+          position: relative;
+          width: 100%;
+          padding-top: 100px;
+          padding-bottom: 50px;
+          color: white;
+          background: url("static/bg-pattern.png"), white;
+          background: url("static/bg-pattern.png"), -webkit-linear-gradient(to left, white, dodgerblue);
+          background: url("static/bg-pattern.png"), linear-gradient(to left, white, dodgerblue); }
+          header.masthead .header-content {
+            max-width: 500px;
+            margin-bottom: 50px;
+            text-align: center; }
+            header.masthead .header-content h1 {
+              font-size: 30px; }
+          header.masthead .device-container {
+            max-width: 325px;
+            margin-right: auto;
+            margin-left: auto; }
+            header.masthead .device-container .screen img {
+              border-radius: 3px; }
+          @media (min-width: 992px) {
+            header.masthead {
+              height: 120vh;
+              max-height: 640px;
+              padding-top: 0;
+              padding-bottom: 0; }
+              header.masthead .header-content {
+                margin-bottom: 0;
+                text-align: left; }
+                header.masthead .header-content h1 {
+                  font-size: 50px; }
+              header.masthead .device-container {
+                max-width: 325px; } }
+        </style>
 
     {% endblock %}
 
@@ -22,9 +59,16 @@
                 {{ super() }}
         {% endblock %}
         {% block myContent %}
-            <div class="container" style="padding-top: 100px; width: 400px; text-align: center">
-                {{ wtf.quick_form(form) }}
-            </div>
+            <header class="masthead" style="padding-top: 80px">
+              <div class="container h-100">
+                <div class="row h-100">
+                    <h1 style="color: white"><b>Registration</b></h1>
+                  <div class="container-fluid">
+                      {{ wtf.quick_form(form) }}
+                  </div>
+                </div>
+              </div>
+            </header>
         {% endblock %}
 
 
