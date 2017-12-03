@@ -17,6 +17,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String, nullable=False, unique=True, index=True)
     password_hash = db.Column(db.String, nullable=False)
 
+
     def get_id(self):
         return self.username
 
@@ -67,6 +68,9 @@ class Service(db.Model, UserMixin):
     servicetype = db.Column(db.String)
     servicedescription = db.Column(db.String)
     servicedate = db.Column(db.Date)
+    servicecity=db.Column(db.String)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def get_id(self):
         return self.username

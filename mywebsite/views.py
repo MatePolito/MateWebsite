@@ -70,8 +70,14 @@ def mate():
 @app.route('/listservice')
 @login_required
 def listservice():
-    '''You need to be logged in to access this page'''
-    return render_template('liste_service.html')
+    res= Service.query.all()
+    list_requester=[]
+    for temp in res:
+        elmt = User.query.filter_by(id=temp.user_id).first().username
+        print elmt
+        list_requester.append(elmt)
+
+    return render_template('liste_service.html', res=res, list_requester=list_requester)
 
 
 
@@ -139,7 +145,10 @@ def createservice():
     if myForm.validate_on_submit():
         service = Service(servicetype=myForm.servicetype.data,
                     servicedescription=myForm.servicedescription.data,
-                    servicedate=myForm.servicedate.data
+                    servicedate=myForm.servicedate.data,
+                    servicecity=myForm.servicecity.data,
+
+                          user_id=current_user.id
 
                     )
         db.session.add(service)

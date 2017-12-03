@@ -71,4 +71,5 @@ class CreateServiceForm(Form):
     servicetype = SelectField('Type of Service', choices=[('ht', 'Home task'), ('st', 'Shopping task'), ('cf', 'Car fare')])
     servicedescription = TextAreaField('Description du service')
     servicedate=DateField("Date of the service", validators=[DataRequired()])
+    servicecity=StringField("City of the service", validators=[DataRequired()])
     submit = SubmitField('Create Service')
