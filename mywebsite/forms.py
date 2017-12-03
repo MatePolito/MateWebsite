@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import StringField, IntegerField, SubmitField, PasswordField, DateField, TextAreaField
+from wtforms import StringField, IntegerField, SubmitField, PasswordField, DateField, TextAreaField, SelectField, DateTimeField
 from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, ValidationError
 from .models import User
 from flask import Flask, render_template
@@ -41,8 +41,7 @@ class ModifyInformationForm(Form):
     phone_number = StringField('Phonenumber')
     mail = StringField('Mail')
     address = StringField('Address')
-    '''birthdate = DateField('Birthdate', validators=[DataRequired()],
-                          render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})'''
+    birthdate = DateField('Birthdate')
     submit = SubmitField('Modify')
 
 
@@ -67,3 +66,9 @@ class LoginMateForm(Form):
             raise ValidationError('Mate name does not exist')
 
 
+
+class CreateServiceForm(Form):
+    typeservice = SelectField('Type of Service', choices=[('ht', 'Home task'), ('st', 'Shopping task'), ('cf', 'Car fare')])
+    description = StringField('Description du service')
+    servicedate=DateField("Date of the service", validators=[DataRequired()])
+    submit = SubmitField('Create Service')

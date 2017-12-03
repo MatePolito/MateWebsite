@@ -248,11 +248,19 @@
                                     <span>Your informations</span>
                         </button>
                     </li>
-                    <a href="{{ url_for('listservice') }}">
+                    <a class="col-lg-5" href="{{ url_for('listservice') }}">
 
                         <button  type="button" class="col-lg-2 btn btn-default center-block" style="margin-top: 0.5cm; margin-left:9cm; position:fixed">
                             <i class="glyphicon glyphicon-align-left"></i>
                             Service existing list
+
+                        </button>
+                    </a>
+                    <a href="{{ url_for('createservice') }}"    class="col-lg-3" >
+
+                        <button  type="button" class="col-lg-2 btn btn-default center-block" style="margin-top: 0.5cm; margin-left:9cm; position:fixed">
+                            <i class="glyphicon glyphicon-align-left"></i>
+                            Create a service
 
                         </button>
                     </a>
