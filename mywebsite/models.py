@@ -20,8 +20,6 @@ class User(db.Model, UserMixin):
     def get_id(self):
         return self.username
 
-    def set_last_name(self, new_last_name):
-        self.last_name=new_last_name
 
     @property
     def password(self):
@@ -33,3 +31,42 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+class Mate(db.Model, UserMixin):
+    __tablename__ = 'mates'
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
+    phone_number = db.Column(db.String)
+    mail = db.Column(db.String)
+    address = db.Column(db.String)
+    birthdate = db.Column(db.Date)
+
+    username = db.Column(db.String, nullable=False, unique=True, index=True)
+    password_hash = db.Column(db.String, nullable=False)
+
+    def get_id(self):
+        return self.username
+
+    @property
+    def password(self):
+        raise StandardError('Password is write-only')
+
+    @password.setter
+    def password(self, value):
+        self.password_hash = generate_password_hash(value)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+
+class Service(db.Model, UserMixin):
+    __tablename__ = 'services'
+
+    id = db.Column(db.Integer, primary_key=True)
+    servicetype = db.Column(db.String)
+    servicedescription = db.Column(db.String)
+    servicedate = db.Column(db.Date)
+
+    def get_id(self):
+        return self.username

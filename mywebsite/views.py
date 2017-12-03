@@ -1,8 +1,8 @@
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user
-from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInformationForm
+from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInformationForm, CreateServiceForm
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm
-from .models import User
+from .models import User, Service
 from flask_login import current_user
 
 from . import app, db, login_manager
@@ -113,6 +113,7 @@ def modifyinformation():
         current_user.phone_number = myForm.phone_number.data
         current_user.mail = myForm.mail.data
         current_user.address = myForm.address.data
+        current_user.birthdate = myForm.birthdate.data
 
         db.session.add(current_user)
         db.session.commit()
@@ -125,6 +126,25 @@ def modifyinformation():
     myForm.phone_number.data = current_user.phone_number
     myForm.mail.data = current_user.mail
     myForm.address.data = current_user.address
+    myForm.birthdate.data = current_user.birthdate
 
 
     return render_template('modifyinformation.html', form=myForm)
+
+
+@app.route('/createservice', methods=['GET', 'POST'])
+@login_required
+def createservice():
+    myForm = CreateServiceForm()
+    if myForm.validate_on_submit():
+        service = Service(servicetype=myForm.servicetype.data,
+                    servicedescription=myForm.servicedescription.data,
+                    servicedate=myForm.servicedate.data
+
+                    )
+        db.session.add(service)
+        db.session.commit()
+        flash('User succesfully registered', 'success')
+        return redirect(url_for('user', username=current_user.username))
+
+    return render_template('createservice.html', form=myForm)
