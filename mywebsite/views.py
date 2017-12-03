@@ -137,8 +137,8 @@ def modifyinformation():
 def createservice():
     myForm = CreateServiceForm()
     if myForm.validate_on_submit():
-        service = Service(typeservice=myForm.typeservice.data,
-                    description=myForm.description.data,
+        service = Service(servicetype=myForm.servicetype.data,
+                    servicedescription=myForm.servicedescription.data,
                     servicedate=myForm.servicedate.data
 
                     )

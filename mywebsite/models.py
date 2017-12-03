@@ -64,8 +64,8 @@ class Service(db.Model, UserMixin):
     __tablename__ = 'services'
 
     id = db.Column(db.Integer, primary_key=True)
-    typeservice = db.Column(db.String)
-    description = db.Column(db.String)
+    servicetype = db.Column(db.String)
+    servicedescription = db.Column(db.String)
     servicedate = db.Column(db.Date)
 
     def get_id(self):

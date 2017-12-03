@@ -68,7 +68,7 @@ class LoginMateForm(Form):
 
 
 class CreateServiceForm(Form):
-    typeservice = SelectField('Type of Service', choices=[('ht', 'Home task'), ('st', 'Shopping task'), ('cf', 'Car fare')])
-    description = StringField('Description du service')
+    servicetype = SelectField('Type of Service', choices=[('ht', 'Home task'), ('st', 'Shopping task'), ('cf', 'Car fare')])
+    servicedescription = TextAreaField('Description du service')
     servicedate=DateField("Date of the service", validators=[DataRequired()])
     submit = SubmitField('Create Service')
