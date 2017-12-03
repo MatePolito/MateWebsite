@@ -146,7 +146,9 @@ def createservice():
         service = Service(servicetype=myForm.servicetype.data,
                     servicedescription=myForm.servicedescription.data,
                     servicedate=myForm.servicedate.data,
-                    user_id=current_user.id
+                    servicecity=myForm.servicecity.data,
+
+                          user_id=current_user.id
 
                     )
         db.session.add(service)
