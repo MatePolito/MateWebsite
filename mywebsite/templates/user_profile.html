@@ -229,7 +229,7 @@
                         <ul class="collapse list-unstyled" id="accountSubmenu" style="color: white">
                             <li> Address: {{ current_user.address }} </li>
                             <li> Phone number: {{ current_user.phone_number }}</li>
-                            <li> Mail: {{ current_user.mail }} <li>
+                            <li> Mail: {{ current_user.mail }} {{ current_user.roleuser.name }} <li>
                         </ul>
                     </li>
                 </ul>
@@ -275,7 +275,8 @@
                               <th scope="col">Date of the service</th>
                               <th scope="col">Your mate name</th>
                               <th scope="col">Type of Service</th>
-                              <th scope="col">Service description</th>
+                              <th scope="col">Service description
+
                         </tr>
                     </thead>
                     <tbody>

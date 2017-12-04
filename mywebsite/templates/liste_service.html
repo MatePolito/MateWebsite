@@ -201,6 +201,9 @@
                               <th scope="col">Service description</th>
                                 <th scope="col">City</th>
                                 <th scope="col">Remuneration</th>
+                            {% if  current_user.roleuser.name=="User" %}
+                            <th scope="col">Service description</th>
+                            {%  endif %}
                         </tr>
                     </thead>
                     <tbody>
@@ -214,6 +217,10 @@
                                         <td>{{ i.servicedescription}}</td>
                                         <td>{{ i.servicecity}}</td>
                                         <td>15€ the service</td>
+
+                                        {% if  current_user.roleuser.name=="User" %}
+                                            <td><a class="button"><font color=#1e90ff>Change password</font></a></td>
+                                        {%  endif %}
 
                             </tr>
                         {% endfor %}

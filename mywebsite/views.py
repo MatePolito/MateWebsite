@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInformationForm, CreateServiceForm
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm
-from .models import User, Service
+from .models import User, Service, Role, Permission
 from flask_login import current_user
 
 from . import app, db, login_manager
@@ -45,7 +45,7 @@ def loginmate():
             # login the user, then redirect to his user page
             login_user(user)
             flash('Mate logged in!', 'success')
-            return redirect(url_for('mate'))
+            return redirect(url_for('user'))
         else:
             flash('Incorrect password!', 'danger')
 
@@ -81,9 +81,30 @@ def listservice():
 
 
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
+@app.route('/registeruser', methods=['GET', 'POST'])
+def registeruser():
     form = RegistrationForm()
+    roles = {
+        'User': (Permission.FOLLOW |
+                 Permission.COMMENT |
+                 Permission.WRITE_ARTICLES, True),
+        'Mate': (Permission.FOLLOW |
+                      Permission.COMMENT |
+                      Permission.WRITE_ARTICLES |
+                      Permission.MODERATE_COMMENTS, False),
+        'Administrator': (0xff, False)
+    }
+    for r in roles:
+        role = Role.query.filter_by(name=r).first()
+        if role is None:
+            role = Role(name=r)
+        role.permissions = roles[r][0]
+        role.default = roles[r][1]
+        db.session.add(role)
+    db.session.commit()
+
+    role=Role.query.filter_by(name="User").first()
+    print role
     if form.validate_on_submit():
         user = User(first_name=form.first_name.data,
                     last_name=form.last_name.data,
@@ -91,8 +112,8 @@ def register():
                     phone_number=form.phone_number.data,
                     mail=form.mail.data,
                     address=form.address.data,
-                    birthdate=form.birthdate.data
-
+                    birthdate=form.birthdate.data,
+                    roleuser=role
                     )
         user.password = form.password.data
         db.session.add(user)
@@ -101,6 +122,31 @@ def register():
         return redirect(url_for('loginuser'))
 
     return render_template('register.html', form=form)
+
+@app.route('/registermate', methods=['GET', 'POST'])
+def registermate():
+    form = RegistrationForm()
+    role=Role.query.filter_by(name="Mate").first()
+    print role
+    if form.validate_on_submit():
+        mate = User(first_name=form.first_name.data,
+                    last_name=form.last_name.data,
+                    username=form.username.data,
+                    phone_number=form.phone_number.data,
+                    mail=form.mail.data,
+                    address=form.address.data,
+                    birthdate=form.birthdate.data,
+                    roleuser=role
+
+                    )
+        mate.password = form.password.data
+        db.session.add(mate)
+        db.session.commit()
+        flash('Mate succesfully registered', 'success')
+        return redirect(url_for('loginmate'))
+
+    return render_template('register.html', form=form)
+
 
 @app.route('/logout')
 @login_required
