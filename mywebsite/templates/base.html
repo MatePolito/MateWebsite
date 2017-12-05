@@ -6,11 +6,16 @@
                 <div class="navbar-collapse collapse pull-left">
                     <ul class="nav navbar-nav">
                         {% if not current_user.is_authenticated %}
+<<<<<<< HEAD
                             <a class="navbar-brand" href="{{ url_for('registeruser') }}" >
                                 <span class="glyphicon glyphicon-pencil" style="color: deepskyblue"> <font face="Gill sans MT"><b> Register</b></font></span>
                             </a>
                             <a class="navbar-brand" href="{{ url_for('registermate') }}" >
                                 <span class="glyphicon glyphicon-pencil" style="color: deepskyblue"> <font face="Gill sans MT"><b> Register</b></font></span>
+=======
+                            <a class="navbar-brand" href="{{ url_for('register') }}" >
+                                <span class="glyphicon glyphicon-pencil" style="color: deepskyblue"> <font face="Arial"><b> Register</b></font></span>
+>>>>>>> refs/remotes/origin/master
                             </a>
                          {% endif %}
                     </ul>
