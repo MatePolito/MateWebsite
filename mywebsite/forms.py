@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import StringField, IntegerField, SubmitField, PasswordField, DateField, TextAreaField, SelectField, DateTimeField
+from wtforms import StringField, IntegerField, SubmitField, PasswordField, DateField, TextAreaField, SelectField, DateTimeField, RadioField
 from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, ValidationError
 from .models import User
 from flask import Flask, render_template
@@ -18,6 +18,7 @@ class NameForm(Form):
 
 
 class RegistrationForm(Form):
+    choice=RadioField('Label', choices=[('1', 'User'), ('2', 'Mate')])
     first_name = StringField('First name', validators=[DataRequired()], render_kw={"placeholder": "Carlo"})
     last_name = StringField('Last name', validators=[DataRequired()], render_kw={"placeholder": "D'Ambrosio"})
     username = StringField('Username', validators=[DataRequired(), Length(min=4)], render_kw={"placeholder": "Carlo1995"})

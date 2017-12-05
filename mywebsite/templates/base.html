@@ -1,21 +1,21 @@
 {% extends "bootstrap/base.html" %}
 
-{% block html %}
-
-
-    {% block head %}
-        {% block title %}Flask Example{% endblock %}
-    {% endblock %}
-
-    {% block body %}
-
-        {% block navbar %}
+{% block title %}Flask Example{% endblock %}
+{% block navbar %}
         <div class="navbar navbar-light navbar-fixed-top" role="navigation" style="border-bottom-color: deepskyblue; background-color: ghostwhite; min-height: 55px">
                 <div class="navbar-collapse collapse pull-left">
                     <ul class="nav navbar-nav">
                         {% if not current_user.is_authenticated %}
+<<<<<<< HEAD
+                            <a class="navbar-brand" href="{{ url_for('registeruser') }}" >
+                                <span class="glyphicon glyphicon-pencil" style="color: deepskyblue"> <font face="Gill sans MT"><b> Register</b></font></span>
+                            </a>
+                            <a class="navbar-brand" href="{{ url_for('registermate') }}" >
+                                <span class="glyphicon glyphicon-pencil" style="color: deepskyblue"> <font face="Gill sans MT"><b> Register</b></font></span>
+=======
                             <a class="navbar-brand" href="{{ url_for('register') }}" >
                                 <span class="glyphicon glyphicon-pencil" style="color: deepskyblue"> <font face="Arial"><b> Register</b></font></span>
+>>>>>>> refs/remotes/origin/master
                             </a>
                          {% endif %}
                     </ul>
@@ -46,22 +46,20 @@
                     </ul>
                 </div>
         </div>
-        {% endblock %}
+{% endblock %}
 
-        {% block content %}
-            <div class="container" style="text-align: center">
-                <div class="container">
-                    {% for category, message in get_flashed_messages(True) %}
-                        <div class="alert alert-{{ category }}">
-                            <button type="button" class="close" data-dismiss="alert" >&times;</button>
-                            {{ message }}
-                        </div>
-                    {% endfor %}
+{% block content %}
+    <div class="container" style="text-align: center">
+        <div class="container">
+            {% for category, message in get_flashed_messages(True) %}
+                <div class="alert alert-{{ category }}">
+                    <button type="button" class="close" data-dismiss="alert" >&times;</button>
+                    {{ message }}
                 </div>
-                <div class="container">
-                    {% block myContent %}{% endblock %}
-                </div>
-            </div>
-        {% endblock %}
-    {% endblock %}
+            {% endfor %}
+        </div>
+        <div class="container">
+            {% block myContent %}{% endblock %}
+        </div>
+    </div>
 {% endblock %}

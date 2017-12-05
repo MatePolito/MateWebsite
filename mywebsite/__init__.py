@@ -12,4 +12,6 @@ login_manager = LoginManager(app)
 # this is the login view users will be redirected to if they are not logged in and they try to access a private page
 login_manager.login_view = 'index'
 
+
 import views
+

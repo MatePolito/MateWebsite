@@ -1,77 +1,65 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block html %}
+{% block head %}
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Our Custom CSS -->
+
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
 
-    {% block head %}
-        <!-- Bootstrap CSS CDN -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <!-- Our Custom CSS -->
+    <style>
 
-        <!-- Scrollbar Custom CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    footer {
+      padding: 25px 0;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.3);
+      background-color: #222222; }
+      footer p {
+        font-size: 12px;
+        margin: 0; }
+      footer ul {
+        margin-bottom: 0; }
+        footer ul li a {
+          font-size: 12px;
+          color: rgba(255, 255, 255, 0.3); }
 
+    </style>
 
-        <style>
-
-        footer {
-          padding: 25px 0;
-          text-align: center;
-          color: rgba(255, 255, 255, 0.3);
-          background-color: #222222; }
-          footer p {
-            font-size: 12px;
-            margin: 0; }
-          footer ul {
-            margin-bottom: 0; }
-            footer ul li a {
-              font-size: 12px;
-              color: rgba(255, 255, 255, 0.3); }
-
-        </style>
-
-    {% endblock %}
-
-
-    {% block body %}
-
-        {% block navbar %}
-                {{ super() }}
-        {% endblock %}
-
-        {% block myContent %}
-            <div class="container-fluid text-center" style="margin-top: 55px; height: 100%">
-              <div class="row content" style="height: 100%">
-                <div class="col-lg-3 sidenav text-left" style="text-align: center; background-color: skyblue; color: white; height: 100%">
-                  <h2 style="margin-top: 55px">Basic Tips</h2>
-                  <hr>
-                  <p>On the top right corner you can find 3 or 4 icons. They will help you going through the pages. If you don't know what they mean, stay a moment on the icon to see the redirection page.</p>
-                  <hr>
-                  <p>In the middle of the top navigation bar, you can find the Mate logo. Clicking it at any time will bring you back to the home page.</p><p></p>
-                  <hr>
-                  <p style="margin-bottom: 82px">To do some actions, you need to be register and logged in. You can register at any time clicking on the icon in the left top corner. You can Login on the home page.</p>
-                </div>
-                <div class="col-lg-6 text-left" style="text-align: center; margin-top: 55px">
-                  <h1>Welcome to our help center</h1>
-                  <p>You are actually in our help center. You can refer to the tip section on the right to see common tricks to use the website.Otherwise, ypu can also check the contact section on the left to get the number of our call center. Someone will answer your call at any time between 8.00 a.m and 7.00 p.m.<br>All the Mate team hopes you're having a good journey using the application !</p>
-                  <hr>
-                </div>
-                  <div class="col-lg-3 sidenav text-left" style="text-align: center; background-color: skyblue; color: white">
-                    <h2 style="margin-top: 155px">Call Center</h2>
-                    <h3>0800 000 000</h3>
-                    <hr>
-                    <p style="margin-bottom: 178px">Availability<br>From Monday to Friday<br>From 8.00 p.m to 7.00 p.m</p>
-                </div>
-              </div>
-            </div>
-            <footer>
-              <div class="container" style="pull bottom">
-                <p>&copy; Mate. All Rights Reserved.</p>
-              </div>
-            </footer>
-        {% endblock %}
-
-
-    {% endblock %}
 {% endblock %}
+
+
+{% block myContent %}
+    <div class="container-fluid text-center" style="margin-top: 55px; height: 100%">
+      <div class="row content" style="height: 100%">
+        <div class="col-lg-3 sidenav text-left" style="text-align: center; background-color: skyblue; color: white; height: 100%">
+          <h2 style="margin-top: 55px">Basic Tips</h2>
+          <hr>
+          <p>On the top right corner you can find 3 or 4 icons. They will help you going through the pages. If you don't know what they mean, stay a moment on the icon to see the redirection page.</p>
+          <hr>
+          <p>In the middle of the top navigation bar, you can find the Mate logo. Clicking it at any time will bring you back to the home page.</p><p></p>
+          <hr>
+          <p style="margin-bottom: 82px">To do some actions, you need to be register and logged in. You can register at any time clicking on the icon in the left top corner. You can Login on the home page.</p>
+        </div>
+        <div class="col-lg-6 text-left" style="text-align: center; margin-top: 55px">
+          <h1>Welcome to our help center</h1>
+          <p>You are actually in our help center. You can refer to the tip section on the right to see common tricks to use the website.Otherwise, ypu can also check the contact section on the left to get the number of our call center. Someone will answer your call at any time between 8.00 a.m and 7.00 p.m.<br>All the Mate team hopes you're having a good journey using the application !</p>
+          <hr>
+        </div>
+          <div class="col-lg-3 sidenav text-left" style="text-align: center; background-color: skyblue; color: white">
+            <h2 style="margin-top: 155px">Call Center</h2>
+            <h3>0800 000 000</h3>
+            <hr>
+            <p style="margin-bottom: 178px">Availability<br>From Monday to Friday<br>From 8.00 p.m to 7.00 p.m</p>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="container" style="pull bottom">
+        <p>&copy; Mate. All Rights Reserved.</p>
+      </div>
+    </footer>
+{% endblock %}
+
