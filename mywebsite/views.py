@@ -103,11 +103,11 @@ def registeruser():
         db.session.add(role)
     db.session.commit()
 
-    if (form.choice.data) == "1":
+    if (form.choice.data) == 1:
         role=Role.query.filter_by(name="User").first()
 
-    if (form.choice.data) == "2":
-        role=Role.query.filter_by(name="Mate").first()
+    if (form.choice.data) == 2:
+        role=Role.query.filter_by(name="m  mATE").first()
     print role
 
 
