@@ -152,47 +152,34 @@
                     <h1 style="text-align: center;  resize: both;  "><font face="Gill sans MT"><font size="8">Services to be supplied</font></font></h1>
                 </a>
             </div>
-            <div>
-                <form action="">
+                <form  method=post >
+                    {{ form.csrf_token }}
                     {{ form.hidden_tag() }}
+                    <div class="row" style="height:2cm; width: 100%; text-align: center; margin-top:4cm; background-color: dodgerblue; padding-top: 20px; position: fixed">
+                        <div class="col-lg-2 col-lg-offset-1">
+                            <span class="custom-dropdown custom-dropdown--white ">
+                                {{ form.servicetype.label }} {{ form.servicetype(class="custom-dropdown__select custom-dropdown__select--white", style="width: 200px" )}}
 
-                    {{ form.username.label }} {{ form.username() }}
+                            </span>
+                        </div>
+                        <div>
+                        </div>
+                        <div class="col-lg-2">
+                            {{ form.servicecity.label }} {{ form.servicecity(class="form-control") }}
+                        </div>
+                        <div class='col-lg-3 col-lg-offset-1" '>
+                            {{ form.servicedate.label }} {{ form.servicedate(class="form-control") }}
+                        </div>
 
+                        <div class="row">
+                            <input type="submit" class="col-lg-2 col-lg-offset-1">
+                                <i class="glyphicon glyphicon-search"></i>
+                                Research
+                            </input>
+                        </div>
+
+                    </div>
                 </form>
-
-            </div>
-            <div class="row" style="height:2cm; width: 100%; text-align: center; margin-top:4cm; background-color: dodgerblue; padding-top: 20px; position: fixed">
-                <div class="col-lg-2 col-lg-offset-1">
-                    <span class="custom-dropdown custom-dropdown--white ">
-                        <select class="custom-dropdown__select custom-dropdown__select--white" style="width: 200px">
-                            <option> -Select the Category- </option>
-                            <option> Home task </option>
-                            <option> Shopping task </option>
-                            <option> Car fare </option>
-                        </select>
-                    </span>
-                </div>
-                <div class="col-lg-2">
-                    <span class="custom-dropdown custom-dropdown--white" style="border-radius: 100px; border-color: deepskyblue">
-                        <select class="custom-dropdown__select custom-dropdown__select--white" style="width: 200px">
-                            <option> -Select the City- </option>
-                            <option> Turin </option>
-                            <option> Paris </option>
-                            <option> Milano </option>
-                            <option> London </option>
-                        </select>
-                    </span>
-                </div>
-                <div class='col-lg-3 col-lg-offset-1" '><input type="date" class="form-control" name="anniversaire"></div>
-
-                <div class="row">
-                    <button type="button" class="col-lg-2 col-lg-offset-1">
-                        <i class="glyphicon glyphicon-search"></i>
-                        Research
-                    </button>
-                </div>
-
-            </div>
 
             </div>
             <div class="row" style="margin-top: 6cm">
