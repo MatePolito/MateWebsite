@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block css %}
+{% block head %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    {% block title %}{{ current_user.username }}{% endblock %}
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -136,61 +138,11 @@
     </style>
 
 {% endblock %}
-
-{% block title %}{{ current_user.username }}{% endblock %}
-
 {% block body %}
     {% block navbar %}
         {{ super() }}
 
     {% endblock %}
-<<<<<<< HEAD
-=======
-    {% block body %}
-        {% block navbar %}
-            {{ super() }}
-
-        {% endblock %}
-
-        <div class="wrapper">
-            <!-- Page Content Holder -->
-            <div id="content">
-                <div class="row" style="margin-top:100px;">
-                    <a style="width: 100%; height:4cm; background-color: white;  position:fixed">
-                        <h1 style="text-align: center;  resize: both;  "><font face="Arial"><font size="8">Services to be supplied</font></font></h1>
-                    </a>
-                </div>
-                <div class="row" style="height:2cm; width: 100%; text-align: center; margin-top:4cm; background-color: dodgerblue; padding-top: 20px; position: fixed">
-                    <div class="col-lg-2 col-lg-offset-1">
-                        <span class="custom-dropdown custom-dropdown--white ">
-                            <select class="custom-dropdown__select custom-dropdown__select--white" style="width: 200px">
-                                <option> -Select the Category- </option>
-                                <option> Home task </option>
-                                <option> Shopping task </option>
-                                <option> Car fare </option>
-                            </select>
-                        </span>
-                    </div>
-                    <div class="col-lg-2">
-                        <span class="custom-dropdown custom-dropdown--white" style="border-radius: 100px; border-color: deepskyblue">
-                            <select class="custom-dropdown__select custom-dropdown__select--white" style="width: 200px">
-                                <option> -Select the City- </option>
-                                <option> Turin </option>
-                                <option> Paris </option>
-                                <option> Milano </option>
-                                <option> London </option>
-                            </select>
-                        </span>
-                    </div>
-                    <div class='col-lg-3 col-lg-offset-1" '><input type="date" class="form-control" name="anniversaire"></div>
-                    
-                    <div class="row">
-                        <button type="button" class="col-lg-2 col-lg-offset-1">
-                            <i class="glyphicon glyphicon-search"></i>
-                            Research
-                        </button>
-                    </div>
->>>>>>> refs/remotes/origin/master
 
     <div class="wrapper">
         <!-- Page Content Holder -->
@@ -199,6 +151,15 @@
                 <a style="width: 100%; height:4cm; background-color: white;  position:fixed">
                     <h1 style="text-align: center;  resize: both;  "><font face="Gill sans MT"><font size="8">Services to be supplied</font></font></h1>
                 </a>
+            </div>
+            <div>
+                <form action="">
+                    {{ form.hidden_tag() }}
+
+                    {{ form.username.label }} {{ form.username() }}
+
+                </form>
+
             </div>
             <div class="row" style="height:2cm; width: 100%; text-align: center; margin-top:4cm; background-color: dodgerblue; padding-top: 20px; position: fixed">
                 <div class="col-lg-2 col-lg-offset-1">
@@ -246,9 +207,6 @@
                           <th scope="col">Service description</th>
                             <th scope="col">City</th>
                             <th scope="col">Remuneration</th>
-                        {% if  current_user.roleuser.name=="User" %}
-                        <th scope="col">Service description</th>
-                        {%  endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -262,10 +220,6 @@
                                     <td>{{ i.servicedescription}}</td>
                                     <td>{{ i.servicecity}}</td>
                                     <td>15€ the service</td>
-
-                                    {% if  current_user.roleuser.name=="Mate" %}
-                                        <td><a class="button"   ><font color=#1e90ff>Be the mate</font></a></td>
-                                    {%  endif %}
 
                         </tr>
                     {% endfor %}
