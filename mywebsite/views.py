@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user
-from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInformationForm, CreateServiceForm
+from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInformationForm, CreateServiceForm, ResearchServiceForm
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm
 from .models import User, Service, Role, Permission
 from flask_login import current_user
@@ -67,19 +67,75 @@ def mate():
     '''You need to be logged in to access this page'''
     return render_template('mate_profile.html')
 
-@app.route('/listservice')
+@app.route('/listservice', methods=['GET', 'POST'])
 @login_required
 def listservice():
+    form = ResearchServiceForm()
+    print(form.errors)
+
     res= Service.query.all()
-    list_requester=[]
-    for temp in res:
-        elmt = User.query.filter_by(id=temp.user_id).first().username
-        print elmt
-        list_requester.append(elmt)
+    for r in res:
+        print r.servicecity, r.servicetype
+    if form.is_submitted():
+        print "submitted"
+        print "olaaa"
+        print "Ola",form.servicecity.data
+        if(form.servicetype.data !='none'):
+            print "1"
+            if(form.servicecity.data!=""):
+                print "11"
+                if(form.servicedate.data!=None):
+                    res = Service.query.filter_by(servicetype=form.servicetype.data, servicecity=form.servicecity.data,servicedate=form.servicedate.data )
+                    print "111"
+                else:
+                    print "112"
+                    res = Service.query.filter_by(servicetype=form.servicetype.data, servicecity=form.servicecity.data )
+            else:
+                print "12"
+                if (form.servicedate.data != None):
+                    print "print 121"
 
-    return render_template('liste_service.html', res=res, list_requester=list_requester)
+                    res = Service.query.filter_by(servicetype=form.servicetype.data, servicedate=form.servicedate.data)
+                else:
+                    print "print 122"
+
+                    print "pas de date"
+                    res = Service.query.filter_by(servicetype=form.servicetype.data)
+        else:
+            print "2"
+            if (form.servicecity.data != ""):
+                print "21"
+                if (form.servicedate.data != None):
+                    print "211"
+                    res = Service.query.filter_by(servicecity=form.servicecity.data, servicedate=form.servicedate.data)
+                else:
+                    print "212"
+                    res = Service.query.filter_by(servicecity=form.servicecity.data)
+            else:
+                print "22"
+
+                if (form.servicedate.data != None):
+                    print "221"
+
+                    res = Service.query.filter_by(servicedate=form.servicedate.data)
+                    print form.servicedate.data
+                else:
+                    print "222"
+
+                    res = Service.query.all()
+                    print "pas de date"
+        for r in res:
+            print r.servicecity, r.servicetype
 
 
+    return render_template('liste_service.html', form=form, res=res)
+
+
+
+@app.route('/test')
+def test():
+    print "ola"
+    return render_template('liste_service.html')
 
 @app.route('/registeruser', methods=['GET', 'POST'])
 def registeruser():
