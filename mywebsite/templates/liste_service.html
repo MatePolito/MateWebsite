@@ -1,253 +1,250 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
+{% block css %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<!DOCTYPE html>
-{% block html %}
-    {% block head %}
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-        {% block title %}{{ current_user.username }}{% endblock %}
+    <!-- DatePicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.js">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link href="jquery-ui.css" rel="stylesheet">
+       <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <!-- Bootstrap Js CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-        <!-- Bootstrap CSS CDN -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
-        <!-- DatePicker -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.js">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-	    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-        <link href="jquery-ui.css" rel="stylesheet">
-           <!-- jQuery CDN -->
-        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-        <!-- Bootstrap Js CDN -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <!-- jQuery Custom Scroller CDN -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <style>
 
-        <!-- Scrollbar Custom CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    div.row button {
+        background-color: white;
+        border-radius: 3px;
+        color: #444;
+        height: 35px;
+        border-color: dodgerblue;
+    }
 
-        <style>
+    .custom-dropdown--large {
+        font-size: 1.5em;
 
-        div.row button {
-            background-color: white;
+    }
+
+    .custom-dropdown--small {
+        font-size: .7em;
+    }
+
+    .custom-dropdown__select{
+        font-size: inherit; /* inherit size from .custom-dropdown */
+        padding: .5em; /* add some space*/
+        margin: 0; /* remove default margins */
+        border-color: deepskyblue;
+        border-radius: 3px;
+    }
+
+    .custom-dropdown__select--white {
+        background-color: white;
+        color: #444;
+        border-color: deepskyblue;
+        border-radius: 3px;
+    }
+
+    @supports (pointer-events: none) and
+          ((-webkit-appearance: none) or
+          (-moz-appearance: none) or
+          (appearance: none)) {
+
+        .custom-dropdown {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .custom-dropdown__select {
+            padding-right: 2.5em; /* accommodate with the pseudo elements for the dropdown arrow */
+            border: 10px;
             border-radius: 3px;
-            color: #444;
-            height: 35px;
-            border-color: dodgerblue;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-color: deepskyblue;
         }
 
-        .custom-dropdown--large {
-            font-size: 1.5em;
+        .custom-dropdown::before,
+        .custom-dropdown::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .custom-dropdown::after { /*  Custom dropdown arrow */
+            content: "\25BC";
+            height: 1em;
+            font-size: .625em;
+            line-height: 1;
+            right: 1.2em;
+            top: 50%; margin-top: -.5em;
+        }
+
+        .custom-dropdown::before { /*  Custom dropdown arrow cover */
+            width: 2em;
+            right: 0; top: 0; bottom: 0;
+            border-radius: 0 3px 3px 0;
 
         }
 
-        .custom-dropdown--small {
-            font-size: .7em;
-        }
-
-        .custom-dropdown__select{
-            font-size: inherit; /* inherit size from .custom-dropdown */
-            padding: .5em; /* add some space*/
-            margin: 0; /* remove default margins */
+        .custom-dropdown__select[disabled] {
+            color: rgba(0,0,0,.3);
             border-color: deepskyblue;
             border-radius: 3px;
         }
 
-        .custom-dropdown__select--white {
-            background-color: white;
-            color: #444;
-            border-color: deepskyblue;
-            border-radius: 3px;
+        .custom-dropdown.custom-dropdown--disabled::after {
+            color: rgba(0,0,0,.1);
         }
 
-        @supports (pointer-events: none) and
-              ((-webkit-appearance: none) or
-              (-moz-appearance: none) or
-              (appearance: none)) {
+        /* White dropdown style */
+        .custom-dropdown--white::before {
+            top: .5em; bottom: .5em;
+            background-color: #fff;
+            border-left: 1px solid rgba(0,0,0,.1);
 
-            .custom-dropdown {
-                position: relative;
-                display: inline-block;
-                vertical-align: middle;
-            }
-
-            .custom-dropdown__select {
-                padding-right: 2.5em; /* accommodate with the pseudo elements for the dropdown arrow */
-                border: 10px;
-                border-radius: 3px;
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                appearance: none;
-                border-color: deepskyblue;
-            }
-
-            .custom-dropdown::before,
-            .custom-dropdown::after {
-                content: "";
-                position: absolute;
-                pointer-events: none;
-            }
-
-            .custom-dropdown::after { /*  Custom dropdown arrow */
-                content: "\25BC";
-                height: 1em;
-                font-size: .625em;
-                line-height: 1;
-                right: 1.2em;
-                top: 50%; margin-top: -.5em;
-            }
-
-            .custom-dropdown::before { /*  Custom dropdown arrow cover */
-                width: 2em;
-                right: 0; top: 0; bottom: 0;
-                border-radius: 0 3px 3px 0;
-
-            }
-
-            .custom-dropdown__select[disabled] {
-                color: rgba(0,0,0,.3);
-                border-color: deepskyblue;
-                border-radius: 3px;
-            }
-
-            .custom-dropdown.custom-dropdown--disabled::after {
-                color: rgba(0,0,0,.1);
-            }
-
-            /* White dropdown style */
-            .custom-dropdown--white::before {
-                top: .5em; bottom: .5em;
-                background-color: #fff;
-                border-left: 1px solid rgba(0,0,0,.1);
-
-            }
-
-            .custom-dropdown--white::after {
-                color: rgba(0,0,0,.9);
-            }
-
-            /* FF only temp fix */
-            @-moz-document url-prefix() {
-                .custom-dropdown__select              { padding-right: .9em }
-                .custom-dropdown--large .custom-dropdown__select { padding-right: 1.3em }
-                .custom-dropdown--small .custom-dropdown__select { padding-right: .5em }
-            }
         }
 
-        </style>
+        .custom-dropdown--white::after {
+            color: rgba(0,0,0,.9);
+        }
+
+        /* FF only temp fix */
+        @-moz-document url-prefix() {
+            .custom-dropdown__select              { padding-right: .9em }
+            .custom-dropdown--large .custom-dropdown__select { padding-right: 1.3em }
+            .custom-dropdown--small .custom-dropdown__select { padding-right: .5em }
+        }
+    }
+
+    </style>
+
+{% endblock %}
+
+{% block title %}{{ current_user.username }}{% endblock %}
+
+{% block body %}
+    {% block navbar %}
+        {{ super() }}
 
     {% endblock %}
-    {% block body %}
-        {% block navbar %}
-            {{ super() }}
 
-        {% endblock %}
-
-        <div class="wrapper">
-            <!-- Page Content Holder -->
-            <div id="content">
-                <div class="row" style="margin-top:100px;">
-                    <a style="width: 100%; height:4cm; background-color: white;  position:fixed">
-                        <h1 style="text-align: center;  resize: both;  "><font face="Gill sans MT"><font size="8">Services to be supplied</font></font></h1>
-                    </a>
+    <div class="wrapper">
+        <!-- Page Content Holder -->
+        <div id="content">
+            <div class="row" style="margin-top:100px;">
+                <a style="width: 100%; height:4cm; background-color: white;  position:fixed">
+                    <h1 style="text-align: center;  resize: both;  "><font face="Gill sans MT"><font size="8">Services to be supplied</font></font></h1>
+                </a>
+            </div>
+            <div class="row" style="height:2cm; width: 100%; text-align: center; margin-top:4cm; background-color: dodgerblue; padding-top: 20px; position: fixed">
+                <div class="col-lg-2 col-lg-offset-1">
+                    <span class="custom-dropdown custom-dropdown--white ">
+                        <select class="custom-dropdown__select custom-dropdown__select--white" style="width: 200px">
+                            <option> -Select the Category- </option>
+                            <option> Home task </option>
+                            <option> Shopping task </option>
+                            <option> Car fare </option>
+                        </select>
+                    </span>
                 </div>
-                <div class="row" style="height:2cm; width: 100%; text-align: center; margin-top:4cm; background-color: dodgerblue; padding-top: 20px; position: fixed">
-                    <div class="col-lg-2 col-lg-offset-1">
-                        <span class="custom-dropdown custom-dropdown--white ">
-                            <select class="custom-dropdown__select custom-dropdown__select--white" style="width: 200px">
-                                <option> -Select the Category- </option>
-                                <option> Home task </option>
-                                <option> Shopping task </option>
-                                <option> Car fare </option>
-                            </select>
-                        </span>
-                    </div>
-                    <div class="col-lg-2">
-                        <span class="custom-dropdown custom-dropdown--white" style="border-radius: 100px; border-color: deepskyblue">
-                            <select class="custom-dropdown__select custom-dropdown__select--white" style="width: 200px">
-                                <option> -Select the City- </option>
-                                <option> Turin </option>
-                                <option> Paris </option>
-                                <option> Milano </option>
-                                <option> London </option>
-                            </select>
-                        </span>
-                    </div>
-                    <div class='col-lg-3 col-lg-offset-1" '><input type="date" class="form-control" name="anniversaire"></div>
-                    
-                    <div class="row">
-                        <button type="button" class="col-lg-2 col-lg-offset-1">
-                            <i class="glyphicon glyphicon-search"></i>
-                            Research
-                        </button>
-                    </div>
+                <div class="col-lg-2">
+                    <span class="custom-dropdown custom-dropdown--white" style="border-radius: 100px; border-color: deepskyblue">
+                        <select class="custom-dropdown__select custom-dropdown__select--white" style="width: 200px">
+                            <option> -Select the City- </option>
+                            <option> Turin </option>
+                            <option> Paris </option>
+                            <option> Milano </option>
+                            <option> London </option>
+                        </select>
+                    </span>
+                </div>
+                <div class='col-lg-3 col-lg-offset-1" '><input type="date" class="form-control" name="anniversaire"></div>
 
+                <div class="row">
+                    <button type="button" class="col-lg-2 col-lg-offset-1">
+                        <i class="glyphicon glyphicon-search"></i>
+                        Research
+                    </button>
                 </div>
 
-                </div>
-                <div class="row" style="margin-top: 6cm">
-                    <table class="table table-responsive    ">
-                    <thead>
+            </div>
+
+            </div>
+            <div class="row" style="margin-top: 6cm">
+                <table class="table table-responsive    ">
+                <thead>
+                    <tr>
+                          <th scope="col">#</th>
+                            <th scope="col">Username</th>
+                          <th scope="col">Date of Due service</th>
+                            <th scope="col">Beginning Hour</th>
+                          <th scope="col">Type of Service</th>
+                          <th scope="col">Service description</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Remuneration</th>
+                        {% if  current_user.roleuser.name=="User" %}
+                        <th scope="col">Service description</th>
+                        {%  endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in res %}
                         <tr>
-                              <th scope="col">#</th>
-                                <th scope="col">Username</th>
-                              <th scope="col">Date of Due service</th>
-                                <th scope="col">Beginning Hour</th>
-                              <th scope="col">Type of Service</th>
-                              <th scope="col">Service description</th>
-                                <th scope="col">City</th>
-                                <th scope="col">Remuneration</th>
-                            {% if  current_user.roleuser.name=="User" %}
-                            <th scope="col">Service description</th>
-                            {%  endif %}
+                              <th scope="row"></th>
+                                    <td>{{i.user_id }}</td>
+                                    <td>{{ i.servicedate }}</td>
+                                    <td>13h20</td>
+                                    <td> {{ i.servicetype}} </td>
+                                    <td>{{ i.servicedescription}}</td>
+                                    <td>{{ i.servicecity}}</td>
+                                    <td>15€ the service</td>
+
+                                    {% if  current_user.roleuser.name=="Mate" %}
+                                        <td><a class="button"   ><font color=#1e90ff>Be the mate</font></a></td>
+                                    {%  endif %}
+
                         </tr>
-                    </thead>
-                    <tbody>
-                        {% for i in res %}
-                            <tr>
-                                  <th scope="row"></th>
-                                        <td>{{i.user_id }}</td>
-                                        <td>{{ i.servicedate }}</td>
-                                        <td>13h20</td>
-                                        <td> {{ i.servicetype}} </td>
-                                        <td>{{ i.servicedescription}}</td>
-                                        <td>{{ i.servicecity}}</td>
-                                        <td>15€ the service</td>
-
-                                        {% if  current_user.roleuser.name=="User" %}
-                                            <td><a class="button"><font color=#1e90ff>Change password</font></a></td>
-                                        {%  endif %}
-
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                    </table>
-                </div>
+                    {% endfor %}
+                </tbody>
+                </table>
             </div>
         </div>
-         <script type="text/javascript">
+    </div>
+     <script type="text/javascript">
 
 
-        $(function() {
-        $( "#datepicker" ).datepicker({
-        altField: "#datepicker",
-        closeText: 'Fermer',
-        prevText: 'Précédent',
-        nextText: 'Suivant',
-        currentText: 'Aujourd\'hui',
-        monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-        monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-        dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-        dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-        dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-        weekHeader: 'Sem.',
-        dateFormat: 'yy-mm-dd'
-        });
-        });
-         </script>
-    {% endblock %}
+    $(function() {
+    $( "#datepicker" ).datepicker({
+    altField: "#datepicker",
+    closeText: 'Fermer',
+    prevText: 'Précédent',
+    nextText: 'Suivant',
+    currentText: 'Aujourd\'hui',
+    monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+    monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+    dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+    dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+    dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+    weekHeader: 'Sem.',
+    dateFormat: 'yy-mm-dd'
+    });
+    });
+     </script>
 {% endblock %}

@@ -1,76 +1,62 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block html %}
+{% block head %}
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Our Custom CSS -->
 
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
-    {% block head %}
-        <!-- Bootstrap CSS CDN -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <!-- Our Custom CSS -->
+    <style>
 
-        <!-- Scrollbar Custom CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-
-        <style>
-
+    header.masthead {
+      position: relative;
+      width: 100%;
+      padding-top: 100px;
+      padding-bottom: 50px;
+      color: white;
+      background: url("static/bg-pattern.png"), white;
+      background: url("static/bg-pattern.png"), -webkit-linear-gradient(to left, white, dodgerblue);
+      background: url("static/bg-pattern.png"), linear-gradient(to left, white, dodgerblue); }
+      header.masthead .header-content {
+        max-width: 500px;
+        margin-bottom: 50px;
+        text-align: center; }
+        header.masthead .header-content h1 {
+          font-size: 30px; }
+      header.masthead .device-container {
+        max-width: 325px;
+        margin-right: auto;
+        margin-left: auto; }
+        header.masthead .device-container .screen img {
+          border-radius: 3px; }
+      @media (min-width: 992px) {
         header.masthead {
-          position: relative;
-          width: 100%;
-          padding-top: 100px;
-          padding-bottom: 50px;
-          color: white;
-          background: url("static/bg-pattern.png"), white;
-          background: url("static/bg-pattern.png"), -webkit-linear-gradient(to left, white, dodgerblue);
-          background: url("static/bg-pattern.png"), linear-gradient(to left, white, dodgerblue); }
+          height: 120vh;
+          min-height: 900px;
+          padding-top: 0;
+          padding-bottom: 0; }
           header.masthead .header-content {
-            max-width: 500px;
-            margin-bottom: 50px;
-            text-align: center; }
+            margin-bottom: 0;
+            text-align: left; }
             header.masthead .header-content h1 {
-              font-size: 30px; }
+              font-size: 50px; }
           header.masthead .device-container {
-            max-width: 325px;
-            margin-right: auto;
-            margin-left: auto; }
-            header.masthead .device-container .screen img {
-              border-radius: 3px; }
-          @media (min-width: 992px) {
-            header.masthead {
-              height: 120vh;
-              min-height: 900px;
-              padding-top: 0;
-              padding-bottom: 0; }
-              header.masthead .header-content {
-                margin-bottom: 0;
-                text-align: left; }
-                header.masthead .header-content h1 {
-                  font-size: 50px; }
-              header.masthead .device-container {
-                max-width: 325px; } }
-        </style>
+            max-width: 325px; } }
+    </style>
 
-    {% endblock %}
-
-
-    {% block body %}
-
-        {% block navbar %}
-                {{ super() }}
-        {% endblock %}
-        {% block myContent %}
-            <header class="masthead" style="padding-top: 80px">
-              <div class="container h-100">
-                <div class="row h-100">
-                    <h1 style="color: white"><b>Registration</b></h1>
-                  <div class="container-fluid">
-                      {{ wtf.quick_form(form) }}
-                  </div>
-                </div>
-              </div>
-            </header>
-        {% endblock %}
-
-
-    {% endblock %}
+{% endblock %}
+{% block myContent %}
+    <header class="masthead" style="padding-top: 80px">
+      <div class="container h-100">
+        <div class="row h-100">
+            <h1 style="color: white"><b>Registration</b></h1>
+          <div class="container-fluid">
+              {{ wtf.quick_form(form) }}
+          </div>
+        </div>
+      </div>
+    </header>
 {% endblock %}
