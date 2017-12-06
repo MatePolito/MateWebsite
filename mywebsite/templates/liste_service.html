@@ -165,6 +165,9 @@
                         <div>
                         </div>
                         <div class="col-lg-2">
+                            {{ form.servicename.label }} {{ form.servicename(class="form-control") }}
+                        </div>
+                        <div class="col-lg-2">
                             {{ form.servicecity.label }} {{ form.servicecity(class="form-control") }}
                         </div>
                         <div class='col-lg-3 col-lg-offset-1" '>
@@ -204,7 +207,7 @@
                                     <td>{{ i.servicedate }}</td>
                                     <td>13h20</td>
                                     <td> {{ i.servicetype}} </td>
-                                    <td>{{ i.servicedescription}}</td>
+                                    <td>{{ i.servicename}}</td>
                                     <td>{{ i.servicecity}}</td>
                                     <td>15€ the service</td>
 

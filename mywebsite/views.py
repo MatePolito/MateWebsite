@@ -82,48 +82,99 @@ def listservice():
         print "Ola",form.servicecity.data
         if(form.servicetype.data !='none'):
             print "1"
-            if(form.servicecity.data!=""):
+            if (form.servicename.data != ''):
                 print "11"
-                if(form.servicedate.data!=None):
-                    res = Service.query.filter_by(servicetype=form.servicetype.data, servicecity=form.servicecity.data,servicedate=form.servicedate.data )
+                if(form.servicecity.data!=""):
                     print "111"
+                    if(form.servicedate.data!=None):
+                        res = Service.query.filter_by(servicetype=form.servicetype.data, servicename=form.servicename.data, servicecity=form.servicecity.data,servicedate=form.servicedate.data )
+                        print "1111"
+                    else:
+                        print "1112"
+                        res = Service.query.filter_by(servicetype=form.servicetype.data, servicename=form.servicename.data, servicecity=form.servicecity.data )
                 else:
                     print "112"
-                    res = Service.query.filter_by(servicetype=form.servicetype.data, servicecity=form.servicecity.data )
+                    if (form.servicedate.data != None):
+                        print "print 1121"
+
+                        res = Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicedate=form.servicedate.data)
+                    else:
+                        print "print 1122"
+                        res = Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data)
             else:
                 print "12"
-                if (form.servicedate.data != None):
-                    print "print 121"
-
-                    res = Service.query.filter_by(servicetype=form.servicetype.data, servicedate=form.servicedate.data)
+                if (form.servicecity.data != ""):
+                    print "121"
+                    if (form.servicedate.data != None):
+                        res = Service.query.filter_by(servicetype=form.servicetype.data,
+                                                      servicecity=form.servicecity.data,
+                                                      servicedate=form.servicedate.data)
+                        print "1211"
+                    else:
+                        print "1212"
+                        res = Service.query.filter_by(servicetype=form.servicetype.data,
+                                                      servicecity=form.servicecity.data)
                 else:
-                    print "print 122"
+                    print "122"
+                    if (form.servicedate.data != None):
+                        print "print 1221"
 
-                    print "pas de date"
-                    res = Service.query.filter_by(servicetype=form.servicetype.data)
+                        res = Service.query.filter_by(servicetype=form.servicetype.data,
+                                                      servicedate=form.servicedate.data)
+                    else:
+                        print "print 1222"
+                        res = Service.query.filter_by(servicetype=form.servicetype.data)
+
+
         else:
             print "2"
-            if (form.servicecity.data != ""):
+            if (form.servicename.data !=""):
                 print "21"
-                if (form.servicedate.data != None):
+                if (form.servicecity.data != ""):
                     print "211"
-                    res = Service.query.filter_by(servicecity=form.servicecity.data, servicedate=form.servicedate.data)
+                    if (form.servicedate.data != None):
+                        print "2111"
+                        res = Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicedate=form.servicedate.data)
+                    else:
+                        print "2112"
+                        res = Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data)
                 else:
                     print "212"
-                    res = Service.query.filter_by(servicecity=form.servicecity.data)
+
+                    if (form.servicedate.data != None):
+                        print "2121"
+
+                        res = Service.query.filter_by(servicename=form.servicename.data, servicedate=form.servicedate.data)
+                        print form.servicedate.data
+                    else:
+                        print "2122"
+
+                        res = Service.query.filter_by(servicename=form.servicename.data)
             else:
                 print "22"
-
-                if (form.servicedate.data != None):
+                if (form.servicecity.data != ""):
                     print "221"
-
-                    res = Service.query.filter_by(servicedate=form.servicedate.data)
-                    print form.servicedate.data
+                    if (form.servicedate.data != None):
+                        print "2211"
+                        res = Service.query.filter_by(servicecity=form.servicecity.data,
+                                                      servicedate=form.servicedate.data)
+                    else:
+                        print "2212"
+                        res = Service.query.filter_by(servicecity=form.servicecity.data)
                 else:
                     print "222"
 
-                    res = Service.query.all()
-                    print "pas de date"
+                    if (form.servicedate.data != None):
+                        print "2221"
+
+                        res = Service.query.filter_by(servicedate=form.servicedate.data)
+                        print form.servicedate.data
+                    else:
+                        print "2222"
+
+                        res = Service.query.all()
+
+
         for r in res:
             print r.servicecity, r.servicetype
 
@@ -253,6 +304,7 @@ def createservice():
     myForm = CreateServiceForm()
     if myForm.validate_on_submit():
         service = Service(servicetype=myForm.servicetype.data,
+                    servicename=myForm.servicename.data,
                     servicedescription=myForm.servicedescription.data,
                     servicedate=myForm.servicedate.data,
                     servicecity=myForm.servicecity.data,

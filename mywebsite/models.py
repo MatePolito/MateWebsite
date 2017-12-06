@@ -54,6 +54,7 @@ class Service(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     servicetype = db.Column(db.String)
+    servicename = db.Column(db.String)
     servicedescription = db.Column(db.String)
     servicedate = db.Column(db.Date)
     servicecity=db.Column(db.String)
