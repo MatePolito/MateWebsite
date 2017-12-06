@@ -74,3 +74,10 @@ class CreateServiceForm(Form):
     servicedate=DateField("Date of the service", validators=[DataRequired()])
     servicecity=StringField("City of the service", validators=[DataRequired()])
     submit = SubmitField('Create Service')
+
+class ResearchServiceForm(Form):
+    servicetype = SelectField('Type of Service', choices=[('none', '- Type of Service -'),('ht', 'Home task'), ('st', 'Shopping task'), ('cf', 'Car fare')])
+    servicedescription = TextAreaField('Description du service')
+    servicedate=DateField("Date of the service", validators=[DataRequired()])
+    servicecity=StringField("City of the service", validators=[DataRequired()])
+    submit = SubmitField('Create Service')
