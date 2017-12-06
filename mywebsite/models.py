@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     birthdate= db.Column(db.Date)
     roleuser_id= db.Column(db.Integer, db.ForeignKey('roles.id'))
     roleuser = relationship("Role")
+    services = db.relationship('Service', backref='role', lazy='dynamic')
 
     username = db.Column(db.String, nullable=False, unique=True, index=True)
     password_hash = db.Column(db.String, nullable=False)
@@ -46,32 +47,6 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-class Mate(db.Model, UserMixin):
-    __tablename__ = 'mates'
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String)
-    last_name = db.Column(db.String)
-    phone_number = db.Column(db.String)
-    mail = db.Column(db.String)
-    address = db.Column(db.String)
-    birthdate = db.Column(db.Date)
-
-    username = db.Column(db.String, nullable=False, unique=True, index=True)
-    password_hash = db.Column(db.String, nullable=False)
-
-    def get_id(self):
-        return self.username
-
-    @property
-    def password(self):
-        raise StandardError('Password is write-only')
-
-    @password.setter
-    def password(self, value):
-        self.password_hash = generate_password_hash(value)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
 
 
 class Service(db.Model, UserMixin):
@@ -82,8 +57,8 @@ class Service(db.Model, UserMixin):
     servicedescription = db.Column(db.String)
     servicedate = db.Column(db.Date)
     servicecity=db.Column(db.String)
-
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = relationship("User")
 
     def get_id(self):
         return self.username

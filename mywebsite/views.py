@@ -163,7 +163,7 @@ def registeruser():
         role=Role.query.filter_by(name="User").first()
 
     if (form.choice.data) == 2:
-        role=Role.query.filter_by(name="m  mATE").first()
+        role=Role.query.filter_by(name="Mate").first()
     print role
 
 
@@ -257,10 +257,11 @@ def createservice():
                     servicedate=myForm.servicedate.data,
                     servicecity=myForm.servicecity.data,
 
-                          user_id=current_user.id
+                    user=current_user
 
                     )
         db.session.add(service)
+        print service.user.username
         db.session.commit()
         flash('User succesfully registered', 'success')
         return redirect(url_for('user', username=current_user.username))
