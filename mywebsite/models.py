@@ -20,8 +20,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String, nullable=False, unique=True, index=True)
     password_hash = db.Column(db.String, nullable=False)
 
-    def __init__(self, **kwargs):
-        super(User, self).__init__(**kwargs)
+    def __init__(self):
+        super(User, self).__init__()
         if self.role is None:
             self.role = Role.query.filter_by(default=True).first()
 
