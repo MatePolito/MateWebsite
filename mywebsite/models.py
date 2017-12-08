@@ -5,6 +5,11 @@ from datetime import date, datetime
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
+registrations = db.Table('registrations',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('service_id', db.Integer, db.ForeignKey('services.id'))
+
+                         )
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -18,8 +23,11 @@ class User(db.Model, UserMixin):
     roleuser = relationship("Role")
     services = db.relationship('Service', backref='role', lazy='dynamic')
 
-    services_requested_id = db.Column(db.Integer, db.ForeignKey('services.id'), nullable=False)
-    services_requested = relationship("Service")
+    servicerequest = db.relationship('Service',
+                              secondary=registrations,
+                              backref=db.backref('users', lazy='dynamic'),
+                              lazy='dynamic')
+
 
     username = db.Column(db.String, nullable=False, unique=True, index=True)
     password_hash = db.Column(db.String, nullable=False)
@@ -51,7 +59,6 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
 
-
 class Service(db.Model, UserMixin):
     __tablename__ = 'services'
 
@@ -64,13 +71,14 @@ class Service(db.Model, UserMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = relationship("User")
 
-    list_requesters = db.relationship('User', backref='services', lazy='dynamic')
-
 
 
 
     def get_id(self):
         return self.username
+
+
+
 
 
 class Role(db.Model):

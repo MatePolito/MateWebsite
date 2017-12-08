@@ -20,7 +20,7 @@
     <div class="col-lg-6" style="height: 100%;  margin-top: 10cm; background-color: skyblue">
 
         {{ service.servicename }} {{ serviceuser.username }}
-        <li><a href="{{ url_for('addrequest', idservice=i.id, idserviceuser=i.user.id, _external=True) }}" class="download"><font color=#1e90ff>Propose your help</font></a></li>
+        <li><a href="{{ url_for('addrequest', idservice=i.id, idservicerequester=i.user.id, _external=True) }}" class="download"><font color=#1e90ff>Propose your help</font></a></li>
 
     </div>
     <div class="col-lg-6">
