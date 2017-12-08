@@ -210,16 +210,15 @@ def registeruser():
         db.session.add(role)
     db.session.commit()
 
-    if (form.choice.data) == 1:
-        role=Role.query.filter_by(name="User").first()
-
-    if (form.choice.data) == 2:
-        role=Role.query.filter_by(name="Mate").first()
-    print role
-
-
-
     if form.validate_on_submit():
+        if (form.choice.data) == '1':
+            role = Role.query.filter_by(name="User").first()
+
+        if (form.choice.data) == '2':
+            role = Role.query.filter_by(name="Mate").first()
+
+        print role
+        print role.name
         user = User(first_name=form.first_name.data,
                     last_name=form.last_name.data,
                     username=form.username.data,
@@ -229,35 +228,12 @@ def registeruser():
                     birthdate=form.birthdate.data,
                     roleuser=role
                     )
+        user.roleuser.name
         user.password = form.password.data
         db.session.add(user)
         db.session.commit()
         flash('User succesfully registered', 'success')
         return redirect(url_for('loginuser'))
-
-    return render_template('register.html', form=form)
-
-@app.route('/registermate', methods=['GET', 'POST'])
-def registermate():
-    form = RegistrationForm()
-    role=Role.query.filter_by(name="Mate").first()
-    print role
-    if form.validate_on_submit():
-        mate = User(first_name=form.first_name.data,
-                    last_name=form.last_name.data,
-                    username=form.username.data,
-                    phone_number=form.phone_number.data,
-                    mail=form.mail.data,
-                    address=form.address.data,
-                    birthdate=form.birthdate.data,
-                    roleuser=role
-
-                    )
-        mate.password = form.password.data
-        db.session.add(mate)
-        db.session.commit()
-        flash('Mate succesfully registered', 'success')
-        return redirect(url_for('loginmate'))
 
     return render_template('register.html', form=form)
 
