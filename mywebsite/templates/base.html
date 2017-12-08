@@ -1,6 +1,27 @@
 {% extends "bootstrap/base.html" %}
 
 {% block title %}Flask Example{% endblock %}
+
+{% block head %}
+
+<style>
+    footer {
+          padding: 25px 0;
+          text-align: center;
+          color: rgba(255, 255, 255, 0.3);
+          background-color: #222222; }
+          footer p {
+            font-size: 12px;
+            margin: 0; }
+          footer ul {
+            margin-bottom: 0; }
+            footer ul li a {
+              font-size: 12px;
+              color: rgba(255, 255, 255, 0.3); }
+</style>
+
+{% endblock %}
+
 {% block navbar %}
         <div class="navbar navbar-light navbar-fixed-top" role="navigation" style="border-bottom-color: deepskyblue; background-color: ghostwhite; min-height: 55px">
                 <div class="navbar-collapse collapse pull-left">
@@ -55,4 +76,9 @@
             {% block myContent %}{% endblock %}
         </div>
     </div>
+    <footer>
+      <div class="container">
+        <p>&copy; Mate. All Rights Reserved.</p>
+      </div>
+    </footer>
 {% endblock %}
