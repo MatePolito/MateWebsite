@@ -51,6 +51,12 @@ def loginmate():
 
     return render_template('loginmate.html', form=myForm)
 
+@app.route('/servicepage', methods=['GET', 'POST'])
+def servicepage():
+
+
+    return render_template('service.html')
+
 @app.route('/help')
 def help():
     return render_template('help.html')
