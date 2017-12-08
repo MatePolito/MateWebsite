@@ -216,7 +216,7 @@
                                     <td>{{i.user.username }}</td>
                                     {% if current_user.roleuser.name=="Mate" %}
                                         <th><ul class="list-unstyled CTAs">
-                                            <li><a href="modifpassword.html" class="download"><font color=#1e90ff>Change password</font></a></li>
+                                            <li><a href="{{ url_for('servicepage') }}" class="download"><font color=#1e90ff>Propose your help</font></a></li>
                                         </ul></th>
                                     {% endif %}
 
