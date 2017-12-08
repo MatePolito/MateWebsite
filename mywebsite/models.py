@@ -2,7 +2,7 @@ from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import date, datetime
-from sqlalchemy import Table, Column, Integer, ForeignKey, StdImageField, LargeBinary
+from sqlalchemy import Table, Column, Integer, ForeignKey, LargeBinary
 from sqlalchemy.orm import relationship
 
 class User(db.Model, UserMixin):
