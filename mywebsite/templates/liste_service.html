@@ -190,26 +190,36 @@
                 <thead>
                     <tr>
                           <th scope="col">#</th>
-                            <th scope="col">Username</th>
-                          <th scope="col">Date of Due service</th>
-                            <th scope="col">Beginning Hour</th>
                           <th scope="col">Type of Service</th>
-                          <th scope="col">Service description</th>
+                            <th scope="col">Name</th>
                             <th scope="col">City</th>
-                            <th scope="col">Remuneration</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Beginning Hour</th>
+                        <th scope="col">Remuneration</th>
+                        <th scope="col">Username</th>
+                        {% if current_user.roleuser.name=="Mate" %}
+                            <th>Apply</th>
+                        {% endif %}
+
                     </tr>
                 </thead>
                 <tbody>
                     {% for i in res %}
                         <tr>
                               <th scope="row"></th>
-                                    <td>{{i.user.username }}</td>
-                                    <td>{{ i.servicedate }}</td>
-                                    <td>13h20</td>
                                     <td> {{ i.servicetype}} </td>
                                     <td>{{ i.servicename}}</td>
                                     <td>{{ i.servicecity}}</td>
+                                    <td>{{ i.servicedate }}</td>
+                                    <td>13h20</td>
                                     <td>15€ the service</td>
+                                    <td>{{i.user.username }}</td>
+                                    {% if current_user.roleuser.name=="Mate" %}
+                                        <th><ul class="list-unstyled CTAs">
+                                            <li><a href="modifpassword.html" class="download"><font color=#1e90ff>Change password</font></a></li>
+                                        </ul></th>
+                                    {% endif %}
+
 
                         </tr>
                     {% endfor %}
