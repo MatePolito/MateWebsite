@@ -52,10 +52,15 @@ def loginmate():
     return render_template('loginmate.html', form=myForm)
 
 @app.route('/servicepage', methods=['GET', 'POST'])
-def servicepage():
-
-
-    return render_template('service.html')
+@app.route('/servicepage/<int:idservice>/<int:idserviceuser>', methods=['GET', 'POST'])
+def servicepage(idservice, idserviceuser):
+    print idserviceuser
+    print idservice
+    service = Service.query.filter_by(id=idservice).first()
+    serviceuser= User.query.filter_by(id=idserviceuser).first()
+    print serviceuser.username
+    print service.servicename
+    return render_template('service.html', service=service, serviceuser=serviceuser)
 
 @app.route('/help')
 def help():
