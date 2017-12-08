@@ -2,7 +2,7 @@ from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import date, datetime
-from sqlalchemy import Table, Column, Integer, ForeignKey, LargeBinary
+from sqlalchemy import Table, Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 class User(db.Model, UserMixin):
@@ -14,7 +14,6 @@ class User(db.Model, UserMixin):
     mail = db.Column(db.String)
     address = db.Column(db.String)
     birthdate= db.Column(db.Date)
-    image = db.Column(db.LargeBinary)
     roleuser_id= db.Column(db.Integer, db.ForeignKey('roles.id'))
     roleuser = relationship("Role")
     services = db.relationship('Service', backref='role', lazy='dynamic')
@@ -22,8 +21,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String, nullable=False, unique=True, index=True)
     password_hash = db.Column(db.String, nullable=False)
 
-    def __init__(self):
-        super(User, self).__init__()
+    def __init__(self, **kwargs):
+        super(User, self).__init__(**kwargs)
         if self.role is None:
             self.role = Role.query.filter_by(default=True).first()
 
