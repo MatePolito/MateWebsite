@@ -18,6 +18,9 @@ class User(db.Model, UserMixin):
     roleuser = relationship("Role")
     services = db.relationship('Service', backref='role', lazy='dynamic')
 
+    services_requested_id = db.Column(db.Integer, db.ForeignKey('services.id'), nullable=False)
+    services_requested = relationship("Service")
+
     username = db.Column(db.String, nullable=False, unique=True, index=True)
     password_hash = db.Column(db.String, nullable=False)
 
@@ -60,6 +63,11 @@ class Service(db.Model, UserMixin):
     servicecity=db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = relationship("User")
+
+    list_requesters = db.relationship('User', backref='services', lazy='dynamic')
+
+
+
 
     def get_id(self):
         return self.username

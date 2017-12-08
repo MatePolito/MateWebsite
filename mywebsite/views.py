@@ -62,6 +62,18 @@ def servicepage(idservice, idserviceuser):
     print service.servicename
     return render_template('service.html', service=service, serviceuser=serviceuser)
 
+@app.route('/addrequest', methods=['GET', 'POST'])
+@app.route('/addrequest/<int:idservice>/<int:idserviceuser>', methods=['GET', 'POST'])
+def addrequest(idservice, idserviceuser):
+    print idserviceuser
+    print idservice
+    service = Service.query.filter_by(id=idservice).first()
+    
+    serviceuser= User.query.filter_by(id=idserviceuser).first()
+    print serviceuser.username
+    print service.servicename
+    return render_template('service.html', service=service, serviceuser=serviceuser)
+
 @app.route('/help')
 def help():
     return render_template('help.html')
