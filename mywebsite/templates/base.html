@@ -27,7 +27,6 @@
                 <div class="navbar-collapse collapse pull-left">
                     <ul class="nav navbar-nav">
                         {% if not current_user.is_authenticated %}
-
                             <a class="navbar-brand" href="{{ url_for('registeruser') }}" >
                                 <span class="glyphicon glyphicon-pencil" style="color: deepskyblue"> <font face="Gill sans MT"><b> Register</b></font></span>
                             </a>
@@ -35,7 +34,7 @@
                     </ul>
                 </div>
                 <div class="navbar-header">
-                    <a class="navbar-left" href="{{ url_for('home') }}" style="margin: 5px; position: absolute; left: 50%; margin-left: -10px">
+                    <a class="navbar-left" href="{{ url_for('home') }}" style="margin: 5px; position: absolute; left: 50%; margin-left: -20.5px">
                             <img class="center-block" src="static/Logo_M.png" width="41" height="45">
                     </a>
                 </div>
