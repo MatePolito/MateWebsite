@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInformationForm, CreateServiceForm, ResearchServiceForm
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm
-from .models import User, Service, Role, Permission, registrations
+from .models import User, Service, Role, Permission
 from flask_login import current_user
 
 from . import app, db, login_manager
@@ -63,27 +63,43 @@ def servicepage(idservice, idserviceuser):
     return render_template('service.html', service=service, serviceuser=serviceuser)
 
 @app.route('/servicepageuser', methods=['GET', 'POST'])
-@app.route('/servicepageuser/<int:idservice>', methods=['GET', 'POST'])
-def servicepageuser(idservice):
+@app.route('/servicepageuser/<int:idservice>/<int:idserviceuser>', methods=['GET', 'POST'])
+def servicepageuser(idservice, idserviceuser):
+    print idserviceuser
     print idservice
     service = Service.query.filter_by(id=idservice).first()
+    serviceuser= User.query.filter_by(id=idserviceuser).first()
+    print serviceuser.username
     print service.servicename
-    for i in service.users:
+    users = User.query.all()
+    requesters = []
+    for i in users:
+        print i.username, ":"
+        for j in i.servicerequest:
+            j.servicename
+            if j.id == service.id:
+                requesters.append(i)
+
+    for i in requesters:
         print i.username
 
-    return render_template('serviceuser.html', service=service)
+
+
+    return render_template('serviceuser.html', service=service, serviceuser=serviceuser, requesters=requesters)
 
 @app.route('/addrequest', methods=['GET', 'POST'])
 @app.route('/addrequest/<int:idservice>/<int:idservicerequester>', methods=['GET', 'POST'])
 def addrequest(idservice, idservicerequester):
     service = Service.query.filter_by(id=idservice).first()
-    print "The service I juste apply for is", service.servicename
-    if service not in current_user.servicerequest:
-        current_user.servicerequest.append(service)
-        db.session.commit()
-        flash('Your request was sent to the user',service.user.username)
-    else:
-        flash('You already apply')
+    print service.servicename
+
+
+    current_user.servicerequest.append(service)
+    db.session.add(current_user)
+    current_user.servicerequest.all()
+
+
+
 
     flash('You apply the service!')
     return render_template('user_profile.html' )
@@ -97,15 +113,6 @@ def help():
 def user():
     '''You need to be logged in to access this page'''
     return render_template('user_profile.html')
-
-@app.route('/listserviceuser', methods=['GET', 'POST'])
-@login_required
-def listserviceuser():
-    res= Service.query.filter_by(user_id=current_user.id)
-    for r in res:
-        print r.servicecity, r.servicetype
-
-    return render_template('liste_service_user.html', res=res)
 
 @app.route('/listservice', methods=['GET', 'POST'])
 @login_required
