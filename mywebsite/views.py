@@ -63,45 +63,28 @@ def servicepage(idservice, idserviceuser):
     return render_template('service.html', service=service, serviceuser=serviceuser)
 
 @app.route('/servicepageuser', methods=['GET', 'POST'])
-@app.route('/servicepageuser/<int:idservice>/<int:idserviceuser>', methods=['GET', 'POST'])
-def servicepageuser(idservice, idserviceuser):
-    print idserviceuser
-    print idservice
+@app.route('/servicepageuser/<int:idservice>', methods=['GET', 'POST'])
+def servicepageuser(idservice):
     service = Service.query.filter_by(id=idservice).first()
-    serviceuser= User.query.filter_by(id=idserviceuser).first()
-    print serviceuser.username
     print service.servicename
-    users = User.query.all()
-    requesters = []
-    for i in users:
-        print i.username, ":"
-        for j in i.servicerequest:
-            j.servicename
-            if j.id == service.id:
-                requesters.append(i)
+    for i in service.users:
+        i.username
 
-    for i in requesters:
-        print i.username
-
-
-
-    return render_template('serviceuser.html', service=service, serviceuser=serviceuser, requesters=requesters)
+    return render_template('serviceuser.html', service=service)
 
 @app.route('/addrequest', methods=['GET', 'POST'])
 @app.route('/addrequest/<int:idservice>/<int:idservicerequester>', methods=['GET', 'POST'])
 def addrequest(idservice, idservicerequester):
     service = Service.query.filter_by(id=idservice).first()
     print service.servicename
+    print "The service I juste apply for is", service.servicename
+    if service not in current_user.servicerequest:
+        current_user.servicerequest.append(service)
+        db.session.commit()
+        flash('Your request was sent to the user', service.user.username)
+    else:
+        flash('You already apply')
 
-
-    current_user.servicerequest.append(service)
-    db.session.add(current_user)
-    current_user.servicerequest.all()
-
-
-
-
-    flash('You apply the service!')
     return render_template('user_profile.html' )
 
 @app.route('/help')
@@ -228,7 +211,14 @@ def listservice():
 
     return render_template('liste_service.html', form=form, res=res)
 
+@app.route('/listserviceuser', methods=['GET', 'POST'])
+@login_required
+def listserviceuser():
+    res= Service.query.filter_by(user_id=current_user.id)
+    for r in res:
+        print r.servicecity, r.servicetype
 
+    return render_template('liste_service_user.html', res=res)
 
 @app.route('/test')
 def test():

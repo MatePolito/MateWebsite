@@ -19,8 +19,8 @@
 <div class="row">
     <div class="col-lg-6" style="height: 100%;  margin-top: 10cm; background-color: skyblue">
         olaaaaaaaa
-        {% for i in requesters %}
-            {{ i.username }} {{ i.id }}
+        {% for i in service.users %}
+            {{ i.username }} {{ i.last_name }} {{ i.first_name }}
         {% endfor %}
 
     </div>
