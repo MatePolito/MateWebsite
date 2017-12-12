@@ -29,26 +29,28 @@
 <div class="row vdivide">
     <div class="col-lg-6" style="height: 100%; text-align: center; padding: 30px; margin-top: 55px">
         {% if service.servicetype == "ht"%}
-            <img src="static/logo_ht.png" style="width: 200px; height: 200px;">
+            <img src="logo_ht.png" style="width: 200px; height: 200px;">
         {% elif service.servicetype == "st"%}
-            <img src="static/logo_st.png" style="width: 200px; height: 200px;">
+            <img src="logo_st.png" style="width: 200px; height: 200px;">
         {% elif service.servicetype == "cf"%}
-            <img src="static/logo_cf.png" style="width: 200px; height: 200px;">
+            <img src="logo_cf.png" style="width: 200px; height: 200px;">
         {% else %}
-            <img src="static/logo_other.png" style="width: 200px; height: 200px;">
+            <img src="logo_other.png" style="width: 200px; height: 200px;">
         {% endif %}
         <p><font size="5"><br>{{ service.servicename }}</font></p>
-        <p><font size="3"><br>{{ service.servicecity }}</font></p>
+        <p><font size="3">{{ service.servicecity }}</font></p>
         <p><font size="2">{{ service.servicedate }}</font></p>
-        <p><font size="2"><br>Description</font></p>
+        <p><font size="3"><br>Description</font></p>
         <p>{{ service.servicedescription }}</p>
-        <div class="col-lg-6 col-lg-offset-3" style="height: 40px; text-align: center; background-color: deepskyblue; border-radius: 100px">
-            <a href="{{ url_for('addrequest', idservice=service.id, idservicerequester=current_user.id, _external=True) }}" class="download"><font color=white>Propose your help</font></a></li>
+        <div class="col-lg-6 col-lg-offset-3" style="background-color: deepskyblue; border-radius: 100px; padding: 10px">
+            <a href="{{ url_for('addrequest', idservice=service.id, idservicerequester=current_user.id, _external=True) }}" class="download">
+                <font color=white><font size="3"></font><b>Propose your help</b></font></font>
+            </a>
         </div>
     </div>
     <div class="col-lg-6" style="text-align: center; padding: 30px; margin-top: 55px">
-        <img src="static/logo_unknown.png" style="width: 200px; height: 200px;">
-        <p><font size="5"><br>{{ service.serviceusername }}</font></p>
+        <img src="logo_unknown.png" style="width: 200px; height: 200px;">
+        <p><font size="5"><br>{{ serviceuser.username }}</font></p>
     </div>
 </div>
 {% endblock %}
