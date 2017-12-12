@@ -214,7 +214,11 @@ def listservice():
 @app.route('/listserviceuser', methods=['GET', 'POST'])
 @login_required
 def listserviceuser():
-    res= Service.query.filter_by(user_id=current_user.id)
+    if current_user.role.name == "User":
+        res = Service.query.filter_by(user_id=current_user.id)
+    elif current_user.role.name == "Mate":
+        res = Service.query.filter_by(mate_id=current_user.id)
+
     for r in res:
         print r.servicecity, r.servicetype
 
