@@ -152,38 +152,6 @@
                     <h1 style="text-align: center;  resize: both;  "><font face="Gill sans MT"><font size="8">Services to be supplied</font></font></h1>
                 </a>
             </div>
-                <form  method=post >
-                    {{ form.csrf_token }}
-                    {{ form.hidden_tag() }}
-                    <div class="row" style="height:2cm; width: 100%; text-align: center; margin-top:4cm; background-color: dodgerblue; padding-top: 20px; position: fixed">
-                        <div class="col-lg-2 col-lg-offset-1">
-                            <span class="custom-dropdown custom-dropdown--white ">
-                                {{ form.servicetype.label }} {{ form.servicetype(class="custom-dropdown__select custom-dropdown__select--white", style="width: 200px" )}}
-
-                            </span>
-                        </div>
-                        <div>
-                        </div>
-                        <div class="col-lg-2">
-                            {{ form.servicename.label }} {{ form.servicename(class="form-control") }}
-                        </div>
-                        <div class="col-lg-2">
-                            {{ form.servicecity.label }} {{ form.servicecity(class="form-control") }}
-                        </div>
-                        <div class='col-lg-3 col-lg-offset-1" '>
-                            {{ form.servicedate.label }} {{ form.servicedate(class="form-control") }}
-                        </div>
-
-                        <div class="row">
-                            <input type="submit" class="col-lg-2 col-lg-offset-1">
-                                <i class="glyphicon glyphicon-search"></i>
-                                Research
-                            </input>
-                        </div>
-
-                    </div>
-                </form>
-
             </div>
             <div class="row" style="margin-top: 6cm">
                 <table class="table table-responsive    ">
@@ -213,7 +181,7 @@
                                     <td>15€ the service</td>
                                     <td>{{i.user.username }}</td>
 
-                                    <td><a href="{{ url_for('servicepageuser', idservice=i.id, idserviceuser=current_user.id, _external=True) }}" class="download"><font color=#1e90ff>See your service</font></a></td>
+                                    <td><a href="{{ url_for('servicepageuser', idservice=i.id, _external=True) }}" class="download"><font color=#1e90ff>See your service</font></a></td>
 
 
                         </tr>

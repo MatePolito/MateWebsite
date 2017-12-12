@@ -63,19 +63,15 @@ def servicepage(idservice, idserviceuser):
     return render_template('service.html', service=service, serviceuser=serviceuser)
 
 @app.route('/servicepageuser', methods=['GET', 'POST'])
-@app.route('/servicepageuser/<int:idservice>/<int:idserviceuser>', methods=['GET', 'POST'])
-def servicepageuser(idservice, idserviceuser):
-    print idserviceuser
+@app.route('/servicepageuser/<int:idservice>', methods=['GET', 'POST'])
+def servicepageuser(idservice):
     print idservice
     service = Service.query.filter_by(id=idservice).first()
-    serviceuser= User.query.filter_by(id=idserviceuser).first()
-    print serviceuser.username
     print service.servicename
-    users = User.query.all()
+    for i in service.users:
+        print i.username
 
-
-
-    return render_template('serviceuser.html', service=service, serviceuser=serviceuser, requesters=requesters)
+    return render_template('serviceuser.html', service=service)
 
 @app.route('/addrequest', methods=['GET', 'POST'])
 @app.route('/addrequest/<int:idservice>/<int:idservicerequester>', methods=['GET', 'POST'])
@@ -101,6 +97,15 @@ def help():
 def user():
     '''You need to be logged in to access this page'''
     return render_template('user_profile.html')
+
+@app.route('/listserviceuser', methods=['GET', 'POST'])
+@login_required
+def listserviceuser():
+    res= Service.query.filter_by(user_id=current_user.id)
+    for r in res:
+        print r.servicecity, r.servicetype
+
+    return render_template('liste_service_user.html', res=res)
 
 @app.route('/listservice', methods=['GET', 'POST'])
 @login_required
