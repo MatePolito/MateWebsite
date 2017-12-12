@@ -18,7 +18,33 @@
 
 <div class="row">
     <div class="col-lg-6" style="height: 100%;  margin-top: 10cm; background-color: skyblue">
-        olaaaaaaaa
+        <table class="table table-responsive    ">
+                <thead>
+                    <tr>
+                          <th scope="col">#</th>
+                            <th scope="col">Mate Name</th>
+                            <th scope="col">Mate First Name</th>
+                        <th scope="col">Mate Last Name</th>
+                            <th scope="col">Birthdate</th>
+                            <th>Choose</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in service.users%}
+                        <tr>
+                              <th scope="row"></th>
+                                    <td> 1 </td>
+                                    <td>{{ i.username}}</td>
+                                    <td>{{ i.first_name}}</td>
+                                    <td>{{ i.last_name }}</td>
+                                    <td>{{ i.birthdate }}</td>
+                                    <td><a href="{{ url_for('pickmate', idservice=service.id, idmate=i.id,  _external=True) }}" class="download"><font color=#1e90ff>Pick this mate</font></a></td>
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
         {% for i in service.users %}
             {{ i.username }} {{ i.last_name }} {{ i.first_name }}
         {% endfor %}

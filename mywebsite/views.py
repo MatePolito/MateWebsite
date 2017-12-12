@@ -78,12 +78,12 @@ def addrequest(idservice, idservicerequester):
     service = Service.query.filter_by(id=idservice).first()
     print service.servicename
     print "The service I juste apply for is", service.servicename
-    if service not in current_user.servicerequest:
-        current_user.servicerequest.append(service)
-        db.session.commit()
-        flash('Your request was sent to the user', service.user.username)
-    else:
-        flash('You already apply')
+    '''if service not in current_user.servicerequest:'''
+    current_user.servicerequest.append(service)
+    db.session.commit()
+    flash('Your request was sent to the user', service.user.username)
+    '''else:
+        flash('You already apply')'''
 
     return render_template('user_profile.html' )
 
@@ -219,6 +219,25 @@ def listserviceuser():
         print r.servicecity, r.servicetype
 
     return render_template('liste_service_user.html', res=res)
+
+@app.route('/pickmate', methods=['GET', 'POST'])
+@app.route('/pickmate/<int:idservice>/<int:idmate>', methods=['GET', 'POST'])
+def pickmate(idservice, idmate):
+    print idservice
+    print idmate
+    service = Service.query.filter_by(id=idservice).first()
+    print service.servicename
+    mate= User.query.filter_by(id=idmate).first()
+    print mate.username,  mate.birthdate
+    service.mate = mate
+    db.session.add(service)
+    db.session.commit()
+    '''if service.mate is empty:'''
+
+
+    flash('You have choosen'+mate.username+'for your service'+service.servicename)
+
+    return render_template('user_profile.html' )
 
 @app.route('/test')
 def test():
