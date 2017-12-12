@@ -41,7 +41,7 @@
         <p><font size="2"><br>{{ service.servicedate }}</font></p>
         <p><font size="3">{{ service.servicecity }}</font></p>
         <p><font size="2"><br>Description</font></p>
-        <p>{{ service.servicedescription }}</p>
+        <p>{{ service.servicedescription }} </p>
         <li><a href="{{ url_for('addrequest', idservice=service.id, idservicerequester=current_user.id, _external=True) }}" class="download"><font color=#1e90ff>Propose your help</font></a></li>
 
     </div>
