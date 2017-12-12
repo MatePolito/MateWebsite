@@ -351,7 +351,7 @@ def createservice():
         db.session.add(service)
         print service.user.username
         db.session.commit()
-        flash('User succesfully registered', 'success')
+        flash('Profile succesfully updated', 'success')
         return redirect(url_for('user', username=current_user.username))
 
     return render_template('createservice.html', form=myForm)
