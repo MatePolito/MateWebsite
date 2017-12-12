@@ -14,9 +14,6 @@ class NameForm(Form):
     age = IntegerField('Age', validators=[NumberRange(min=18)])
     submit = SubmitField('Submit')
 
-
-
-
 class RegistrationForm(Form):
     choice=RadioField('Label', choices=[('1', 'User'), ('2', 'Mate')])
     first_name = StringField('First name', validators=[DataRequired()], render_kw={"placeholder": "Carlo"})
