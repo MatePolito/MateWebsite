@@ -78,12 +78,13 @@ def addrequest(idservice, idservicerequester):
     service = Service.query.filter_by(id=idservice).first()
     print service.servicename
     print "The service I juste apply for is", service.servicename
-    '''if service not in current_user.servicerequest:'''
-    current_user.servicerequest.append(service)
-    db.session.commit()
-    flash('Your request was sent to the user', service.user.username)
-    '''else:
-        flash('You already apply')'''
+    if service not in current_user.servicerequest:
+        current_user.servicerequest.append(service)
+        db.session.commit()
+        flash('Your request was sent to the user', service.user.username)
+    else:
+        print "ola"
+        flash('You already apply')
 
     return render_template('user_profile.html' )
 
@@ -107,8 +108,6 @@ def listservice():
     for r in res:
         print r.servicecity, r.servicetype
     if form.is_submitted():
-        print "submitted"
-        print "olaaa"
         print "Ola",form.servicecity.data
         if(form.servicetype.data !='none'):
             print "1"
