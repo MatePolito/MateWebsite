@@ -72,16 +72,6 @@ def servicepageuser(idservice, idserviceuser):
     print serviceuser.username
     print service.servicename
     users = User.query.all()
-    requesters = []
-    for i in users:
-        print i.username, ":"
-        for j in i.servicerequest:
-            j.servicename
-            if j.id == service.id:
-                requesters.append(i)
-
-    for i in requesters:
-        print i.username
 
 
 
