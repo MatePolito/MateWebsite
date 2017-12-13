@@ -29,13 +29,13 @@
 <div class="row vdivide">
     <div class="col-lg-6" style="height: 100%; text-align: center; padding: 30px; margin-top: 55px">
         {% if service.servicetype == "ht"%}
-            <img src="logo_ht.png" style="width: 200px; height: 200px;">
+            <img src="logo_ht.png" alt="Home Task" style="width: 200px; height: 200px;">
         {% elif service.servicetype == "st"%}
-            <img src="logo_st.png" style="width: 200px; height: 200px;">
+            <img src="logo_st.png" alt="Shopping" style="width: 200px; height: 200px;">
         {% elif service.servicetype == "cf"%}
-            <img src="logo_cf.png" style="width: 200px; height: 200px;">
+            <img src="logo_cf.png" alt="Car fare" style="width: 200px; height: 200px;">
         {% else %}
-            <img src="logo_other.png" style="width: 200px; height: 200px;">
+            <img src="logo_other.png" alt="Service" style="width: 200px; height: 200px;">
         {% endif %}
         <p><font size="5"><br>{{ service.servicename }}</font></p>
         <p><font size="3">{{ service.servicecity }}</font></p>
@@ -49,7 +49,7 @@
         </div>
     </div>
     <div class="col-lg-6" style="text-align: center; padding: 30px; margin-top: 55px">
-        <img src="logo_unknown.png" style="width: 200px; height: 200px;">
+        <img src="static/logo_unknown.png" style="width: 200px; height: 200px;">
         <p><font size="5"><br>{{ serviceuser.username }}</font></p>
     </div>
 </div>
