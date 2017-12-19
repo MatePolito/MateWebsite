@@ -62,7 +62,7 @@
     {% endblock %}
 
     {% block content %}
-        <div style="text-align: center">
+        <div style="text-align: center; margin-top: 55px">
             <div>
                 {% for category, message in get_flashed_messages(True) %}
                     <div class="alert alert-{{ category }}">
