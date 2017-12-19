@@ -81,6 +81,7 @@ def addrequest(idservice, idservicerequester):
     print service.servicename
     print "The service I juste apply for is", service.servicename
     if service not in current_user.servicerequest:
+        service.servicestate=2
         current_user.servicerequest.append(service)
         db.session.commit()
         flash('Your request was sent to the user', service.user.username)
@@ -107,7 +108,9 @@ def listservice():
     form = ResearchServiceForm()
     print(form.errors)
 
-    res= Service.query.all()
+    res1 = Service.query.filter_by(servicestate=1).all()
+    res2 = Service.query.filter_by(servicestate=2).all()
+    res=res1+res2
     for r in res:
         print r.servicecity, r.servicetype
         if form.is_submitted():
@@ -206,7 +209,6 @@ def listservice():
 
                         res = Service.query.all()
 
-
         for r in res:
             print r.servicecity, r.servicetype
 
@@ -217,6 +219,10 @@ def listservice():
 @login_required
 def listserviceuser():
     if current_user.role.name == "User":
+        res1 = Service.query.filter_by(user_id=current_user.id, servicestate=1).all()
+        res2 = Service.query.filter_by(user_id=current_user.id, servicestate=2).all()
+        res3 = Service.query.filter_by(user_id=current_user.id, servicestate=3).all()
+        res = res1 + res2 + res3
         res = Service.query.filter_by(user_id=current_user.id)
     elif current_user.role.name == "Mate":
         res = Service.query.filter_by(mate_id=current_user.id)
@@ -236,6 +242,7 @@ def pickmate(idservice, idmate):
     mate= User.query.filter_by(id=idmate).first()
     print mate.username,  mate.birthdate
     service.mate = mate
+    service.servicestate=3
     db.session.add(service)
     db.session.commit()
     '''if service.mate is empty:'''
@@ -260,8 +267,7 @@ def registeruser():
         'Mate': (Permission.FOLLOW |
                       Permission.COMMENT |
                       Permission.WRITE_ARTICLES |
-                      Permission.MODERATE_COMMENTS, False),
-        'Administrator': (0xff, False)
+                      Permission.MODERATE_COMMENTS, False)
     }
     for r in roles:
         role = Role.query.filter_by(name=r).first()
@@ -273,6 +279,7 @@ def registeruser():
     db.session.commit()
 
     if form.validate_on_submit():
+        print form.choice.data
         if (form.choice.data) == '1':
             role = Role.query.filter_by(name="User").first()
 
@@ -290,7 +297,7 @@ def registeruser():
                     birthdate=form.birthdate.data,
                     roleuser=role
                     )
-        user.roleuser.name
+        print user.roleuser
         user.password = form.password.data
         db.session.add(user)
         db.session.commit()
@@ -346,6 +353,7 @@ def createservice():
                     servicedescription=myForm.servicedescription.data,
                     servicedate=myForm.servicedate.data,
                     servicecity=myForm.servicecity.data,
+                    servicestate=1,
 
                     user=current_user
 
