@@ -83,6 +83,7 @@ def addrequest(idservice, idservicerequester):
         db.session.commit()
         flash('Your request was sent to the user', service.user.username)
     else:
+        print "ola"
         flash('You already apply')
 
     return render_template('user_profile.html' )
@@ -107,8 +108,6 @@ def listservice():
     for r in res:
         print r.servicecity, r.servicetype
     if form.is_submitted():
-        print "submitted"
-        print "olaaa"
         print "Ola",form.servicecity.data
         if(form.servicetype.data !='none'):
             print "1"
@@ -214,11 +213,34 @@ def listservice():
 @app.route('/listserviceuser', methods=['GET', 'POST'])
 @login_required
 def listserviceuser():
-    res= Service.query.filter_by(user_id=current_user.id)
+    if current_user.role.name == "User":
+        res = Service.query.filter_by(user_id=current_user.id)
+    elif current_user.role.name == "Mate":
+        res = Service.query.filter_by(mate_id=current_user.id)
+
     for r in res:
         print r.servicecity, r.servicetype
 
     return render_template('liste_service_user.html', res=res)
+
+@app.route('/pickmate', methods=['GET', 'POST'])
+@app.route('/pickmate/<int:idservice>/<int:idmate>', methods=['GET', 'POST'])
+def pickmate(idservice, idmate):
+    print idservice
+    print idmate
+    service = Service.query.filter_by(id=idservice).first()
+    print service.servicename
+    mate= User.query.filter_by(id=idmate).first()
+    print mate.username,  mate.birthdate
+    service.mate = mate
+    db.session.add(service)
+    db.session.commit()
+    '''if service.mate is empty:'''
+
+
+    flash('You have choosen'+mate.username+'for your service'+service.servicename)
+
+    return render_template('user_profile.html' )
 
 @app.route('/test')
 def test():
@@ -328,7 +350,7 @@ def createservice():
         db.session.add(service)
         print service.user.username
         db.session.commit()
-        flash('User succesfully registered', 'success')
+        flash('Profile succesfully updated', 'success')
         return redirect(url_for('user', username=current_user.username))
 
     return render_template('createservice.html', form=myForm)

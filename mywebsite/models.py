@@ -21,7 +21,12 @@ class User(db.Model, UserMixin):
     birthdate= db.Column(db.Date)
     roleuser_id= db.Column(db.Integer, db.ForeignKey('roles.id'))
     roleuser = relationship("Role")
-    services = db.relationship('Service', backref='role', lazy='dynamic')
+
+    '''services = db.relationship('Service', backref='role', lazy='dynamic')
+
+    servicesmate = db.relationship('Service', backref='users')'''
+
+
 
     servicerequest = db.relationship('Service',
                               secondary=registrations,
@@ -68,11 +73,12 @@ class Service(db.Model, UserMixin):
     servicedescription = db.Column(db.String)
     servicedate = db.Column(db.Date)
     servicecity=db.Column(db.String)
+
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    user = relationship("User")
+    user = relationship("User", foreign_keys=[user_id])
 
-
-
+    mate_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    mate = relationship("User", foreign_keys=[mate_id])
 
     def get_id(self):
         return self.username

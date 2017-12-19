@@ -213,13 +213,13 @@
                                     <td>15€ the service</td>
                                     <td>{{i.user.username }}</td>
                                     {% if current_user.roleuser.name=="Mate" %}
-                                        <th>
-                                            <ul class="list-unstyled CTAs">
-                                            <li><a href="{{ url_for('servicepage', idservice=i.id, idserviceuser=i.user.id, _external=True) }}" class="download"><font color=#1e90ff>Propose your help</font></a></li>
-                                            </ul>
-                                        </th>
+                                            <th>
+                                                <ul class="list-unstyled CTAs">
+                                                <li><a href="{{ url_for('servicepage', idservice=i.id, idserviceuser=i.user.id, _external=True) }}" class="download"><font color=#1e90ff>Propose your help</font></a></li>
+                                                </ul>
+                                            </th>
                                     {% else %}
-                                        {% if i.user_id==current_user.id %}
+                                        {% if i.user_id==current_user.id%}
                                             <td><a href="{{ url_for('servicepageuser', idservice=i.id, idserviceuser=current_user.id, _external=True) }}" class="download"><font color=#1e90ff>See your service</font></a></td>
                                         {% endif %}
                                     {% endif %}
