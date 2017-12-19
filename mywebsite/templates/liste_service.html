@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block head %}
+{% block head %}  
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -189,15 +189,16 @@
                 <table class="table table-responsive    ">
                 <thead>
                     <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Type of Service</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">City</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Beginning Hour</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Type of Service</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">City</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Beginning Hour</th>
                         <th scope="col">Remuneration</th>
                         <th scope="col">Username</th>
-                            <th>Apply</th>
+                        <th scope="col">State</th>
+                        <th>Apply</th>
 
                     </tr>
                 </thead>
@@ -212,6 +213,12 @@
                                     <td>13h20</td>
                                     <td>15€ the service</td>
                                     <td>{{i.user.username }}</td>
+                                    {% if i.servicestate==1%}
+                                        <td> Waiting for mate request</td>
+                                    {% elif i.servicestate==2 %}
+                                        <td> Mate(s) have already applied waiting for user answer</td>
+                                    {%  endif  %}
+
                                     {% if current_user.roleuser.name=="Mate" %}
                                             <th>
                                                 <ul class="list-unstyled CTAs">
