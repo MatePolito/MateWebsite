@@ -73,7 +73,6 @@ class Service(db.Model, UserMixin):
     servicedescription = db.Column(db.String)
     servicedate = db.Column(db.Date)
     servicecity=db.Column(db.String)
-    servicestate=db.Column(db.Integer)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = relationship("User", foreign_keys=[user_id])
