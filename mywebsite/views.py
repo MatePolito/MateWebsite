@@ -4,6 +4,8 @@ from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInforma
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm
 from .models import User, Service, Role, Permission
 from flask_login import current_user
+from flask.ext.mail import Mail
+
 
 from . import app, db, login_manager
 
@@ -82,6 +84,7 @@ def addrequest(idservice, idservicerequester):
         current_user.servicerequest.append(service)
         db.session.commit()
         flash('Your request was sent to the user', service.user.username)
+        mail = Mail(app)
     else:
         print "ola"
         flash('You already apply')
@@ -107,8 +110,8 @@ def listservice():
     res= Service.query.all()
     for r in res:
         print r.servicecity, r.servicetype
-    if form.is_submitted():
-        print "Ola",form.servicecity.data
+        if form.is_submitted():
+            print "Ola",form.servicecity.data
         if(form.servicetype.data !='none'):
             print "1"
             if (form.servicename.data != ''):
