@@ -75,6 +75,13 @@ class Service(db.Model, UserMixin):
     servicecity=db.Column(db.String)
     servicestate = db.Column(db.Integer)
 
+    userrank = db.Column(db.Integer)
+    userfeedback = db.Column(db.String)
+
+    materank=db.Column(db.Integer)
+    matefeedback = db.Column(db.String)
+
+
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = relationship("User", foreign_keys=[user_id])
 

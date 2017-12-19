@@ -198,7 +198,7 @@
                                     {% elif i.servicestate==3 %}
                                         <td> Waiting for closing the service  </td>
                                         {% if current_user.roleuser.name=="User"%}
-                                            <td><a href="{{ url_for('closeserviceuser', idservice=i.id, _external=True) }}" class="download"><font color=#1e90ff> Close the service</font></a></td>
+                                            <td><a href="{{ url_for('feedbackuser', idservice=i.id, _external=True) }}" class="download"><font color=#1e90ff> Close the service</font></a></td>
                                             <td> {{ i.mate.username }} is your mate <br> Contact him: {{ i.mate.phone_number }} </td>
                                         {% elif current_user.roleuser.name=="Mate"%}
                                             <td><a href="{{ url_for('closeservicemate', idservice=i.id, _external=True) }}" class="download"><font color=#1e90ff> Close the service</font></a></td>

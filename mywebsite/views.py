@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user
-from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInformationForm, CreateServiceForm, ResearchServiceForm
+from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInformationForm, CreateServiceForm, ResearchServiceForm, FeedbackForm
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm
 from .models import User, Service, Role, Permission
 from flask_login import current_user
@@ -72,6 +72,37 @@ def servicepageuser(idservice):
         i.username
 
     return render_template('serviceuser.html', service=service)
+
+@app.route('/feedbackuser', methods=['GET', 'POST'])
+@app.route('/feedbackuser/<int:idservice>', methods=['GET', 'POST'])
+def feedbackuser(idservice):
+    service = Service.query.filter_by(id=idservice).first()
+    print service.servicename
+
+    form=form = FeedbackForm()
+    if form.validate_on_submit():
+        service.userrank = form.rank.data
+        service.userfeedback=form.com.data
+
+
+        print service.servicename
+        if service.servicestate == 3:
+            service.servicestate = 4
+            str = "You've closed the service! The mate will close it soon"
+            flash(str)
+
+
+        elif service.servicestate == 4:
+            service.servicestate = 6
+            str = "The service is closed!"
+            flash(str)
+
+        db.session.add(service)
+        db.session.commit()
+        print service.servicestate
+        return render_template('user_profile.html')
+    return render_template('serviceuserfeedbacks.html', form=form, service=service)
+
 
 @app.route('/closeserviceuser', methods=['GET', 'POST'])
 @app.route('/closeserviceuser/<int:idservice>', methods=['GET', 'POST'])
@@ -146,8 +177,8 @@ def user():
 def listservice():
     form = ResearchServiceForm()
     print(form.errors)
-
-    res= Service.query.all()
+    res = Service.query.filter_by(servicestate=1).all()
+    res = res + Service.query.filter_by( servicestate=2).all()
     for r in res:
         print r.servicecity, r.servicetype
         if form.is_submitted():
@@ -244,9 +275,6 @@ def listservice():
                     else:
                         print "2222"
 
-                        res = Service.query.all()
-
-
         for r in res:
             print r.servicecity, r.servicetype
 
@@ -258,8 +286,8 @@ def listservice():
 def listserviceuser():
     if current_user.role.name == "User":
         res = Service.query.filter_by(user_id=current_user.id, servicestate=1).all()
-        res=res+Service.query.filter_by(user_id=current_user.id, servicestate=2).all()
-        res=res+Service.query.filter_by(user_id=current_user.id, servicestate=3).all()
+        res = res+Service.query.filter_by(user_id=current_user.id, servicestate=2).all()
+        res = res+Service.query.filter_by(user_id=current_user.id, servicestate=3).all()
 
 
     elif current_user.role.name == "Mate":
