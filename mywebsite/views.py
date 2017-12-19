@@ -103,46 +103,33 @@ def feedbackuser(idservice):
         return render_template('user_profile.html')
     return render_template('serviceuserfeedbacks.html', form=form, service=service)
 
-
-@app.route('/closeserviceuser', methods=['GET', 'POST'])
-@app.route('/closeserviceuser/<int:idservice>', methods=['GET', 'POST'])
-def closeserviceuser(idservice):
-    service = Service.query.filter_by(id=idservice).first()
-    print service.servicename
-    if service.servicestate==3:
-        service.servicestate = 4
-        flash = "You've closed the service! The mate will close it soon"
-
-    elif service.servicestate==4:
-        service.servicestate = 6
-        flash = "The service is closed!"
-
-    db.session.add(service)
-    db.session.commit()
-    flash(flash)
-
-    return render_template('user_profile.html')
-
-
-@app.route('/closeservicemate', methods=['GET', 'POST'])
-@app.route('/closeservicemate/<int:idservice>', methods=['GET', 'POST'])
-def closeservicemate(idservice):
+@app.route('/feedbackmate', methods=['GET', 'POST'])
+@app.route('/feedbackmate/<int:idservice>', methods=['GET', 'POST'])
+def feedbackmate(idservice):
     service = Service.query.filter_by(id=idservice).first()
     print service.servicename
 
-    if service.servicestate == 3:
-        service.servicestate = 5
-        flash="You've closed the service! The user will close it soon"
+    form=form = FeedbackForm()
+    if form.validate_on_submit():
+        service.materank = form.rank.data
+        service.matefeedback=form.com.data
 
-    elif service.servicestate == 4:
-        service.servicestate = 6
-        flash = "The service is closed!"
 
-    db.session.add(service)
-    db.session.commit()
-    flash(flash)
+        print service.servicename
+        if service.servicestate == 3:
+            service.servicestate = 5
+            str = "You've closed the service! The user will close it soon"
 
-    return render_template('user_profile.html')
+        elif service.servicestate == 4:
+            service.servicestate = 6
+            str = "The service is closed!"
+
+        db.session.add(service)
+        db.session.commit()
+        print service.servicestate
+        flash(str)
+        return render_template('user_profile.html')
+    return render_template('serviceuserfeedbacks.html', form=form, service=service)
 
 @app.route('/addrequest', methods=['GET', 'POST'])
 @app.route('/addrequest/<int:idservice>/<int:idservicerequester>', methods=['GET', 'POST'])
@@ -288,12 +275,14 @@ def listserviceuser():
         res = Service.query.filter_by(user_id=current_user.id, servicestate=1).all()
         res = res+Service.query.filter_by(user_id=current_user.id, servicestate=2).all()
         res = res+Service.query.filter_by(user_id=current_user.id, servicestate=3).all()
-
+        res = res + Service.query.filter_by(user_id=current_user.id, servicestate=5).all()
 
     elif current_user.role.name == "Mate":
         res = Service.query.filter_by(mate_id=current_user.id, servicestate=1).all()
         res = res + Service.query.filter_by(mate_id=current_user.id, servicestate=2).all()
         res = res + Service.query.filter_by(mate_id=current_user.id, servicestate=3).all()
+        res = res + Service.query.filter_by(mate_id=current_user.id, servicestate=4).all()
+
     for r in res:
         print r.servicecity, r.servicetype
 
