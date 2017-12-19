@@ -60,8 +60,7 @@ def servicepage(idservice, idserviceuser):
     print idservice'''
     service = Service.query.filter_by(id=idservice).first()
     serviceuser= User.query.filter_by(id=idserviceuser).first()
-    '''print serviceuser.username
-    print service.servicename'''
+
     return render_template('service.html', service=service, serviceuser=serviceuser)
 
 @app.route('/servicepageuser', methods=['GET', 'POST'])
@@ -74,6 +73,46 @@ def servicepageuser(idservice):
 
     return render_template('serviceuser.html', service=service)
 
+@app.route('/closeserviceuser', methods=['GET', 'POST'])
+@app.route('/closeserviceuser/<int:idservice>', methods=['GET', 'POST'])
+def closeserviceuser(idservice):
+    service = Service.query.filter_by(id=idservice).first()
+    print service.servicename
+    if service.servicestate==3:
+        service.servicestate = 4
+        flash = "You've closed the service! The mate will close it soon"
+
+    elif service.servicestate==4:
+        service.servicestate = 6
+        flash = "The service is closed!"
+
+    db.session.add(service)
+    db.session.commit()
+    flash(flash)
+
+    return render_template('user_profile.html')
+
+
+@app.route('/closeservicemate', methods=['GET', 'POST'])
+@app.route('/closeservicemate/<int:idservice>', methods=['GET', 'POST'])
+def closeservicemate(idservice):
+    service = Service.query.filter_by(id=idservice).first()
+    print service.servicename
+
+    if service.servicestate == 3:
+        service.servicestate = 5
+        flash="You've closed the service! The user will close it soon"
+
+    elif service.servicestate == 4:
+        service.servicestate = 6
+        flash = "The service is closed!"
+
+    db.session.add(service)
+    db.session.commit()
+    flash(flash)
+
+    return render_template('user_profile.html')
+
 @app.route('/addrequest', methods=['GET', 'POST'])
 @app.route('/addrequest/<int:idservice>/<int:idservicerequester>', methods=['GET', 'POST'])
 def addrequest(idservice, idservicerequester):
@@ -81,6 +120,7 @@ def addrequest(idservice, idservicerequester):
     print service.servicename
     print "The service I juste apply for is", service.servicename
     if service not in current_user.servicerequest:
+        service.servicestate=2
         current_user.servicerequest.append(service)
         db.session.commit()
         flash('Your request was sent to the user', service.user.username)
@@ -217,10 +257,15 @@ def listservice():
 @login_required
 def listserviceuser():
     if current_user.role.name == "User":
-        res = Service.query.filter_by(user_id=current_user.id)
-    elif current_user.role.name == "Mate":
-        res = Service.query.filter_by(mate_id=current_user.id)
+        res = Service.query.filter_by(user_id=current_user.id, servicestate=1).all()
+        res=res+Service.query.filter_by(user_id=current_user.id, servicestate=2).all()
+        res=res+Service.query.filter_by(user_id=current_user.id, servicestate=3).all()
 
+
+    elif current_user.role.name == "Mate":
+        res = Service.query.filter_by(mate_id=current_user.id, servicestate=1).all()
+        res = res + Service.query.filter_by(mate_id=current_user.id, servicestate=2).all()
+        res = res + Service.query.filter_by(mate_id=current_user.id, servicestate=3).all()
     for r in res:
         print r.servicecity, r.servicetype
 
@@ -236,6 +281,7 @@ def pickmate(idservice, idmate):
     mate= User.query.filter_by(id=idmate).first()
     print mate.username,  mate.birthdate
     service.mate = mate
+    service.servicestate = 3
     db.session.add(service)
     db.session.commit()
     '''if service.mate is empty:'''
@@ -346,6 +392,7 @@ def createservice():
                     servicedescription=myForm.servicedescription.data,
                     servicedate=myForm.servicedate.data,
                     servicecity=myForm.servicecity.data,
+                    servicestate = 1,
 
                     user=current_user
 
