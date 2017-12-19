@@ -206,7 +206,6 @@ def listservice():
 
                         res = Service.query.all()
 
-
         for r in res:
             print r.servicecity, r.servicetype
 
