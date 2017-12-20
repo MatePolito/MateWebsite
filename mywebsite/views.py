@@ -100,7 +100,7 @@ def feedbackuser(idservice):
         db.session.add(service)
         db.session.commit()
         print service.servicestate
-        return render_template('user_profile.html')
+        return redirect(url_for('user'))
     return render_template('serviceuserfeedbacks.html', form=form, service=service)
 
 @app.route('/feedbackmate', methods=['GET', 'POST'])
@@ -128,7 +128,7 @@ def feedbackmate(idservice):
         db.session.commit()
         print service.servicestate
         flash(str)
-        return render_template('user_profile.html')
+        return redirect(url_for('user'))
     return render_template('serviceuserfeedbacks.html', form=form, service=service)
 
 @app.route('/addrequest', methods=['GET', 'POST'])
@@ -137,18 +137,19 @@ def addrequest(idservice, idservicerequester):
     service = Service.query.filter_by(id=idservice).first()
     print service.servicename
     print "The service I juste apply for is", service.servicename
-    if service not in current_user.servicerequest:
-        service.servicestate=2
-        current_user.servicerequest.append(service)
-        db.session.commit()
-        flash('Your request was sent to the user', service.user.username)
-        mail = Mail(app)
-    else:
-        print "ola"
-        flash('You already apply')
+    service.servicestate=2
+    current_user.servicerequest.append(service)
+    db.session.commit()
+    flash('Your request was sent to the user', service.user.username)
+    mail = Mail(app)
 
-    return render_template('user_profile.html' )
+    if current_user.role.name=="User":
+        res = Service.query.filter_by(user_id=current_user.id, servicestate=6).all()
 
+    elif current_user.role.name=="Mate":
+        res = Service.query.filter_by(mate_id=current_user.id, servicestate=6).all()
+
+    return render_template('user_profile.html',res=res)
 @app.route('/help')
 def help():
     return render_template('help.html')
@@ -157,7 +158,14 @@ def help():
 @login_required
 def user():
     '''You need to be logged in to access this page'''
-    return render_template('user_profile.html')
+
+    if current_user.role.name=="User":
+        res = Service.query.filter_by(user_id=current_user.id, servicestate=6).all()
+
+    elif current_user.role.name=="Mate":
+        res = Service.query.filter_by(mate_id=current_user.id, servicestate=6).all()
+
+    return render_template('user_profile.html',res=res)
 
 @app.route('/listservice', methods=['GET', 'POST'])
 @login_required
@@ -306,12 +314,8 @@ def pickmate(idservice, idmate):
 
     flash('You have choosen'+mate.username+'for your service'+service.servicename)
 
-    return render_template('user_profile.html' )
+    return redirect(url_for('user'))
 
-@app.route('/test')
-def test():
-    print "ola"
-    return render_template('liste_service.html')
 
 @app.route('/registeruser', methods=['GET', 'POST'])
 def registeruser():
