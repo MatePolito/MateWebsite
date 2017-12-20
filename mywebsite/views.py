@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user
-from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInformationForm, CreateServiceForm, ResearchServiceForm
+from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInformationForm, CreateServiceForm, ResearchServiceForm, FeedbackForm
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm
 from .models import User, Service, Role, Permission
 from flask_login import current_user
@@ -60,8 +60,7 @@ def servicepage(idservice, idserviceuser):
     print idservice'''
     service = Service.query.filter_by(id=idservice).first()
     serviceuser= User.query.filter_by(id=idserviceuser).first()
-    '''print serviceuser.username
-    print service.servicename'''
+
     return render_template('service.html', service=service, serviceuser=serviceuser)
 
 @app.route('/servicepageuser', methods=['GET', 'POST'])
@@ -74,6 +73,64 @@ def servicepageuser(idservice):
 
     return render_template('serviceuser.html', service=service)
 
+@app.route('/feedbackuser', methods=['GET', 'POST'])
+@app.route('/feedbackuser/<int:idservice>', methods=['GET', 'POST'])
+def feedbackuser(idservice):
+    service = Service.query.filter_by(id=idservice).first()
+    print service.servicename
+
+    form=form = FeedbackForm()
+    if form.validate_on_submit():
+        service.userrank = form.rank.data
+        service.userfeedback=form.com.data
+
+
+        print service.servicename
+        if service.servicestate == 3:
+            service.servicestate = 4
+            str = "You've closed the service! The mate will close it soon"
+            flash(str)
+
+
+        elif service.servicestate == 4:
+            service.servicestate = 6
+            str = "The service is closed!"
+            flash(str)
+
+        db.session.add(service)
+        db.session.commit()
+        print service.servicestate
+        return render_template('user_profile.html')
+    return render_template('serviceuserfeedbacks.html', form=form, service=service)
+
+@app.route('/feedbackmate', methods=['GET', 'POST'])
+@app.route('/feedbackmate/<int:idservice>', methods=['GET', 'POST'])
+def feedbackmate(idservice):
+    service = Service.query.filter_by(id=idservice).first()
+    print service.servicename
+
+    form=form = FeedbackForm()
+    if form.validate_on_submit():
+        service.materank = form.rank.data
+        service.matefeedback=form.com.data
+
+
+        print service.servicename
+        if service.servicestate == 3:
+            service.servicestate = 5
+            str = "You've closed the service! The user will close it soon"
+
+        elif service.servicestate == 4:
+            service.servicestate = 6
+            str = "The service is closed!"
+
+        db.session.add(service)
+        db.session.commit()
+        print service.servicestate
+        flash(str)
+        return render_template('user_profile.html')
+    return render_template('serviceuserfeedbacks.html', form=form, service=service)
+
 @app.route('/addrequest', methods=['GET', 'POST'])
 @app.route('/addrequest/<int:idservice>/<int:idservicerequester>', methods=['GET', 'POST'])
 def addrequest(idservice, idservicerequester):
@@ -81,6 +138,7 @@ def addrequest(idservice, idservicerequester):
     print service.servicename
     print "The service I juste apply for is", service.servicename
     if service not in current_user.servicerequest:
+        service.servicestate=2
         current_user.servicerequest.append(service)
         db.session.commit()
         flash('Your request was sent to the user', service.user.username)
@@ -106,8 +164,8 @@ def user():
 def listservice():
     form = ResearchServiceForm()
     print(form.errors)
-
-    res= Service.query.all()
+    res = Service.query.filter_by(servicestate=1).all()
+    res = res + Service.query.filter_by( servicestate=2).all()
     for r in res:
         print r.servicecity, r.servicetype
         if form.is_submitted():
@@ -204,9 +262,6 @@ def listservice():
                     else:
                         print "2222"
 
-                        res = Service.query.all()
-
-
         for r in res:
             print r.servicecity, r.servicetype
 
@@ -217,9 +272,16 @@ def listservice():
 @login_required
 def listserviceuser():
     if current_user.role.name == "User":
-        res = Service.query.filter_by(user_id=current_user.id)
+        res = Service.query.filter_by(user_id=current_user.id, servicestate=1).all()
+        res = res+Service.query.filter_by(user_id=current_user.id, servicestate=2).all()
+        res = res+Service.query.filter_by(user_id=current_user.id, servicestate=3).all()
+        res = res + Service.query.filter_by(user_id=current_user.id, servicestate=5).all()
+
     elif current_user.role.name == "Mate":
-        res = Service.query.filter_by(mate_id=current_user.id)
+        res = Service.query.filter_by(mate_id=current_user.id, servicestate=1).all()
+        res = res + Service.query.filter_by(mate_id=current_user.id, servicestate=2).all()
+        res = res + Service.query.filter_by(mate_id=current_user.id, servicestate=3).all()
+        res = res + Service.query.filter_by(mate_id=current_user.id, servicestate=4).all()
 
     for r in res:
         print r.servicecity, r.servicetype
@@ -236,6 +298,7 @@ def pickmate(idservice, idmate):
     mate= User.query.filter_by(id=idmate).first()
     print mate.username,  mate.birthdate
     service.mate = mate
+    service.servicestate = 3
     db.session.add(service)
     db.session.commit()
     '''if service.mate is empty:'''
@@ -346,6 +409,7 @@ def createservice():
                     servicedescription=myForm.servicedescription.data,
                     servicedate=myForm.servicedate.data,
                     servicecity=myForm.servicecity.data,
+                    servicestate = 1,
 
                     user=current_user
 

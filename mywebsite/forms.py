@@ -83,3 +83,9 @@ class ResearchServiceForm(Form):
     servicedate=DateField("Date of the service", validators=[DataRequired()])
     servicecity=StringField("City of the service", validators=[DataRequired()])
     submit = SubmitField('Create Service')
+
+class FeedbackForm(Form):
+    rank = IntegerField("Rank the service", validators=[DataRequired()])
+    com = TextAreaField('Description du service')
+
+    submit = SubmitField('Give Feedback and close the service')

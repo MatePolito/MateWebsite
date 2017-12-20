@@ -42,7 +42,11 @@
         <p><font size="2">{{ service.servicedate }}</font></p>
         <p><font size="3"><br>Description</font></p>
         <p>{{ service.servicedescription }}</p>
-
+        <div class="col-lg-6 col-lg-offset-3" style="background-color: deepskyblue; border-radius: 100px; padding: 10px">
+            <a href="{{ url_for('addrequest', idservice=service.id, idservicerequester=current_user.id, _external=True) }}" class="download">
+                <font color=white><font size="3"></font><b>Propose your help</b></font></font>
+            </a>
+        </div>
     </div>
     <div class="col-lg-6" style="height: 100%; margin-top: 55px; padding: 15px; padding-top: 30px">
         <img src="static/logo_apply.png" style="width: 200px; height: 200px;">
@@ -59,16 +63,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for i in service.users%}
-                        <tr>
-                            <th scope="row"></th>
-                            <td>{{ i.username}}</td>
-                            <td>{{ i.first_name}}</td>
-                            <td>{{ i.last_name }}</td>
-                            <td>{{ i.birthdate }}</td>
-                            <td><a href="{{ url_for('pickmate', idservice=service.id, idmate=i.id,  _external=True) }}" class="download"><font color=#1e90ff>Pick this mate</font></a></td>
-                        </tr>
-                    {% endfor %}
+
+                    {{ wtf.quick_form(form) }}
                 </tbody>
         </table>
     </div>

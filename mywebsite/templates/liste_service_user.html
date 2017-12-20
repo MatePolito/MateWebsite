@@ -171,10 +171,11 @@
                         <th scope="col">Name</th>
                         <th scope="col">City</th>
                         <th scope="col">Date</th>
-                        <th scope="col">Beginning Hour</th>
                         <th scope="col">Remuneration</th>
                         <th scope="col">Username</th>
+                        <th scope="col">Service state</th>
                         <th>Apply</th>
+                        <th></th>
 
                     </tr>
                 </thead>
@@ -186,10 +187,24 @@
                                     <td>{{ i.servicename}}</td>
                                     <td>{{ i.servicecity}}</td>
                                     <td>{{ i.servicedate }}</td>
-                                    <td>13h20</td>
                                     <td>15€ the service</td>
                                     <td>{{i.user.username }}</td>
-                                    <td><a href="{{ url_for('servicepageuser', idservice=i.id, _external=True) }}" class="download"><font color=#1e90ff>See your service</font></a></td>
+                                    {% if i.servicestate==1%}
+                                        <td> Waiting for mate request</td>
+                                        <td><a href="{{ url_for('servicepageuser', idservice=i.id, _external=True) }}" class="download"><font color=#1e90ff>See your service</font></a></td>
+                                    {% elif i.servicestate==2 %}
+                                        <td> Mate(s) have already applied / waiting for user answer </td>
+                                        <td><a href="{{ url_for('servicepageuser', idservice=i.id, _external=True) }}" class="download"><font color=#1e90ff>Pick Your Mate!</font></a></td>
+                                    {% elif i.servicestate==3 or i.servicestate==4 or i.servicestate==5  %}
+                                        <td> Waiting for closing the service  </td>
+                                        {% if current_user.roleuser.name=="User"%}
+                                            <td><a href="{{ url_for('feedbackuser', idservice=i.id, _external=True) }}" class="download"><font color=#1e90ff> Close the service</font></a></td>
+                                            <td> {{ i.mate.username }} is your mate <br> Contact him: {{ i.mate.phone_number }} </td>
+                                        {% elif current_user.roleuser.name=="Mate"%}
+                                            <td><a href="{{ url_for('feedbackmate', idservice=i.id, _external=True) }}" class="download"><font color=#1e90ff> Close the service</font></a></td>
+                                            <td> {{ i.user.username }} is your mate <br> Contact him: {{ i.user.phone_number }} </td>
+                                        {% endif %}
+                                    {%  endif  %}
 
                         </tr>
                     {% endfor %}
