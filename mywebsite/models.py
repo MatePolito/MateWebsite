@@ -64,7 +64,7 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
 
-class Service(db.Model, UserMixin):
+class Service(db.Model):
     __tablename__ = 'services'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -87,12 +87,6 @@ class Service(db.Model, UserMixin):
 
     mate_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     mate = relationship("User", foreign_keys=[mate_id])
-
-    def get_id(self):
-        return self.username
-
-
-
 
 
 class Role(db.Model):

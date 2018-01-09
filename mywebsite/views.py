@@ -89,13 +89,13 @@ def feedbackuser(idservice):
         if service.servicestate == 3:
             service.servicestate = 4
             str = "You've closed the service! The mate will close it soon"
-            flash(str)
+            flash(str , 'success')
 
 
         elif service.servicestate == 4:
             service.servicestate = 6
             str = "The service is closed!"
-            flash(str)
+            flash(str,'success')
 
         db.session.add(service)
         db.session.commit()
@@ -127,7 +127,7 @@ def feedbackmate(idservice):
         db.session.add(service)
         db.session.commit()
         print service.servicestate
-        flash(str)
+        flash(str,'success')
         return redirect(url_for('user'))
     return render_template('serviceuserfeedbacks.html', form=form, service=service)
 
@@ -140,7 +140,8 @@ def addrequest(idservice, idservicerequester):
     service.servicestate=2
     current_user.servicerequest.append(service)
     db.session.commit()
-    flash('Your request was sent to the user', service.user.username)
+    str= 'Your request was sent to the user '+ service.user.username+' who creates the service '+ service.servicename+ '!'
+    flash(str, 'success')
     mail = Mail(app)
 
     if current_user.role.name=="User":
@@ -150,6 +151,7 @@ def addrequest(idservice, idservicerequester):
         res = Service.query.filter_by(mate_id=current_user.id, servicestate=6).all()
 
     return render_template('user_profile.html',res=res)
+
 @app.route('/help')
 def help():
     return render_template('help.html')
@@ -311,8 +313,8 @@ def pickmate(idservice, idmate):
     db.session.commit()
     '''if service.mate is empty:'''
 
-
-    flash('You have choosen'+mate.username+'for your service'+service.servicename)
+    str='You have choosen'+mate.username+'for your service'+service.servicename
+    flash(str, 'success')
 
     return redirect(url_for('user'))
 
