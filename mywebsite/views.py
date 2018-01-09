@@ -313,7 +313,7 @@ def pickmate(idservice, idmate):
     db.session.commit()
     '''if service.mate is empty:'''
 
-    str='You have choosen'+mate.username+' for your service '+service.servicename
+    str='You have choosen '+mate.username+' for your service '+service.servicename
     flash(str, 'success')
 
     return redirect(url_for('user'))
