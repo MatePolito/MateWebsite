@@ -92,7 +92,7 @@ def feedbackuser(idservice):
             flash(str , 'success')
 
 
-        elif service.servicestate == 4:
+        elif service.servicestate == 5:
             service.servicestate = 6
             str = "The service is closed!"
             flash(str,'success')
