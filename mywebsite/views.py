@@ -4,10 +4,24 @@ from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInforma
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm
 from .models import User, Service, Role, Permission
 from flask_login import current_user
-from flask.ext.mail import Mail
+from flask_mail import Mail, Message
+
+from . import app, db, login_manager, mail
 
 
-from . import app, db, login_manager
+def notification():
+    msg = Message('Hello', sender='julientriquet69@gmail.com', recipients=['julientriquet69@gmail.com'])
+    msg.body = "Hello Flask message sent from Flask-Mail"
+    mail.send(msg)
+    return "Sent"
+
+app.config['FLASKY_MAIL_SENDER'] = 'julientriquet69@gmail.com'
+
+def send_mail(to, subject, template, **kwargs):
+    msg = Message(subject, sender=app.config['FLASKY_MAIL_SENDER'], recipients=[to])
+    msg.body = render_template(template +'.txt', **kwargs)
+    msg.html = render_template(template + '.html', **kwargs)
+    mail.send(msg)
 
 @login_manager.user_loader
 def get_user(username):
@@ -108,6 +122,7 @@ def listservice():
     print(form.errors)
 
     res= Service.query.all()
+    notification()
     for r in res:
         print r.servicecity, r.servicetype
         if form.is_submitted():
@@ -295,10 +310,24 @@ def registeruser():
         db.session.add(user)
         db.session.commit()
         flash('User succesfully registered', 'success')
+        token=user.generate_confirmation_token()
+        send_mail('julientriquet69@gmail.com','Confirm your account','email/confirm',current_user=current_user, token=token)
+        flash('A confirmation auth has been sent to you by email')
         return redirect(url_for('loginuser'))
 
     return render_template('register.html', form=form)
 
+
+@app.route('/confirm/<token>')
+@login_required
+def confirm(token):
+    if current_user.confirmed:
+        return redirect(url_for('loginuser'))
+    if current_user.confirm(token):
+        flash('You have confirm your account. Thanks!')
+    else :
+        flash('The confirmation link is invalid or has expired.')
+    return redirect(url_for('loginuser'))
 
 @app.route('/logout')
 @login_required
