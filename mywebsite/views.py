@@ -313,7 +313,7 @@ def pickmate(idservice, idmate):
     db.session.commit()
     '''if service.mate is empty:'''
 
-    str='You have choosen'+mate.username+'for your service'+service.servicename
+    str='You have choosen'+mate.username+' for your service '+service.servicename
     flash(str, 'success')
 
     return redirect(url_for('user'))
@@ -363,8 +363,13 @@ def registeruser():
         user.password = form.password.data
         db.session.add(user)
         db.session.commit()
-        flash('User succesfully registered', 'success')
-        return redirect(url_for('loginuser'))
+        if (form.choice.data) == '1':
+            flash('User succesfully registered', 'success')
+            return redirect(url_for('loginuser'))
+
+        if (form.choice.data) == '2':
+            flash('Mate succesfully registered', 'success')
+            return redirect(url_for('loginmate'))
 
     return render_template('register.html', form=form)
 
@@ -372,8 +377,13 @@ def registeruser():
 @app.route('/logout')
 @login_required
 def logout():
+
+    if current_user.role.name=="User":
+        flash('User logged out!', 'success')
+    elif current_user.role.name=="Mate":
+        flash('Mate logged out!', 'success')
+
     logout_user()
-    flash('User logged out!', 'success')
     return render_template('homepage.html')
 
 @app.route('/modifyinformation', methods=['GET', 'POST'])
@@ -423,7 +433,8 @@ def createservice():
         db.session.add(service)
         print service.user.username
         db.session.commit()
-        flash('Profile succesfully updated', 'success')
+        str='Service successfully '+ service.servicename+ ' created!'
+        flash(str, 'success')
         return redirect(url_for('user', username=current_user.username))
 
     return render_template('createservice.html', form=myForm)
