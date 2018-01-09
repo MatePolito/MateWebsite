@@ -311,7 +311,7 @@ def registeruser():
         db.session.commit()
         flash('User succesfully registered', 'success')
         token=user.generate_confirmation_token()
-        send_mail('julientriquet69@gmail.com','Confirm your account','email/confirm',current_user=current_user, token=token)
+        send_mail('julientriquet69@gmail.com','Confirm your account','confirm',current_user=current_user, token=token)
         flash('A confirmation auth has been sent to you by email')
         return redirect(url_for('loginuser'))
 
