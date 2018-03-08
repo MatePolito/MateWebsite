@@ -39,10 +39,11 @@ class RegistrationForm(Form):
 class ModifyInformationForm(Form):
     first_name = StringField('First name', render_kw={"placeholder": "Carlo"})
     last_name = StringField('Last name', render_kw={"placeholder": "D'Ambrosio"})
+    birthdate = DateField('Birthdate', render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
+    address = StringField('Address', render_kw={"placeholder": "carlo.dambrosio@gmail.com"})
     phone_number = StringField('Phonenumber', render_kw={"placeholder": "+39610101010"})
     mail = StringField('Mail', render_kw={"placeholder": "carlo.dambrosio@gmail.com"})
-    address = StringField('Address', render_kw={"placeholder": "carlo.dambrosio@gmail.com"})
-    birthdate = DateField('Birthdate', render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
+
     submit = SubmitField('Modify')
 
 
