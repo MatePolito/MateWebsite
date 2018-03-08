@@ -29,13 +29,13 @@
 <div class="row vdivide">
     <div class="col-lg-6" style="height: 100%; text-align: center; padding: 30px; margin-top: 55px">
         {% if service.servicetype == "ht"%}
-            <img src="logo_ht.png" style="width: 200px; height: 200px;">
+            <img src="{{ url_for('static', filename='logo_ht.png') }}" style="width: 200px; height: 200px;">
         {% elif service.servicetype == "st"%}
-            <img src="logo_st.png" style="width: 200px; height: 200px;">
+            <img src="{{ url_for('static', filename='logo_st.png') }}" style="width: 200px; height: 200px;">
         {% elif service.servicetype == "cf"%}
-            <img src="logo_cf.png" style="width: 200px; height: 200px;">
+            <img src="{{ url_for('static', filename='logo_cf.png') }}" style="width: 200px; height: 200px;">
         {% else %}
-            <img src="logo_other.png" style="width: 200px; height: 200px;">
+            <img src="{{ url_for('static', filename='logo_other.png') }}" style="width: 200px; height: 200px;">
         {% endif %}
         <p><font size="5"><br>{{ service.servicename }}</font></p>
         <p><font size="3">{{ service.servicecity }}</font></p>
@@ -45,7 +45,7 @@
 
     </div>
     <div class="col-lg-6" style="height: 100%; margin-top: 55px; padding: 15px; padding-top: 30px">
-        <img src="static/logo_apply.png" style="width: 200px; height: 200px;">
+        <img src="{{ url_for('static', filename='logo_apply.png') }}" style="width: 200px; height: 200px;">
         <p><font size="5"><br>They want to help you !</font></p>
         <table class="table table-responsive" style="width: 90%; margin-left: 5%">
                 <thead>
