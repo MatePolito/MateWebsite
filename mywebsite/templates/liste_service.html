@@ -149,8 +149,8 @@
                     {{ form.hidden_tag() }}
                     <div class="row" style="height:3cm; width: 100%; text-align: center; background-color: skyblue; padding-top: 20px">
                         <div class="col-lg-2 col-lg-offset-1">
-                            <span class="custom-dropdown custom-dropdown--white ">
-                                {{ form.servicetype.label }} {{ form.servicetype(class="custom-dropdown__select custom-dropdown__select--white", style="width: 200px" )}}
+                            <span>
+                                {{ form.servicetype.label }} {{ form.servicetype(class="custom-dropdown__select", style="width: 200px" )}}
                             </span>
                         </div>
                         <div class="col-lg-2">
@@ -162,10 +162,8 @@
                         <div class='col-lg-3 col-lg-offset-1" '>
                             {{ form.servicedate.label }} {{ form.servicedate(class="form-control") }}
                         </div>
-                        <div class="row">
-                            <input type="submit" class="col-lg-1 col-lg-offset-1">
-                                <i class="glyphicon glyphicon-search"></i>
-                                Research
+                        <div style="padding: 29px">
+                            <input type="submit" class="col-lg-1">
                             </input>
                         </div>
                     </div>
