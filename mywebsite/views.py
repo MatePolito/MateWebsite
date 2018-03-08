@@ -10,12 +10,12 @@ from . import app, db, login_manager, mail
 
 
 def notification():
-    msg = Message('Hello', sender='julientriquet69@gmail.com', recipients=['julientriquet69@gmail.com'])
+    msg = Message('Hello', sender='projectworkis1@gmail.com', recipients=current_user.mail)
     msg.body = "Hello Flask message sent from Flask-Mail"
     mail.send(msg)
     return "Sent"
 
-app.config['FLASKY_MAIL_SENDER'] = 'julientriquet69@gmail.com'
+app.config['FLASKY_MAIL_SENDER'] = 'projectworkis1@gmail.com'
 
 def send_mail(to, subject, template, **kwargs):
     msg = Message(subject, sender=app.config['FLASKY_MAIL_SENDER'], recipients=[to])
@@ -311,7 +311,7 @@ def registeruser():
         db.session.commit()
         flash('User succesfully registered', 'success')
         token=user.generate_confirmation_token()
-        send_mail('julientriquet69@gmail.com','Confirm your account','confirm',current_user=current_user, token=token)
+        send_mail(form.mail.data,'Confirm your account','confirm',current_user=current_user, token=token)
         flash('A confirmation auth has been sent to you by email')
         return redirect(url_for('loginuser'))
 

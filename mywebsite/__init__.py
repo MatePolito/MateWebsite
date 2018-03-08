@@ -15,8 +15,8 @@ login_manager.login_view = 'index'
 #Configuration of Flask-Mail for gmail
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'julientriquet69@gmail.com'
-app.config['MAIL_PASSWORD'] = 'postbac69'
+app.config['MAIL_USERNAME'] = 'projectworkis1@gmail.com'
+app.config['MAIL_PASSWORD'] = 'projectwork'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
