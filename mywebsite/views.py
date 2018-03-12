@@ -413,7 +413,7 @@ def modifyinformation():
         db.session.add(current_user)
         db.session.commit()
 
-        flash('Your profile has been updated.')
+        flash('Your profile has been updated.', 'success' )
         return redirect(url_for('user', username=current_user.username))
 
     myForm.first_name.data= current_user.first_name
