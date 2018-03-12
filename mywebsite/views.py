@@ -61,8 +61,7 @@ def loginmate():
 @app.route('/servicepage', methods=['GET', 'POST'])
 @app.route('/servicepage/<int:idservice>/<int:idserviceuser>', methods=['GET', 'POST'])
 def servicepage(idservice, idserviceuser):
-    '''print idserviceuser
-    print idservice'''
+
     service = Service.query.filter_by(id=idservice).first()
     serviceuser= User.query.filter_by(id=idserviceuser).first()
 
@@ -72,7 +71,6 @@ def servicepage(idservice, idserviceuser):
 @app.route('/servicepageuser/<int:idservice>', methods=['GET', 'POST'])
 def servicepageuser(idservice):
     service = Service.query.filter_by(id=idservice).first()
-    print service.servicename
     for i in service.users:
         i.username
 
@@ -82,7 +80,6 @@ def servicepageuser(idservice):
 @app.route('/feedbackuser/<int:idservice>', methods=['GET', 'POST'])
 def feedbackuser(idservice):
     service = Service.query.filter_by(id=idservice).first()
-    print service.servicename
 
     form=form = FeedbackForm()
     if form.validate_on_submit():
@@ -90,7 +87,6 @@ def feedbackuser(idservice):
         service.userfeedback=form.com.data
 
 
-        print service.servicename
         if service.servicestate == 3:
             service.servicestate = 4
             str = "You've closed the service! The mate will close it soon"
@@ -104,7 +100,6 @@ def feedbackuser(idservice):
 
         db.session.add(service)
         db.session.commit()
-        print service.servicestate
         return redirect(url_for('user'))
     return render_template('serviceuserfeedbacks.html', form=form, service=service)
 
@@ -112,7 +107,6 @@ def feedbackuser(idservice):
 @app.route('/feedbackmate/<int:idservice>', methods=['GET', 'POST'])
 def feedbackmate(idservice):
     service = Service.query.filter_by(id=idservice).first()
-    print service.servicename
 
     form=form = FeedbackForm()
     if form.validate_on_submit():
@@ -120,7 +114,6 @@ def feedbackmate(idservice):
         service.matefeedback=form.com.data
 
 
-        print service.servicename
         if service.servicestate == 3:
             service.servicestate = 5
             str = "You've closed the service! The user will close it soon"
@@ -131,7 +124,6 @@ def feedbackmate(idservice):
 
         db.session.add(service)
         db.session.commit()
-        print service.servicestate
         flash(str,'success')
         return redirect(url_for('user'))
     return render_template('serviceuserfeedbacks.html', form=form, service=service)
@@ -140,8 +132,6 @@ def feedbackmate(idservice):
 @app.route('/addrequest/<int:idservice>/<int:idservicerequester>', methods=['GET', 'POST'])
 def addrequest(idservice, idservicerequester):
     service = Service.query.filter_by(id=idservice).first()
-    print service.servicename
-    print "The service I juste apply for is", service.servicename
     service.servicestate=2
     current_user.servicerequest.append(service)
     db.session.commit()
@@ -178,9 +168,6 @@ def user():
 @login_required
 def listservice():
     form = ResearchServiceForm()
-    print(form.errors)
-    if form.is_submitted():
-        print "Ola",form.servicecity.data
 
     res = Service.query.filter_by(servicestate=1).all()
     res = res + Service.query.filter_by(servicestate=2).all()
@@ -242,10 +229,6 @@ def listservice():
                     res = Service.query.filter_by(servicetype=form.servicetype.data, servicedate=form.servicedate.data, servicestate=1).all()
                     res = res + Service.query.filter_by(servicetype=form.servicetype.data, servicedate=form.servicedate.data, servicestate=2).all()
 
-                    '''for i in test:
-                       if(i.servicedate==form.servicedate.data):
-                           print i.servicestate
-                           res.append(i)       '''
 
                     for i in res:
                         print i.servicename
@@ -344,12 +327,9 @@ def listserviceuser():
 @app.route('/pickmate', methods=['GET', 'POST'])
 @app.route('/pickmate/<int:idservice>/<int:idmate>', methods=['GET', 'POST'])
 def pickmate(idservice, idmate):
-    print idservice
-    print idmate
+
     service = Service.query.filter_by(id=idservice).first()
-    print service.servicename
     mate= User.query.filter_by(id=idmate).first()
-    print mate.username,  mate.birthdate
     service.mate = mate
     service.servicestate = 3
     db.session.add(service)
@@ -376,15 +356,12 @@ def registeruser():
     db.session.commit()
 
     if form.validate_on_submit():
-        print form.choice.data
         if (form.choice.data) == '1':
             role = Role.query.filter_by(name="User").first()
 
         if (form.choice.data) == '2':
             role = Role.query.filter_by(name="Mate").first()
 
-        print role
-        print role.name
         user = User(first_name=form.first_name.data,
                     last_name=form.last_name.data,
                     username=form.username.data,
@@ -466,7 +443,6 @@ def createservice():
 
                     )
         db.session.add(service)
-        print service.user.username
         db.session.commit()
         str='Service ' + service.servicename+ ' successfully created!'
         flash(str, 'success')
