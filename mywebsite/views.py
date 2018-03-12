@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInformationForm, CreateServiceForm, ResearchServiceForm, FeedbackForm
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm
-from .models import User, Service, Role, Permission
+from .models import User, Service, Role
 from flask_login import current_user
 from flask.ext.mail import Mail
 
@@ -28,13 +28,16 @@ def loginuser():
     if myForm.validate_on_submit():
         # we are certain user exists because of the username validator of LoginForm
         user = get_user(myForm.username.data)
-        if user.check_password(myForm.password.data):
-            # login the user, then redirect to his user page
-            login_user(user)
-            flash('User logged in!', 'success')
-            return redirect(url_for('user'))
-        else:
-            flash('Incorrect password!', 'danger')
+        if user.roleuser.name=="User":
+            if user.check_password(myForm.password.data):
+                # login the user, then redirect to his user page
+                login_user(user)
+                flash('User logged in!', 'success')
+                return redirect(url_for('user'))
+            else:
+                flash('Incorrect password!', 'danger')
+        elif user.roleuser.name=="Mate":
+            flash("You're a mate, not a user! Login through the mate page ;)", 'danger')
     return render_template('loginuser.html', form=myForm)
 
 @app.route('/loginmate', methods=['GET', 'POST'])
@@ -43,14 +46,16 @@ def loginmate():
     if myForm.validate_on_submit():
         # we are certain user exists because of the username validator of LoginForm
         user = get_user(myForm.username.data)
-        if user.check_password(myForm.password.data):
-            # login the user, then redirect to his user page
-            login_user(user)
-            flash('Mate logged in!', 'success')
-            return redirect(url_for('user'))
-        else:
-            flash('Incorrect password!', 'danger')
-
+        if user.roleuser.name == "Mate":
+            if user.check_password(myForm.password.data):
+                # login the user, then redirect to his user page
+                login_user(user)
+                flash('Mate logged in!', 'success')
+                return redirect(url_for('user'))
+            else:
+                flash('Incorrect password!', 'danger')
+        elif user.roleuser.name == "User":
+            flash("You're a User, not a Mate! Login through the User page ;)", 'danger')
     return render_template('loginmate.html', form=myForm)
 
 @app.route('/servicepage', methods=['GET', 'POST'])
@@ -361,25 +366,17 @@ def pickmate(idservice, idmate):
 def registeruser():
     form = RegistrationForm()
     roles = {
-        'User': (Permission.FOLLOW |
-                 Permission.COMMENT |
-                 Permission.WRITE_ARTICLES, True),
-        'Mate': (Permission.FOLLOW |
-                      Permission.COMMENT |
-                      Permission.WRITE_ARTICLES |
-                      Permission.MODERATE_COMMENTS, False),
-        'Administrator': (0xff, False)
+        'User','Mate'
     }
     for r in roles:
         role = Role.query.filter_by(name=r).first()
         if role is None:
             role = Role(name=r)
-        role.permissions = roles[r][0]
-        role.default = roles[r][1]
         db.session.add(role)
     db.session.commit()
 
     if form.validate_on_submit():
+        print form.choice.data
         if (form.choice.data) == '1':
             role = Role.query.filter_by(name="User").first()
 
@@ -471,7 +468,7 @@ def createservice():
         db.session.add(service)
         print service.user.username
         db.session.commit()
-        str='Service successfully '+ service.servicename+ ' created!'
+        str='Service ' + service.servicename+ ' successfully created!'
         flash(str, 'success')
         return redirect(url_for('user', username=current_user.username))
 
