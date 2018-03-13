@@ -1,0 +1,13 @@
+Dear {{current_user.username }},
+
+Welcome on Mate!
+
+To confirm your account, please click on the following link:
+
+{{url_for('confirm', token=token, _external=True) }}
+
+Sincerely,
+
+The Mate team
+
+Note: This email was automatically sent. Do not respond to it.
