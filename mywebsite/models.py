@@ -39,18 +39,18 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String, nullable=False, unique=True, index=True)
     password_hash = db.Column(db.String, nullable=False)
 
-    #Token generation and verfication
+    #Token generation and verification
     confirmed = db.Column(db.Boolean, default=False)
 
     #Generation of a token with a default validity of one hour
-    def generate_confirmation_token(self, expiration = 3600):
-        s= Serializer(current_app.config['SECRET_KEY'], expiration)
+    def generate_confirmation_token(self, expiration=3600):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
         return s.dumps({'confirm': self.id})
 
     #Verification of the token
     def confirm(self, token):
-        s= Serializer(current_app.config['SECRET_KEY'])
-        try :
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
             #Verification the signature and the expiration time
             data = s.loads(token)
         except:
@@ -58,7 +58,7 @@ class User(db.Model, UserMixin):
             #Check the match between the id from the token and the user logged in
         if data.get('confirm') != self.id:
             return False
-        self.confirm= True
+        self.confirmed = True
         db.session.add(self)
         return True
 

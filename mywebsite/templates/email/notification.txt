@@ -1,0 +1,10 @@
+Dear {{current_user.username }},
+
+Congratulations !
+Your service {{ service.servicename }} has been successfully created !
+
+Sincerely,
+
+The Mate team
+
+Note: This email was automatically sent. Do not respond to it.

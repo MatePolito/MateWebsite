@@ -11,7 +11,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 # this is the login view users will be redirected to if they are not logged in and they try to access a private page
-login_manager.login_view = 'index'
+login_manager.login_view = 'loginuser'
 #Configuration of Flask-Mail for gmail
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465

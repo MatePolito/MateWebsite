@@ -5,13 +5,14 @@ from .forms import LoginUserForm, RegistrationForm, LoginMateForm
 from .models import User, Service, Role, Permission
 from flask_login import current_user
 from flask_mail import Mail, Message
+from flask import request
 
 from . import app, db, login_manager, mail
 
 
 def notification():
     msg = Message('Hello', sender='projectworkis1@gmail.com', recipients=current_user.mail)
-    msg.body = "Hello Flask message sent from Flask-Mail"
+    msg.body = "Hello, you just reveived a message from Mate"
     mail.send(msg)
     return "Sent"
 
@@ -309,10 +310,10 @@ def registeruser():
         user.password = form.password.data
         db.session.add(user)
         db.session.commit()
-        flash('User succesfully registered', 'success')
+        '''flash('User succesfully registered', 'success')'''
         token=user.generate_confirmation_token()
-        send_mail(form.mail.data,'Confirm your account','confirm',current_user=current_user, token=token)
-        flash('A confirmation auth has been sent to you by email')
+        send_mail(form.mail.data,'Confirm your account','email/confirm',current_user=current_user, token=token)
+        flash('A confirmation email has been sent to you. To validate your registration, please click on the link in the mail')
         return redirect(url_for('loginuser'))
 
     return render_template('register.html', form=form)
@@ -324,7 +325,7 @@ def confirm(token):
     if current_user.confirmed:
         return redirect(url_for('loginuser'))
     if current_user.confirm(token):
-        flash('You have confirm your account. Thanks!')
+        flash('You have confirmed your account. Thanks!')
     else :
         flash('The confirmation link is invalid or has expired.')
     return redirect(url_for('loginuser'))
@@ -383,6 +384,8 @@ def createservice():
         print service.user.username
         db.session.commit()
         flash('Profile succesfully updated', 'success')
+        notification()
+        flash('A email to confirm the creation of the service has been sent to you')
         return redirect(url_for('user', username=current_user.username))
 
     return render_template('createservice.html', form=myForm)

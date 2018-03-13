@@ -1,3 +1,0 @@
-Dear {{current_user.username }},
-
-{{url_for('confirm', token=token, _external=True) }}
