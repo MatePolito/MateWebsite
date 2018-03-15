@@ -1,0 +1,17 @@
+Dear {{current_user.username }},
+
+You have successfully updated your profile.
+
+Your new personal data are :
+- first name : {{current_user.first_name}}
+- last name : {{current_user.last_name}}
+- phone number : {{current_user.phone_number}}
+- email address : {{current_user.mail}}
+- address : {{current_user.address}}
+- birthdate : {{current_user.birthdate}}
+
+Sincerely,
+
+The Mate team
+
+Note: This email was automatically sent. Do not respond to it.
