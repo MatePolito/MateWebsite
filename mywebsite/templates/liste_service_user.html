@@ -184,7 +184,7 @@
                                         <td> Waiting for mate request</td>
                                         <td><a href="{{ url_for('servicepageuser', idservice=i.id, _external=True) }}" class="download"><font color=#1e90ff>See your service</font></a></td>
                                     {% elif i.servicestate==2 %}
-                                        <td> Mate(s) have already applied / waiting for your answer </td>
+                                        <td> Mate(s) have already applied / waiting for user answer </td>
                                         <td><a href="{{ url_for('servicepageuser', idservice=i.id, _external=True) }}" class="download"><font color=#1e90ff>Pick Your Mate!</font></a></td>
                                     {% elif i.servicestate==3 or i.servicestate==4 or i.servicestate==5  %}
                                         <td> Waiting for closing the service  </td>

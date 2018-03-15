@@ -1,4 +1,4 @@
-f{% extends "base.html" %}
+{% extends "base.html" %}
 
 {% block head %}
     <meta charset="utf-8">
@@ -34,8 +34,9 @@ f{% extends "base.html" %}
             <h3>Contact Informations</h3>
             <p> Address: {{ current_user.address }} </p>
             <p> Phone number: {{ current_user.phone_number }}</p>
-            <p> Mail: {{ current_user.mail }} </p>
+            <p> Mail: {{ current_user.mail }} {{ current_user.roleuser.name }} </p>
             <hr>
+            <a class="download col-lg-10 col-lg-offset-1 container" style="background-color: white; height: 30px; padding:  5px; border-radius: 5px" href="modifpassword.html"><font {% if current_user.role.name=="User" %}color=#1e90ff{% elif current_user.role.name=="Mate" %}color=orange{% endif %}>Change password</font></a>
             <a class="download col-lg-10 col-lg-offset-1 container" style="background-color: white; height: 30px; padding:  5px; margin-top: 10px; border-radius: 5px" href="{{ url_for('modifyinformation') }}"><font {% if current_user.role.name=="User" %}color=#1e90ff{% elif current_user.role.name=="Mate" %}color=orange{% endif %}>Modify your informations</font></a>
         </div>
         <div class="col-lg-9" style="text-align: center; margin-left: -15px">
@@ -90,16 +91,12 @@ f{% extends "base.html" %}
                         See your work-in progress services
                     </button>
                 </a>
-
-                {% if current_user.role.name=="User" %}
-
-                    <a class="col-lg-3 col-lg-offset-1" href="{{ url_for('createservice') }}" style="background-color: white">
-                        <button  type="button" class="btn btn-default center-block">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                            Create a service
-                        </button>
-                    </a>
-                {% endif %}
+                <a class="col-lg-3 col-lg-offset-1" href="{{ url_for('createservice') }}" style="background-color: white">
+                    <button  type="button" class="btn btn-default center-block">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        Create a service
+                    </button>
+                </a>
             </div>
         </div>
     </div>
