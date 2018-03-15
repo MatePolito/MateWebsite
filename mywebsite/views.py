@@ -148,9 +148,9 @@ def addrequest(idservice, idservicerequester):
     db.session.commit()
     str= 'Your request was sent to the user '+ service.user.username+' who creates the service '+ service.servicename+ '!'
     flash(str, 'success')
-    send_mail(current_user.mail, 'Service request', 'email/servicerequest', current_user=current_user,
-              service=service)
+    send_mail(current_user.mail, 'Service request', 'email/servicerequest', current_user=current_user, service=service)
     flash('You just received an email confirming your will to request a service', 'success')
+    send_mail(service.user.mail, 'Service request', 'email/servicerequest2', current_user=current_user, service=service)
 
     if current_user.role.name=="User":
         res = Service.query.filter_by(user_id=current_user.id, servicestate=6).all()
@@ -351,6 +351,8 @@ def pickmate(idservice, idmate):
 
     str='You have choosen '+mate.username+' for your service '+service.servicename
     flash(str, 'success')
+    send_mail(current_user.mail, 'Creation of the service', 'email/servicecreation', current_user=current_user,service=service)
+    flash('You just received an email confirming the creation of your service', 'success')
 
     return redirect(url_for('user'))
 
@@ -404,16 +406,25 @@ def registeruser():
 
     return render_template('register.html', form=form)
 
-@app.route('/confirm/<token>')
+@app.route('/email/confirm/<token>')
 @login_required
 def confirm(token):
-    if current_user.confirmed:
+    if user.roleuser.name =='User':
+        if user.confirmed:
+            return redirect(url_for('loginuser'))
+        if user.confirm(token):
+            flash('You have confirmed your account. Thanks!', 'success')
+        else :
+            flash('The confirmation link is invalid or has expired.','danger')
         return redirect(url_for('loginuser'))
-    if current_user.confirm(token):
-        flash('You have confirmed your account. Thanks!')
-    else :
-        flash('The confirmation link is invalid or has expired.')
-    return redirect(url_for('loginuser'))
+    elif user.role.name=='Mate':
+        if user.confirmed:
+            return redirect(url_for('loginmate'))
+        if user.confirm(token):
+            flash('You have confirmed your account. Thanks!', 'success')
+        else :
+            flash('The confirmation link is invalid or has expired.','danger')
+        return redirect(url_for('loginmate'))
 
 @app.route('/logout')
 @login_required

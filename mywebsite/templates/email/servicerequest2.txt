@@ -1,0 +1,11 @@
+Dear {{user.username }},
+
+A mate just applied to your service.
+
+Please go on the website if you want to confirm this mate to fulfill your service {{service.servicename}}.
+
+Sincerely,
+
+The Mate team
+
+Note: This email was automatically sent. Do not respond to it.
