@@ -111,6 +111,7 @@ def feedbackuser(idservice):
 
         db.session.add(service)
         db.session.commit()
+        send_mail(service.mate.mail, 'Watch your feedbacks', 'email/feedbackmate', user=user, service=service)
         return redirect(url_for('user'))
     return render_template('serviceuserfeedbacks.html', form=form, service=service)
 
@@ -136,6 +137,7 @@ def feedbackmate(idservice):
         db.session.add(service)
         db.session.commit()
         flash(str,'success')
+        send_mail(service.user.mail, 'Watch your feedbacks', 'email/feedbackuser', user=user, service=service)
         return redirect(url_for('user'))
     return render_template('serviceuserfeedbacks.html', form=form, service=service)
 
@@ -148,9 +150,9 @@ def addrequest(idservice, idservicerequester):
     db.session.commit()
     str= 'Your request was sent to the user '+ service.user.username+' who creates the service '+ service.servicename+ '!'
     flash(str, 'success')
-    send_mail(current_user.mail, 'Service request', 'email/servicerequest', current_user=current_user, service=service)
-    flash('You just received an email confirming your will to request a service', 'success')
-    send_mail(service.user.mail, 'Service request', 'email/servicerequest2', current_user=current_user, service=service)
+    send_mail(current_user.mail, 'Service request', 'email/servicerequest', user=user, service=service)
+    flash('You just received an email confirming your will to realize a service', 'success')
+    send_mail(service.user.mail, 'Service request', 'email/servicerequest2', user=user, service=service)
 
     if current_user.role.name=="User":
         res = Service.query.filter_by(user_id=current_user.id, servicestate=6).all()
@@ -351,8 +353,9 @@ def pickmate(idservice, idmate):
 
     str='You have choosen '+mate.username+' for your service '+service.servicename
     flash(str, 'success')
-    send_mail(current_user.mail, 'Creation of the service', 'email/servicecreation', current_user=current_user,service=service)
-    flash('You just received an email confirming the creation of your service', 'success')
+    send_mail(current_user.mail, 'Mate chosen', 'email/pickmate', current_user=current_user,service=service)
+    flash('You just received an email confirming your mate choice and his/her coordinates', 'success')
+    send_mail(service.mate.mail, 'You are a mate !!!', 'email/pickmate2', user=user, service=service)
 
     return redirect(url_for('user'))
 
@@ -418,7 +421,6 @@ def confirm(token):
             flash('The confirmation link is invalid or has expired.','danger')
         return redirect(url_for('loginuser'))
     elif current_user.roleuser=='Mate':
-        print 'on est dans mate'
         if current_user.confirmed:
             return redirect(url_for('loginmate'))
         if current_user.confirm(token):

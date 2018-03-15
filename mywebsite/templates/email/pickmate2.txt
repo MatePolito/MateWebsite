@@ -1,0 +1,15 @@
+Dear {{service.mate.username }},
+
+The user {{service.user.username}} picked you as his/her mate for the fulfillment of its service {{service.servicename}}.
+
+Here his/her coordinates in order to contact him/her:
+- First name : {{service.user.first_name}}
+- Last name : {{service.user.last_name}}
+- Phone number : {{service.user.phone_number}}
+- Mail : {{service.user.mail}}
+
+Sincerely,
+
+The Mate team
+
+Note: This email was automatically sent. Do not respond to it.

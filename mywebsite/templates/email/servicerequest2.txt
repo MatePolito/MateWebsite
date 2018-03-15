@@ -1,8 +1,8 @@
-Dear {{user.username }},
+Dear {{service.user.username }},
 
 A mate just applied to your service.
 
-Please go on the website if you want to confirm this mate to fulfill your service {{service.servicename}}.
+Please go on the website if you want to confirm this mate as service provider of your service : {{service.servicename}}.
 
 Sincerely,
 
