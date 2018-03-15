@@ -9,7 +9,7 @@ from flask_mail import Mail, Message
 from flask import request
 
 from . import app, db, login_manager, mail
-
+#Notification
 def notification():
     msg = Message('Hello', sender='projectworkis1@gmail.com', recipients=current_user.mail)
     msg.body = "Hello, you just reveived a message from Mate"
