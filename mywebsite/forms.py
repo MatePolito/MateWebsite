@@ -1,6 +1,6 @@
 from flask_wtf import Form
 from wtforms import StringField, IntegerField, SubmitField, PasswordField, DateField, TextAreaField, SelectField, DateTimeField, RadioField
-from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, ValidationError
+from wtforms.validators import DataRequired, NumberRange, Length, EqualTo, ValidationError, Email
 from .models import User
 from flask import Flask, render_template
 from flask_wtf import Form
@@ -22,7 +22,7 @@ class RegistrationForm(Form):
     first_name = StringField('First name', validators=[DataRequired()], render_kw={"placeholder": "Carlo"})
     last_name = StringField('Last name', validators=[DataRequired()], render_kw={"placeholder": "D'Ambrosio"})
     username = StringField('Username', validators=[DataRequired(), Length(min=4)], render_kw={"placeholder": "Carlo1995"})
-    phone_number = StringField('Phonenumber', validators=[DataRequired()], render_kw={"placeholder": "+39610101010"})
+    phone_number = StringField('Phonenumber', validators=[DataRequired(), Email(message=None)], render_kw={"placeholder": "+39610101010"})
     mail = StringField('Mail', validators=[DataRequired()], render_kw={"placeholder": "carlo.dambrosio@gmail.com"})
     address = StringField('Address', validators=[DataRequired()], render_kw={"placeholder": "Torino"})
     birthdate=DateField('Birthdate', validators=[DataRequired()], render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
@@ -86,7 +86,7 @@ class ResearchServiceForm(Form):
     submit = SubmitField('Create Service')
 
 class FeedbackForm(Form):
-    rank = IntegerField("Rank the service", validators=[DataRequired()])
+    rank = IntegerField("Rank the service from 1 to 5", validators=[NumberRange(min=1), NumberRange(max=5) ], render_kw={"placeholder": "1 - 5"})
     com = TextAreaField('Description du service')
 
     submit = SubmitField('Give Feedback and close the service')
