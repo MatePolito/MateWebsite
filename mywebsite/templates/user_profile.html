@@ -51,7 +51,7 @@ f{% extends "base.html" %}
                         <th scope="col">Name</th>
                         <th scope="col">City</th>
                         <th scope="col">Date</th>
-                        <th scope="col">Remuneration</th>
+                        <th scope="col">Estimated time</th>
                         {% if current_user.role.name=="User" %}
                             <th scope="col"> The Mate </th>
                         {% elif current_user.role.name=="Mate": %}
@@ -66,7 +66,7 @@ f{% extends "base.html" %}
                             <td>{{ i.servicename}}</td>
                             <td>{{ i.servicecity}}</td>
                             <td>{{ i.servicedate }}</td>
-                            <td>15€ the service</td>
+                            <td>{{ i.servicetime }}</td>
                             {% if current_user.role.name=="User" %}
                                 <td>{{i.user.username }}</td>
                             {% elif current_user.role.name=="Mate": %}
