@@ -1,0 +1,12 @@
+Dear {{current_user.username }},
+
+You have successfully created the service : {{service.servicename}}.
+
+You will receive an email when someone books the service.
+Then, you will have to choose your MATE.
+
+Sincerely,
+
+The Mate team
+
+Note: This email was automatically sent. Do not respond to it.

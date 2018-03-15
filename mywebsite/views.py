@@ -9,12 +9,6 @@ from flask_mail import Mail, Message
 from flask import request
 
 from . import app, db, login_manager, mail
-#Notification
-def notification():
-    msg = Message('Hello', sender='projectworkis1@gmail.com', recipients=current_user.mail)
-    msg.body = "Hello, you just reveived a message from Mate"
-    mail.send(msg)
-    return "Sent"
 
 app.config['FLASKY_MAIL_SENDER'] = 'projectworkis1@gmail.com'
 
@@ -152,7 +146,9 @@ def addrequest(idservice, idservicerequester):
     db.session.commit()
     str= 'Your request was sent to the user '+ service.user.username+' who creates the service '+ service.servicename+ '!'
     flash(str, 'success')
-    mail = Mail(app)
+    send_mail(current_user.mail, 'Service request', 'email/servicerequest', current_user=current_user,
+              service=service)
+    flash('You just received an email confirming your will to request a service', 'success')
 
     if current_user.role.name=="User":
         res = Service.query.filter_by(user_id=current_user.id, servicestate=6).all()
@@ -393,15 +389,15 @@ def registeruser():
         if (form.choice.data) == '1':
             flash('User succesfully registered', 'success')
             token = user.generate_confirmation_token()
-            send_mail(form.mail.data, 'Confirm your account', 'email/confirm', current_user=current_user, token=token)
-            flash('A confirmation email has been sent to you. To validate your registration, please click on the link in the mail')
+            send_mail(form.mail.data, 'Confirm your account', 'email/confirm', user=user, token=token)
+            flash('A confirmation email has been sent to you. To validate your registration, please click on the link in the mail', 'success')
             return redirect(url_for('loginuser'))
 
         if (form.choice.data) == '2':
             flash('Mate succesfully registered', 'success')
             token = user.generate_confirmation_token()
-            send_mail(form.mail.data, 'Confirm your account', 'email/confirm', current_user=current_user, token=token)
-            flash('A confirmation email has been sent to you. To validate your registration, please click on the link in the mail')
+            send_mail(form.mail.data, 'Confirm your account', 'email/confirm', user=user, token=token)
+            flash('A confirmation email has been sent to you. To validate your registration, please click on the link in the mail', 'success')
             return redirect(url_for('loginmate'))
 
     return render_template('register.html', form=form)
@@ -429,7 +425,7 @@ def logout():
     logout_user()
     return render_template('homepage.html')
 
-@app.route('/modifyinformation', methods=['GET', 'POST'])
+@app.route('/modifyinformation.txt', methods=['GET', 'POST'])
 @login_required
 def modifyinformation():
     myForm = ModifyInformationForm()
@@ -445,12 +441,15 @@ def modifyinformation():
         db.session.commit()
 
         flash('Your profile has been updated.', 'success' )
+        send_mail(current_user.mail, 'Profile updated ', 'email/modifyinformation', current_user=current_user)
+        flash('You received an email with the modifications done to your profile', 'success')
         return redirect(url_for('user', username=current_user.username))
 
     myForm.first_name.data= current_user.first_name
     myForm.last_name.data = current_user.last_name
     myForm.phone_number.data = current_user.phone_number
-    myForm.mail.data = current_user.mail
+    myForm.mail.data = current_user.\
+        mail
     myForm.address.data = current_user.address
     myForm.birthdate.data = current_user.birthdate
 
@@ -477,6 +476,8 @@ def createservice():
         db.session.commit()
         str='Service ' + service.servicename+ ' successfully created!'
         flash(str, 'success')
+        send_mail(current_user.mail, 'Creation of the service', 'email/servicecreation', current_user=current_user, service=service)
+        flash('You just received an email confirming the creation of your service', 'success')
         return redirect(url_for('user', username=current_user.username))
 
     return render_template('createservice.html', form=myForm)
