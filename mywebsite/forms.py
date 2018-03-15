@@ -5,8 +5,9 @@ from .models import User
 from flask import Flask, render_template
 from flask_wtf import Form
 from wtforms import DateField
-from datetime import date
+from datetime import datetime
 from wtforms import fields, widgets
+from datetime import date
 
 class NameForm(Form):
     first_name = StringField('First name', validators=[DataRequired()])
@@ -76,16 +77,18 @@ class LoginMateForm(Form):
         if user is None:
             raise ValidationError('Mate name does not exist')
 
+def datep(form, field):
+        if  field.data<date.today():
+            raise ValidationError('Error')
 
 
 class CreateServiceForm(Form):
     servicetype = SelectField('Type of Service', choices=[('ht', 'Home task'), ('st', 'Shopping task'), ('cf', 'Car fare')])
     servicename = StringField("Name of the service", validators=[DataRequired()], render_kw={"placeholder": "Help in doing shopping task"})
     servicedescription = TextAreaField('Description du service')
-    servicedate=DateField("Date of the service", validators=[DataRequired()], render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
+    servicedate=DateField("Date of the service", validators=[DataRequired(),datep], render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
     servicecity=StringField("City of the service", validators=[DataRequired()], render_kw={"placeholder": "Torino"})
-    servicebeg=DateTimeField("Estimated Beginning (hour) ",format='%H:%M', validators=[DataRequired()], render_kw={"placeholder": "1"})
-
+    servicebeg=DateTimeField("Estimated Beginning (hour) ",format='%H:%M', validators=[DataRequired()], render_kw={"placeholder": "15:00"})
     servicetime=IntegerField("Estimated Time (hour) ", validators=[DataRequired()], render_kw={"placeholder": "1"})
     submit = SubmitField('Create Service')
 
