@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm, ModifyInformationForm, CreateServiceForm, ResearchServiceForm, FeedbackForm
 from .forms import LoginUserForm, RegistrationForm, LoginMateForm
-from .models import User, Service, Role, Permission
+from .models import User, Service, Role
 from flask_login import current_user
 from flask.ext.mail import Mail
 from flask_mail import Mail, Message
@@ -43,13 +43,16 @@ def loginuser():
     if myForm.validate_on_submit():
         # we are certain user exists because of the username validator of LoginForm
         user = get_user(myForm.username.data)
-        if user.check_password(myForm.password.data):
-            # login the user, then redirect to his user page
-            login_user(user)
-            flash('User logged in!', 'success')
-            return redirect(url_for('user'))
-        else:
-            flash('Incorrect password!', 'danger')
+        if user.roleuser.name=="User":
+            if user.check_password(myForm.password.data):
+                # login the user, then redirect to his user page
+                login_user(user)
+                flash('User logged in!', 'success')
+                return redirect(url_for('user'))
+            else:
+                flash('Incorrect password!', 'danger')
+        elif user.roleuser.name=="Mate":
+            flash("You're a mate, not a user! Login through the mate page ;)", 'danger')
     return render_template('loginuser.html', form=myForm)
 
 @app.route('/loginmate', methods=['GET', 'POST'])
@@ -58,21 +61,22 @@ def loginmate():
     if myForm.validate_on_submit():
         # we are certain user exists because of the username validator of LoginForm
         user = get_user(myForm.username.data)
-        if user.check_password(myForm.password.data):
-            # login the user, then redirect to his user page
-            login_user(user)
-            flash('Mate logged in!', 'success')
-            return redirect(url_for('user'))
-        else:
-            flash('Incorrect password!', 'danger')
-
+        if user.roleuser.name == "Mate":
+            if user.check_password(myForm.password.data):
+                # login the user, then redirect to his user page
+                login_user(user)
+                flash('Mate logged in!', 'success')
+                return redirect(url_for('user'))
+            else:
+                flash('Incorrect password!', 'danger')
+        elif user.roleuser.name == "User":
+            flash("You're a User, not a Mate! Login through the User page ;)", 'danger')
     return render_template('loginmate.html', form=myForm)
 
 @app.route('/servicepage', methods=['GET', 'POST'])
 @app.route('/servicepage/<int:idservice>/<int:idserviceuser>', methods=['GET', 'POST'])
 def servicepage(idservice, idserviceuser):
-    '''print idserviceuser
-    print idservice'''
+
     service = Service.query.filter_by(id=idservice).first()
     serviceuser= User.query.filter_by(id=idserviceuser).first()
 
@@ -82,7 +86,6 @@ def servicepage(idservice, idserviceuser):
 @app.route('/servicepageuser/<int:idservice>', methods=['GET', 'POST'])
 def servicepageuser(idservice):
     service = Service.query.filter_by(id=idservice).first()
-    print service.servicename
     for i in service.users:
         i.username
 
@@ -92,7 +95,6 @@ def servicepageuser(idservice):
 @app.route('/feedbackuser/<int:idservice>', methods=['GET', 'POST'])
 def feedbackuser(idservice):
     service = Service.query.filter_by(id=idservice).first()
-    print service.servicename
 
     form=form = FeedbackForm()
     if form.validate_on_submit():
@@ -100,7 +102,6 @@ def feedbackuser(idservice):
         service.userfeedback=form.com.data
 
 
-        print service.servicename
         if service.servicestate == 3:
             service.servicestate = 4
             str = "You've closed the service! The mate will close it soon"
@@ -114,7 +115,6 @@ def feedbackuser(idservice):
 
         db.session.add(service)
         db.session.commit()
-        print service.servicestate
         return redirect(url_for('user'))
     return render_template('serviceuserfeedbacks.html', form=form, service=service)
 
@@ -122,7 +122,6 @@ def feedbackuser(idservice):
 @app.route('/feedbackmate/<int:idservice>', methods=['GET', 'POST'])
 def feedbackmate(idservice):
     service = Service.query.filter_by(id=idservice).first()
-    print service.servicename
 
     form=form = FeedbackForm()
     if form.validate_on_submit():
@@ -130,7 +129,6 @@ def feedbackmate(idservice):
         service.matefeedback=form.com.data
 
 
-        print service.servicename
         if service.servicestate == 3:
             service.servicestate = 5
             str = "You've closed the service! The user will close it soon"
@@ -141,7 +139,6 @@ def feedbackmate(idservice):
 
         db.session.add(service)
         db.session.commit()
-        print service.servicestate
         flash(str,'success')
         return redirect(url_for('user'))
     return render_template('serviceuserfeedbacks.html', form=form, service=service)
@@ -150,8 +147,6 @@ def feedbackmate(idservice):
 @app.route('/addrequest/<int:idservice>/<int:idservicerequester>', methods=['GET', 'POST'])
 def addrequest(idservice, idservicerequester):
     service = Service.query.filter_by(id=idservice).first()
-    print service.servicename
-    print "The service I juste apply for is", service.servicename
     service.servicestate=2
     current_user.servicerequest.append(service)
     db.session.commit()
@@ -188,107 +183,138 @@ def user():
 @login_required
 def listservice():
     form = ResearchServiceForm()
-    print(form.errors)
+
     res = Service.query.filter_by(servicestate=1).all()
-    res = res + Service.query.filter_by( servicestate=2).all()
-    for r in res:
-        print r.servicecity, r.servicetype
-        if form.is_submitted():
-            print "Ola",form.servicecity.data
-        if(form.servicetype.data !='none'):
-            print "1"
-            if (form.servicename.data != ''):
-                print "11"
-                if(form.servicecity.data!=""):
-                    print "111"
-                    if(form.servicedate.data!=None):
-                        res = Service.query.filter_by(servicetype=form.servicetype.data, servicename=form.servicename.data, servicecity=form.servicecity.data,servicedate=form.servicedate.data )
-                        print "1111"
-                    else:
-                        print "1112"
-                        res = Service.query.filter_by(servicetype=form.servicetype.data, servicename=form.servicename.data, servicecity=form.servicecity.data )
-                else:
-                    print "112"
-                    if (form.servicedate.data != None):
-                        print "print 1121"
+    res = res + Service.query.filter_by(servicestate=2).all()
+    if(form.servicetype.data !='none'):
+        print "1"
+        if (form.servicename.data != ''):
+            print "11"
+            if(form.servicecity.data!=""):
+                print "111"
+                if(form.servicedate.data!=None):
+                    res = Service.query.filter_by(servicetype=form.servicetype.data, servicename=form.servicename.data, servicecity=form.servicecity.data,servicedate=form.servicedate.data, servicestate=1)
+                    res = res+Service.query.filter_by(servicetype=form.servicetype.data, servicename=form.servicename.data, servicecity=form.servicecity.data,servicedate=form.servicedate.data, servicestate=2)
 
-                        res = Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicedate=form.servicedate.data)
-                    else:
-                        print "print 1122"
-                        res = Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data)
+                    print "1111"
+                else:
+                    print "1112"
+                    res = Service.query.filter_by(servicetype=form.servicetype.data, servicename=form.servicename.data, servicecity=form.servicecity.data, servicestate=1 ).all()
+                    res = res + Service.query.filter_by(servicetype=form.servicetype.data, servicename=form.servicename.data, servicecity=form.servicecity.data, servicestate=2 ).all()
+
+                    
+
             else:
-                print "12"
-                if (form.servicecity.data != ""):
-                    print "121"
-                    if (form.servicedate.data != None):
-                        res = Service.query.filter_by(servicetype=form.servicetype.data,
-                                                      servicecity=form.servicecity.data,
-                                                      servicedate=form.servicedate.data)
-                        print "1211"
-                    else:
-                        print "1212"
-                        res = Service.query.filter_by(servicetype=form.servicetype.data,
-                                                      servicecity=form.servicecity.data)
+                print "112"
+                if (form.servicedate.data != None):
+                    print "print 1121"
+
+                    res = Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=1)
+                    res = res + Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=2)
+                                
+
                 else:
-                    print "122"
-                    if (form.servicedate.data != None):
-                        print "print 1221"
-
-                        res = Service.query.filter_by(servicetype=form.servicetype.data,
-                                                      servicedate=form.servicedate.data)
-                    else:
-                        print "print 1222"
-                        res = Service.query.filter_by(servicetype=form.servicetype.data)
-
+                    print "print 1122"
+                    res = Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicestate=1)
+                    res = res+Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicestate=2)
 
         else:
-            print "2"
-            if (form.servicename.data !=""):
-                print "21"
-                if (form.servicecity.data != ""):
-                    print "211"
-                    if (form.servicedate.data != None):
-                        print "2111"
-                        res = Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicedate=form.servicedate.data)
-                    else:
-                        print "2112"
-                        res = Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data)
+            print "12"
+            if (form.servicecity.data != ""):
+                print "121"
+                if (form.servicedate.data != None):
+                    res = Service.query.filter_by(servicetype=form.servicetype.data,
+                                                  servicecity=form.servicecity.data,
+                                                  servicedate=form.servicedate.data, servicestate=1)
+                    res = res+Service.query.filter_by(servicetype=form.servicetype.data,
+                                                  servicecity=form.servicecity.data,
+                                                  servicedate=form.servicedate.data, servicestate=2)
+                    print "1211"
                 else:
-                    print "212"
-
-                    if (form.servicedate.data != None):
-                        print "2121"
-
-                        res = Service.query.filter_by(servicename=form.servicename.data, servicedate=form.servicedate.data)
-                        print form.servicedate.data
-                    else:
-                        print "2122"
-
-                        res = Service.query.filter_by(servicename=form.servicename.data)
+                    print "1212"
+                    res = Service.query.filter_by(servicetype=form.servicetype.data,
+                                                  servicecity=form.servicecity.data, servicestate=1)
+                    res = res+Service.query.filter_by(servicetype=form.servicetype.data,
+                                                  servicecity=form.servicecity.data, servicestate=2)
             else:
-                print "22"
-                if (form.servicecity.data != ""):
-                    print "221"
-                    if (form.servicedate.data != None):
-                        print "2211"
-                        res = Service.query.filter_by(servicecity=form.servicecity.data,
-                                                      servicedate=form.servicedate.data)
-                    else:
-                        print "2212"
-                        res = Service.query.filter_by(servicecity=form.servicecity.data)
+                print "122"
+
+                if (form.servicedate.data != None):
+                    print "print 1221"
+                    res = Service.query.filter_by(servicetype=form.servicetype.data, servicedate=form.servicedate.data, servicestate=1).all()
+                    res = res + Service.query.filter_by(servicetype=form.servicetype.data, servicedate=form.servicedate.data, servicestate=2).all()
+
+
+                    for i in res:
+                        print i.servicename
                 else:
-                    print "222"
+                    print "print 1222"
+                    res = Service.query.filter_by(servicetype=form.servicetype.data, servicestate=1).all()
+                    res = res + Service.query.filter_by(servicetype=form.servicetype.data, servicestate=2).all()
 
-                    if (form.servicedate.data != None):
-                        print "2221"
 
-                        res = Service.query.filter_by(servicedate=form.servicedate.data)
-                        print form.servicedate.data
-                    else:
-                        print "2222"
+    else:
+        print "2"
+        if (form.servicename.data !=""):
+            print "21"
+            if (form.servicecity.data != ""):
+                print "211"
+                if (form.servicedate.data != None):
+                    print "2111"
+                    res = Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=1)
+                    res = res+Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=2)
 
-        for r in res:
-            print r.servicecity, r.servicetype
+                else:
+                    print "2112"
+                    res = Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicestate=1)
+                    res = res+Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicestate=2)
+
+            else:
+                print "212"
+
+                if (form.servicedate.data != None):
+                    print "2121"
+
+                    res = Service.query.filter_by(servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=1)
+                    res = res+Service.query.filter_by(servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=2)
+
+                    print form.servicedate.data
+                else:
+                    print "2122"
+                    res = Service.query.filter_by(servicename=form.servicename.data, servicestate=1)
+                    res = res+ Service.query.filter_by(servicename=form.servicename.data, servicestate=2)
+
+        else:
+            print "22"
+            if (form.servicecity.data != ""):
+                print "221"
+                if (form.servicedate.data != None):
+                    print "2211"
+                    res = Service.query.filter_by(servicecity=form.servicecity.data,
+                                                  servicedate=form.servicedate.data, servicestate=1)
+                    res=res+Service.query.filter_by(servicecity=form.servicecity.data,
+                                                  servicedate=form.servicedate.data, servicestate=2)
+                else:
+                    print "2212"
+                    res = Service.query.filter_by(servicecity=form.servicecity.data, servicestate=1)
+                    res=Service.query.filter_by(servicecity=form.servicecity.data, servicestate=2)
+            else:
+                print "222"
+
+                if (form.servicedate.data != None):
+                    print "2221"
+                    res = Service.query.filter_by(servicedate=form.servicedate.data, servicestate=1).all()        
+                    res = res + Service.query.filter_by(servicedate=form.servicedate.data,servicestate=2).all()
+
+                    print form.servicedate.data
+                else:
+                    print "2222"
+                    res = Service.query.filter_by(servicestate=1).all()
+                    res = res + Service.query.filter_by(servicestate=2).all()
+
+
+
+
 
 
     return render_template('liste_service.html', form=form, res=res)
@@ -316,12 +342,9 @@ def listserviceuser():
 @app.route('/pickmate', methods=['GET', 'POST'])
 @app.route('/pickmate/<int:idservice>/<int:idmate>', methods=['GET', 'POST'])
 def pickmate(idservice, idmate):
-    print idservice
-    print idmate
+
     service = Service.query.filter_by(id=idservice).first()
-    print service.servicename
     mate= User.query.filter_by(id=idmate).first()
-    print mate.username,  mate.birthdate
     service.mate = mate
     service.servicestate = 3
     db.session.add(service)
@@ -338,21 +361,12 @@ def pickmate(idservice, idmate):
 def registeruser():
     form = RegistrationForm()
     roles = {
-        'User': (Permission.FOLLOW |
-                 Permission.COMMENT |
-                 Permission.WRITE_ARTICLES, True),
-        'Mate': (Permission.FOLLOW |
-                      Permission.COMMENT |
-                      Permission.WRITE_ARTICLES |
-                      Permission.MODERATE_COMMENTS, False),
-        'Administrator': (0xff, False)
+        'User','Mate'
     }
     for r in roles:
         role = Role.query.filter_by(name=r).first()
         if role is None:
             role = Role(name=r)
-        role.permissions = roles[r][0]
-        role.default = roles[r][1]
         db.session.add(role)
     db.session.commit()
 
@@ -363,8 +377,6 @@ def registeruser():
         if (form.choice.data) == '2':
             role = Role.query.filter_by(name="Mate").first()
 
-        print role
-        print role.name
         user = User(first_name=form.first_name.data,
                     last_name=form.last_name.data,
                     username=form.username.data,
@@ -432,7 +444,7 @@ def modifyinformation():
         db.session.add(current_user)
         db.session.commit()
 
-        flash('Your profile has been updated.')
+        flash('Your profile has been updated.', 'success' )
         return redirect(url_for('user', username=current_user.username))
 
     myForm.first_name.data= current_user.first_name
@@ -462,9 +474,8 @@ def createservice():
 
                     )
         db.session.add(service)
-        print service.user.username
         db.session.commit()
-        str='Service successfully '+ service.servicename+ ' created!'
+        str='Service ' + service.servicename+ ' successfully created!'
         flash(str, 'success')
         return redirect(url_for('user', username=current_user.username))
 
