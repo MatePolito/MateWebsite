@@ -5,9 +5,24 @@ from .forms import LoginUserForm, RegistrationForm, LoginMateForm
 from .models import User, Service, Role
 from flask_login import current_user
 from flask.ext.mail import Mail
+from flask_mail import Mail, Message
+from flask import request
 
+from . import app, db, login_manager, mail
 
-from . import app, db, login_manager
+def notification():
+    msg = Message('Hello', sender='projectworkis1@gmail.com', recipients=current_user.mail)
+    msg.body = "Hello, you just reveived a message from Mate"
+    mail.send(msg)
+    return "Sent"
+
+app.config['FLASKY_MAIL_SENDER'] = 'projectworkis1@gmail.com'
+
+def send_mail(to, subject, template, **kwargs):
+    msg = Message(subject, sender=app.config['FLASKY_MAIL_SENDER'], recipients=[to])
+    msg.body = render_template(template +'.txt', **kwargs)
+    msg.html = render_template(template + '.html', **kwargs)
+    mail.send(msg)
 
 @login_manager.user_loader
 def get_user(username):
@@ -377,14 +392,30 @@ def registeruser():
         db.session.commit()
         if (form.choice.data) == '1':
             flash('User succesfully registered', 'success')
+            token = user.generate_confirmation_token()
+            send_mail(form.mail.data, 'Confirm your account', 'email/confirm', current_user=current_user, token=token)
+            flash('A confirmation email has been sent to you. To validate your registration, please click on the link in the mail')
             return redirect(url_for('loginuser'))
 
         if (form.choice.data) == '2':
             flash('Mate succesfully registered', 'success')
+            token = user.generate_confirmation_token()
+            send_mail(form.mail.data, 'Confirm your account', 'email/confirm', current_user=current_user, token=token)
+            flash('A confirmation email has been sent to you. To validate your registration, please click on the link in the mail')
             return redirect(url_for('loginmate'))
 
     return render_template('register.html', form=form)
 
+@app.route('/confirm/<token>')
+@login_required
+def confirm(token):
+    if current_user.confirmed:
+        return redirect(url_for('loginuser'))
+    if current_user.confirm(token):
+        flash('You have confirmed your account. Thanks!')
+    else :
+        flash('The confirmation link is invalid or has expired.')
+    return redirect(url_for('loginuser'))
 
 @app.route('/logout')
 @login_required
