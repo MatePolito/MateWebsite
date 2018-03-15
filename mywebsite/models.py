@@ -88,6 +88,8 @@ class Service(db.Model):
     servicedate = db.Column(db.Date)
     servicecity=db.Column(db.String)
     servicestate = db.Column(db.Integer)
+    servicebeg=db.Column(db.DateTime)
+    servicetime = db.Column(db.Integer)
 
     userrank = db.Column(db.Integer)
     userfeedback = db.Column(db.String)

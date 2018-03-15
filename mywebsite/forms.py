@@ -48,7 +48,7 @@ class ModifyInformationForm(Form):
     first_name = StringField('First name', render_kw={"placeholder": "Carlo"})
     last_name = StringField('Last name', render_kw={"placeholder": "D'Ambrosio"})
     birthdate = DateField('Birthdate', render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
-    address = StringField('Address', render_kw={"placeholder": "carlo.dambrosio@gmail.com"})
+    address = StringField('Address', render_kw={"placeholder": "80, Via Giordano Bruno Torino"})
     phone_number = StringField('Phonenumber', validators=[number],render_kw={"placeholder": "+39610101010"})
 
     mail = StringField('Mail', render_kw={"placeholder": "carlo.dambrosio@gmail.com"})
@@ -80,10 +80,13 @@ class LoginMateForm(Form):
 
 class CreateServiceForm(Form):
     servicetype = SelectField('Type of Service', choices=[('ht', 'Home task'), ('st', 'Shopping task'), ('cf', 'Car fare')])
-    servicename = StringField("Name of the service", validators=[DataRequired()])
+    servicename = StringField("Name of the service", validators=[DataRequired()], render_kw={"placeholder": "Help in doing shopping task"})
     servicedescription = TextAreaField('Description du service')
-    servicedate=DateField("Date of the service", validators=[DataRequired()])
-    servicecity=StringField("City of the service", validators=[DataRequired()])
+    servicedate=DateField("Date of the service", validators=[DataRequired()], render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
+    servicecity=StringField("City of the service", validators=[DataRequired()], render_kw={"placeholder": "Torino"})
+    servicebeg=DateTimeField("Estimated Beginning (hour) ",format='%H:%M', validators=[DataRequired()], render_kw={"placeholder": "1"})
+
+    servicetime=IntegerField("Estimated Time (hour) ", validators=[DataRequired()], render_kw={"placeholder": "1"})
     submit = SubmitField('Create Service')
 
 class ResearchServiceForm(Form):

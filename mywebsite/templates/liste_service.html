@@ -179,7 +179,7 @@
                         <th scope="col">City</th>
                         <th scope="col">Date</th>
                         <th scope="col">Beginning Hour</th>
-                        <th scope="col">Remuneration</th>
+                        <th scope="col">Estimated time</th>
                         <th scope="col">Username</th>
                         <th scope="col">State</th>
                         <th>Apply</th>
@@ -194,8 +194,8 @@
                                     <td>{{ i.servicename}}</td>
                                     <td>{{ i.servicecity}}</td>
                                     <td>{{ i.servicedate }}</td>
-                                    <td>13h20</td>
-                                    <td>15€ the service</td>
+                                    <td>{{ i.servicebeg.strftime('%H:%M') }}</td>
+                                    <td>{{ i.servicetime }}</td>
                                     <td>{{i.user.username }}</td>
                                     {% if i.servicestate==1%}
                                         <td> Waiting for mate request</td>

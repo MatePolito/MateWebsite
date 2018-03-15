@@ -29,6 +29,8 @@ def get_user(username):
     '''This is needed by LoginManager to retrieve a User instance based on its ID (in this case, username)'''
     return User.query.filter_by(username=username).first()
 
+
+
 @app.before_first_request
 def setup_db():
     db.create_all()
@@ -468,6 +470,8 @@ def createservice():
                     servicedescription=myForm.servicedescription.data,
                     servicedate=myForm.servicedate.data,
                     servicecity=myForm.servicecity.data,
+                    servicebeg=myForm.servicebeg.data,
+                    servicetime=myForm.servicetime.data,
                     servicestate = 1,
 
                     user=current_user
