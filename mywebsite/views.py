@@ -406,21 +406,22 @@ def registeruser():
 
     return render_template('register.html', form=form)
 
-@app.route('/email/confirm/<token>')
+@app.route('/confirm/<token>')
 @login_required
 def confirm(token):
-    if user.roleuser.name =='User':
-        if user.confirmed:
+    if current_user.roleuser=='User':
+        if current_user.confirmed:
             return redirect(url_for('loginuser'))
-        if user.confirm(token):
+        if current_user.confirm(token):
             flash('You have confirmed your account. Thanks!', 'success')
         else :
             flash('The confirmation link is invalid or has expired.','danger')
         return redirect(url_for('loginuser'))
-    elif user.role.name=='Mate':
-        if user.confirmed:
+    elif current_user.roleuser=='Mate':
+        print 'on est dans mate'
+        if current_user.confirmed:
             return redirect(url_for('loginmate'))
-        if user.confirm(token):
+        if current_user.confirm(token):
             flash('You have confirmed your account. Thanks!', 'success')
         else :
             flash('The confirmation link is invalid or has expired.','danger')
