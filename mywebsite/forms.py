@@ -79,7 +79,7 @@ class LoginMateForm(Form):
 
 def datep(form, field):
         if  field.data<date.today():
-            raise ValidationError('Error')
+            raise ValidationError("This date is passed! Enter a valid date")
 
 
 class CreateServiceForm(Form):

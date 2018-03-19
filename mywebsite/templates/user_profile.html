@@ -57,6 +57,7 @@ f{% extends "base.html" %}
                         {% elif current_user.role.name=="Mate": %}
                             <th scope="col">The User </th>
                         {% endif %}
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,8 +71,11 @@ f{% extends "base.html" %}
                             {% if current_user.role.name=="User" %}
                                 <td>{{i.user.username }}</td>
                             {% elif current_user.role.name=="Mate": %}
-                                <td>{{i.user.username }}</td>
+                                <td>{{i.mate.username }}</td>
                             {% endif %}
+
+                            <td> <a href="{{ url_for('servicepageend', idservice=i.id, idserviceuser=i.user.id, _external=True) }}">See your services</a>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

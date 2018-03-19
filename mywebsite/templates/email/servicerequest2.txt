@@ -1,4 +1,4 @@
-Dear {{user.username }},
+Dear {{current_user.username }},
 
 A mate just applied to your service.
 

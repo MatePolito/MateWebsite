@@ -78,6 +78,15 @@ def servicepage(idservice, idserviceuser):
 
     return render_template('service.html', service=service, serviceuser=serviceuser)
 
+@app.route('/servicepageend', methods=['GET', 'POST'])
+@app.route('/servicepageend/<int:idservice>/<int:idserviceuser>', methods=['GET', 'POST'])
+def servicepageend(idservice, idserviceuser):
+
+    service = Service.query.filter_by(id=idservice).first()
+    serviceuser= User.query.filter_by(id=idserviceuser).first()
+
+    return render_template('serviceend.html', service=service, serviceuser=serviceuser)
+
 @app.route('/servicepageuser', methods=['GET', 'POST'])
 @app.route('/servicepageuser/<int:idservice>', methods=['GET', 'POST'])
 def servicepageuser(idservice):
