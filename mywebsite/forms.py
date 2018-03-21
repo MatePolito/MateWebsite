@@ -30,7 +30,7 @@ class RegistrationForm(Form):
     last_name = StringField('Last name', validators=[DataRequired()], render_kw={"placeholder": "D'Ambrosio"})
     username = StringField('Username', validators=[DataRequired(), Length(min=4)], render_kw={"placeholder": "Carlo1995"})
     phone_number = StringField('Phonenumber', validators=[DataRequired(), number], render_kw={"placeholder": "+39610101010"})
-    mail = StringField('Mail', validators=[DataRequired(), Email(message=None)], render_kw={"placeholder": "carlo.dambrosio@gmail.com"})
+    mail = StringField('Google Mail Address', validators=[DataRequired(), Email(message=None)], render_kw={"placeholder": "carlo.dambrosio@gmail.com"})
     address = StringField('Address', validators=[DataRequired()], render_kw={"placeholder": "Torino"})
     birthdate=DateField('Birthdate', validators=[DataRequired()], render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
 

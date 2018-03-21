@@ -63,7 +63,7 @@ class User(db.Model, UserMixin):
         return True
 
     def get_id(self):
-        return self.username
+        return self.id
 
 
     @property
@@ -104,12 +104,17 @@ class Service(db.Model):
     mate_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     mate = relationship("User", foreign_keys=[mate_id])
 
+    def get_id(self):
+        return self.id
+
 
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     users = db.relationship('User', backref='role', lazy='dynamic')
+    def get_id(self):
+        return self.id
 
 
 
