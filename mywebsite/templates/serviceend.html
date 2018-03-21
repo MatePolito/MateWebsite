@@ -42,6 +42,7 @@
         <p><font size="2">{{ service.servicedate }}</font></p>
         <p><font size="3"><br>Description</font></p>
         <p>{{ service.servicedescription }}</p>
+        <p><br>The remuneration for this service is {{ service.servicetime*10 }}€</p>
     </div>
     <div class="col-lg-6" style="text-align: center; padding: 30px; margin-top: 20px">
         {% if service.materank == 1 %}
