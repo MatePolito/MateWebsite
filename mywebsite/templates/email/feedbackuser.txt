@@ -1,0 +1,15 @@
+Dear {{service.user.username }},
+
+Following the achievement of the service {{service.servicename}}, the mate {{service.mate.username}} gave you some feedbacks on the service:
+"{{service.matefeedback}}".
+
+You received the rank of : {{service.materank}}/5.
+
+You can also see all the information about this service on the Mate website.
+
+Thank you for having chosen Mate to ask for a service.
+We hope you enjoyed it and hope to see you soon on our website.
+
+Sincerely,
+
+The Mate team
