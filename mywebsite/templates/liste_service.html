@@ -183,6 +183,9 @@
                         <th scope="col">Username</th>
                         <th scope="col">State</th>
                         <th>Apply</th>
+                        {% if current_user.roleuser.name=="User" %}
+                                <th></th>
+                        {%  endif  %}
 
                     </tr>
                 </thead>
@@ -224,7 +227,16 @@
                                         {% endif %}
                                     {% endif %}
 
+                                    {% if  current_user.id==i.user.id %}
+                                        <th>
+                                            <ul class="list-unstyled CTAs">
+                                                <li><a href="{{ url_for('deleteservice', idservice=i.id,  _external=True) }}" class="download"><font color=#1e90ff>Delete your service</font></a></li>
+                                            </ul>
+                                        </th>
+                                    {%  endif  %}
+
                         </tr>
+
                     {% endfor %}
                 </tbody>
                 </table>

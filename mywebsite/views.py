@@ -69,6 +69,23 @@ def loginmate():
             flash("You're a User, not a Mate! Login through the User page ;)", 'danger')
     return render_template('loginmate.html', form=myForm)
 
+
+@app.route('/deleteservice', methods=['GET', 'POST'])
+@app.route('/deleteservice/<int:idservice>', methods=['GET', 'POST'])
+def deleteservice(idservice):
+
+    service = Service.query.filter_by(id=idservice).first()
+    db.session.delete(service)
+    db.session.commit()
+
+    if current_user.role.name=="User":
+        res = Service.query.filter_by(user_id=current_user.id, servicestate=6).all()
+
+    elif current_user.role.name=="Mate":
+        res = Service.query.filter_by(mate_id=current_user.id, servicestate=6).all()
+
+    return render_template('user_profile.html',res=res)
+
 @app.route('/servicepage', methods=['GET', 'POST'])
 @app.route('/servicepage/<int:idservice>/<int:idserviceuser>', methods=['GET', 'POST'])
 def servicepage(idservice, idserviceuser):
