@@ -202,8 +202,8 @@ def listservice():
             if(form.servicecity.data!=""):
                 print "111"
                 if(form.servicedate.data!=None):
-                    res = Service.query.filter_by(servicetype=form.servicetype.data, servicename=form.servicename.data, servicecity=form.servicecity.data,servicedate=form.servicedate.data, servicestate=1)
-                    res = res+Service.query.filter_by(servicetype=form.servicetype.data, servicename=form.servicename.data, servicecity=form.servicecity.data,servicedate=form.servicedate.data, servicestate=2)
+                    res = Service.query.filter_by(servicetype=form.servicetype.data, servicename=form.servicename.data, servicecity=form.servicecity.data,servicedate=form.servicedate.data, servicestate=1).all()
+                    res = res+Service.query.filter_by(servicetype=form.servicetype.data, servicename=form.servicename.data, servicecity=form.servicecity.data,servicedate=form.servicedate.data, servicestate=2).all()
 
                     print "1111"
                 else:
@@ -218,14 +218,14 @@ def listservice():
                 if (form.servicedate.data != None):
                     print "print 1121"
 
-                    res = Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=1)
-                    res = res + Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=2)
+                    res = Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=1).all()
+                    res = res + Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=2).all()
                                 
 
                 else:
                     print "print 1122"
-                    res = Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicestate=1)
-                    res = res+Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicestate=2)
+                    res = Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicestate=1).all()
+                    res = res+Service.query.filter_by(servicetype=form.servicetype.data,  servicename=form.servicename.data, servicestate=2).all()
 
         else:
             print "12"
@@ -234,17 +234,17 @@ def listservice():
                 if (form.servicedate.data != None):
                     res = Service.query.filter_by(servicetype=form.servicetype.data,
                                                   servicecity=form.servicecity.data,
-                                                  servicedate=form.servicedate.data, servicestate=1)
+                                                  servicedate=form.servicedate.data, servicestate=1).all()
                     res = res+Service.query.filter_by(servicetype=form.servicetype.data,
                                                   servicecity=form.servicecity.data,
-                                                  servicedate=form.servicedate.data, servicestate=2)
+                                                  servicedate=form.servicedate.data, servicestate=2).all()
                     print "1211"
                 else:
                     print "1212"
                     res = Service.query.filter_by(servicetype=form.servicetype.data,
-                                                  servicecity=form.servicecity.data, servicestate=1)
+                                                  servicecity=form.servicecity.data, servicestate=1).all()
                     res = res+Service.query.filter_by(servicetype=form.servicetype.data,
-                                                  servicecity=form.servicecity.data, servicestate=2)
+                                                  servicecity=form.servicecity.data, servicestate=2).all()
             else:
                 print "122"
 
@@ -270,13 +270,13 @@ def listservice():
                 print "211"
                 if (form.servicedate.data != None):
                     print "2111"
-                    res = Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=1)
-                    res = res+Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=2)
+                    res = Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=1).all()
+                    res = res+Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=2).all()
 
                 else:
                     print "2112"
-                    res = Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicestate=1)
-                    res = res+Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicestate=2)
+                    res = Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicestate=1).all()
+                    res = res+Service.query.filter_by(servicecity=form.servicecity.data, servicename=form.servicename.data, servicestate=2).all()
 
             else:
                 print "212"
@@ -284,14 +284,14 @@ def listservice():
                 if (form.servicedate.data != None):
                     print "2121"
 
-                    res = Service.query.filter_by(servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=1)
-                    res = res+Service.query.filter_by(servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=2)
+                    res = Service.query.filter_by(servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=1).all()
+                    res = res+Service.query.filter_by(servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=2).all()
 
                     print form.servicedate.data
                 else:
                     print "2122"
-                    res = Service.query.filter_by(servicename=form.servicename.data, servicestate=1)
-                    res = res+ Service.query.filter_by(servicename=form.servicename.data, servicestate=2)
+                    res = Service.query.filter_by(servicename=form.servicename.data, servicestate=1).all()
+                    res = res+ Service.query.filter_by(servicename=form.servicename.data, servicestate=2).all()
 
         else:
             print "22"
@@ -300,13 +300,14 @@ def listservice():
                 if (form.servicedate.data != None):
                     print "2211"
                     res = Service.query.filter_by(servicecity=form.servicecity.data,
-                                                  servicedate=form.servicedate.data, servicestate=1)
+                                                  servicedate=form.servicedate.data, servicestate=1).all()
                     res=res+Service.query.filter_by(servicecity=form.servicecity.data,
-                                                  servicedate=form.servicedate.data, servicestate=2)
+                                                  servicedate=form.servicedate.data, servicestate=2).all()
                 else:
                     print "2212"
-                    res = Service.query.filter_by(servicecity=form.servicecity.data, servicestate=1)
-                    res=Service.query.filter_by(servicecity=form.servicecity.data, servicestate=2)
+                    res = Service.query.filter_by(servicecity=form.servicecity.data, servicestate=1).all()
+                    res= res + Service.query.filter_by(servicecity=form.servicecity.data, servicestate=2).all()
+
             else:
                 print "222"
 
