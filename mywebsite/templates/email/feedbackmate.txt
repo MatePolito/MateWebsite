@@ -5,6 +5,8 @@ Following the achievement of the service {{service.servicename}}, the user {{ser
 
 You received the rank of : {{service.userrank}}/5.
 
+You will receive in a few days the payment of {{service.servicetime*10}}€.
+
 You can also see all the information about this service on the Mate website.
 
 Thank you for having chosen Mate.
