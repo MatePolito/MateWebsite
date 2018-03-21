@@ -42,15 +42,36 @@
         <p><font size="2">{{ service.servicedate }}</font></p>
         <p><font size="3"><br>Description</font></p>
         <p>{{ service.servicedescription }}</p>
-        <div class="col-lg-6 col-lg-offset-3" style="background-color: deepskyblue; border-radius: 100px; padding: 10px">
-            <a href="{{ url_for('addrequest', idservice=service.id, idservicerequester=current_user.id, _external=True) }}" class="download">
-                <font color=white><font size="3"></font><b>Propose your help</b></font></font>
-            </a>
-        </div>
     </div>
-    <div class="col-lg-6" style="text-align: center; padding: 30px; margin-top: 55px">
-        <img src="{{ url_for('static', filename='logo_apply.png') }}" style="width: 200px; height: 200px;">
-        <p><font size="5"><br>{{ service.materank}} {{ service.userrank}} {{ serviceuser.username }}</font></p>
+    <div class="col-lg-6" style="text-align: center; padding: 30px; margin-top: 20px">
+        {% if service.materank == 1 %}
+            <img src="{{ url_for('static', filename='logo_1.png') }}" style="width: 150px; height: 150px;">
+        {% elif service.materank == 2 %}
+            <img src="{{ url_for('static', filename='logo_2.png') }}" style="width: 150px; height: 150px;">
+        {% elif service.materank == 3 %}
+            <img src="{{ url_for('static', filename='logo_3.png') }}" style="width: 150px; height: 150px;">
+        {% elif service.materank == 4 %}
+            <img src="{{ url_for('static', filename='logo_4.png') }}" style="width: 150px; height: 150px;">
+        {% elif service.materank == 5 %}
+            <img src="{{ url_for('static', filename='logo_5.png') }}" style="width: 150px; height: 150px;">
+        {% endif %}
+        <p><font size="3"><br>{{service.mate.username}}'s feedback</font></p>
+        <p>{{ service.matefeedback}}</p>
+        <br>
+        <br>
+        {% if service.userrank == 1 %}
+            <img src="{{ url_for('static', filename='logo_1.png') }}" style="width: 150px; height: 150px;">
+        {% elif service.userrank == 2 %}
+            <img src="{{ url_for('static', filename='logo_2.png') }}" style="width: 150px; height: 150px;">
+        {% elif service.userrank == 3 %}
+            <img src="{{ url_for('static', filename='logo_3.png') }}" style="width: 150px; height: 150px;">
+        {% elif service.userrank == 4 %}
+            <img src="{{ url_for('static', filename='logo_4.png') }}" style="width: 150px; height: 150px;">
+        {% elif service.userrank == 5 %}
+            <img src="{{ url_for('static', filename='logo_5.png') }}" style="width: 150px; height: 150px;">
+        {% endif %}
+        <p><font size="3"><br>{{service.user.username}}'s feedback</font></p>
+        <p>{{ service.userfeedback}}</p>
     </div>
 </div>
 {% endblock %}
