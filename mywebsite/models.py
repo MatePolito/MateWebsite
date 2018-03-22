@@ -24,11 +24,6 @@ class User(db.Model, UserMixin):
     roleuser_id= db.Column(db.Integer, db.ForeignKey('roles.id'))
     roleuser = relationship("Role")
 
-    '''services = db.relationship('Service', backref='role', lazy='dynamic')
-
-    servicesmate = db.relationship('Service', backref='users')'''
-
-
 
     servicerequest = db.relationship('Service',
                               secondary=registrations,
