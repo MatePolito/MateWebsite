@@ -14,6 +14,8 @@ registrations = db.Table('registrations',
                          )
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
+
+    """ ATTRIBUTES"""
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
@@ -21,21 +23,26 @@ class User(db.Model, UserMixin):
     mail = db.Column(db.String)
     address = db.Column(db.String)
     birthdate= db.Column(db.Date)
+
+    servicerequest = db.relationship('Service',
+                                     secondary=registrations,
+                                     backref=db.backref('users', lazy='dynamic'),
+                                     lazy='dynamic')
+
+    """ FOIREIGN KEYS"""
+
     roleuser_id= db.Column(db.Integer, db.ForeignKey('roles.id'))
     roleuser = relationship("Role")
 
-
-    servicerequest = db.relationship('Service',
-                              secondary=registrations,
-                              backref=db.backref('users', lazy='dynamic'),
-                              lazy='dynamic')
-
+    """ LOG-IN ATTRIBUTES """
 
     username = db.Column(db.String, nullable=False, unique=True, index=True)
     password_hash = db.Column(db.String, nullable=False)
     
     #Token generation and verification
     confirmed = db.Column(db.Boolean, default=False)
+
+    """ Function"""
 
     #Generation of a token with a default validity of one hour
     def generate_confirmation_token(self, expiration=3600):
@@ -75,6 +82,8 @@ class User(db.Model, UserMixin):
 class Service(db.Model):
     __tablename__ = 'services'
 
+    """ ATTRIBUTES"""
+
     id = db.Column(db.Integer, primary_key=True)
     servicetype = db.Column(db.String)
     servicename = db.Column(db.String)
@@ -91,6 +100,7 @@ class Service(db.Model):
     materank=db.Column(db.Integer)
     matefeedback = db.Column(db.String)
 
+    """ FOIREIGN KEYS"""
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = relationship("User", foreign_keys=[user_id])
@@ -102,6 +112,9 @@ class Service(db.Model):
 
 class Role(db.Model):
     __tablename__ = 'roles'
+
+    """ ATTRIBUTES"""
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     users = db.relationship('User', backref='role', lazy='dynamic')

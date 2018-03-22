@@ -9,14 +9,6 @@ from datetime import datetime
 from wtforms import fields, widgets
 from datetime import date
 
-class NameForm(Form):
-    first_name = StringField('First name', validators=[DataRequired()])
-    last_name = StringField('Last name', validators=[DataRequired()])
-    age = IntegerField('Age', validators=[NumberRange(min=18)])
-    submit = SubmitField('Submit')
-
-
-
 def number(form, field):
     for c in field.data:
         if  c < '0' and c > '9':

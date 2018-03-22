@@ -23,8 +23,6 @@ def get_user(username):
     '''This is needed by LoginManager to retrieve a User instance based on its ID (in this case, username)'''
     return User.query.filter_by(username=username).first()
 
-
-
 @app.before_first_request
 def setup_db():
     db.create_all()
@@ -49,6 +47,7 @@ def loginuser():
                 flash('Incorrect password!', 'danger')
         elif user.roleuser.name=="Mate":
             flash("You're a mate, not a user! Login through the mate page ;)", 'danger')
+
     return render_template('loginuser.html', form=myForm)
 
 @app.route('/loginmate', methods=['GET', 'POST'])
@@ -74,7 +73,7 @@ def loginmate():
 @app.route('/deleteservice/<int:idservice>', methods=['GET', 'POST'])
 def deleteservice(idservice):
 
-    service = Service.query.filter_by(id=idservice).first()
+    service = Service.query.filter_by(id=idservice).first()#we pick the service corresponding to idservice in the database
     db.session.delete(service)
     db.session.commit()
 
@@ -90,7 +89,7 @@ def deleteservice(idservice):
 @app.route('/servicepage/<int:idservice>/<int:idserviceuser>', methods=['GET', 'POST'])
 def servicepage(idservice, idserviceuser):
 
-    service = Service.query.filter_by(id=idservice).first()
+    service = Service.query.filter_by(id=idservice).first()#we pick the service corresponding to idservice in the database
     serviceuser= User.query.filter_by(id=idserviceuser).first()
 
     return render_template('service.html', service=service, serviceuser=serviceuser)
@@ -99,7 +98,7 @@ def servicepage(idservice, idserviceuser):
 @app.route('/servicepageend/<int:idservice>/<int:idserviceuser>', methods=['GET', 'POST'])
 def servicepageend(idservice, idserviceuser):
 
-    service = Service.query.filter_by(id=idservice).first()
+    service = Service.query.filter_by(id=idservice).first()#we pick the service corresponding to idservice in the database
     serviceuser= User.query.filter_by(id=idserviceuser).first()
 
     return render_template('serviceend.html', service=service, serviceuser=serviceuser)
@@ -107,7 +106,7 @@ def servicepageend(idservice, idserviceuser):
 @app.route('/servicepageuser', methods=['GET', 'POST'])
 @app.route('/servicepageuser/<int:idservice>', methods=['GET', 'POST'])
 def servicepageuser(idservice):
-    service = Service.query.filter_by(id=idservice).first()
+    service = Service.query.filter_by(id=idservice).first()#we pick the service corresponding to idservice in the database
     for i in service.users:
         i.username
 
@@ -116,26 +115,27 @@ def servicepageuser(idservice):
 @app.route('/feedbackuser', methods=['GET', 'POST'])
 @app.route('/feedbackuser/<int:idservice>', methods=['GET', 'POST'])
 def feedbackuser(idservice):
-    service = Service.query.filter_by(id=idservice).first()
+    service = Service.query.filter_by(id=idservice).first()#we pick the service corresponding to idservice in the database
 
     form=form = FeedbackForm()
+    # The user gives his feedback about the service
     if form.validate_on_submit():
         service.userrank = form.rank.data
-        service.userfeedback=form.com.data
+        service.userfeedback=form.com.data#we create the feedback through the form the user filled
 
 
-        if service.servicestate == 3:
-            service.servicestate = 4
+        if service.servicestate == 3:#neither the user nor the mate has given his feedback
+            service.servicestate = 4#now the user has given his feedback
             str = "You've closed the service! The mate will close it soon"
             flash(str , 'success')
 
 
-        elif service.servicestate == 5:
-            service.servicestate = 6
+        elif service.servicestate == 5:#the mate has already given his feedback
+            service.servicestate = 6#now the user AND the mate have given their feedback
             str = "The service is closed!"
             flash(str,'success')
 
-        db.session.add(service)
+        db.session.add(service)#we modify the service information in the DB
         db.session.commit()
         send_mail(service.mate.mail, 'Watch your feedbacks', 'email/feedbackmate', user=user, service=service)
         return redirect(url_for('user'))
@@ -144,26 +144,29 @@ def feedbackuser(idservice):
 @app.route('/feedbackmate', methods=['GET', 'POST'])
 @app.route('/feedbackmate/<int:idservice>', methods=['GET', 'POST'])
 def feedbackmate(idservice):
-    service = Service.query.filter_by(id=idservice).first()
 
-    form=form = FeedbackForm()
+    service = Service.query.filter_by(id=idservice).first() #we pick the service corresponding to idservice in the database
+
+    form= FeedbackForm()
+
     if form.validate_on_submit():
+        # The mate gives his feedback about the service
         service.materank = form.rank.data
-        service.matefeedback=form.com.data
+        service.matefeedback=form.com.data #we create the feedback through the form the mate filled
 
 
-        if service.servicestate == 3:
-            service.servicestate = 5
+        if service.servicestate == 3:#neither the user nor the mate has given his feedback
+            service.servicestate = 5#now the mate has given his feedback
             str = "You've closed the service! The user will close it soon"
 
-        elif service.servicestate == 4:
-            service.servicestate = 6
+        elif service.servicestate == 4:#the user has already given his feedback
+            service.servicestate = 6#now the user AND the mate have given their feedback
             str = "The service is closed!"
 
-        db.session.add(service)
+        db.session.add(service)#we modify the service information in the DB
         db.session.commit()
         flash(str,'success')
-        send_mail(service.user.mail, 'Watch your feedbacks', 'email/feedbackuser', user=user, service=service)
+        send_mail(service.user.mail, 'Watch your feedbacks', 'email/feedbackuser', user=user, service=service)#inform the mate aboute the situation
         return redirect(url_for('user'))
     return render_template('serviceuserfeedbacks.html', form=form, service=service)
 
@@ -212,6 +215,7 @@ def listservice():
 
     res = Service.query.filter_by(servicestate=1).all()
     res = res + Service.query.filter_by(servicestate=2).all()
+    #we are only looking for the service which aren't associate to a mate yet
     if(form.servicetype.data !='none'):
         print "1"
         if (form.servicename.data != ''):
@@ -362,13 +366,13 @@ def listserviceuser():
 @app.route('/pickmate/<int:idservice>/<int:idmate>', methods=['GET', 'POST'])
 def pickmate(idservice, idmate):
 
-    service = Service.query.filter_by(id=idservice).first()
+    service = Service.query.filter_by(id=idservice).first()#we pick the service corresponding to idservice in the database
     mate= User.query.filter_by(id=idmate).first()
-    service.mate = mate
-    service.servicestate = 3
+    service.mate = mate#we attribute the mate to the service
+    service.servicestate = 3#we change the state of the service
     db.session.add(service)
     db.session.commit()
-    '''if service.mate is empty:'''
+
 
     str='You have choosen '+mate.username+' for your service '+service.servicename
     flash(str, 'success')
