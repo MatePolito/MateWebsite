@@ -26,17 +26,17 @@ f{% extends "base.html" %}
             {% endif %}
             <h3>{{ current_user.username }}</h3>
             <hr>
-            <h3>General Informations</h3>
+            <h3>General Information</h3>
             <p>First name: {{ current_user.first_name }}</p>
             <p>Last name:{{ current_user.last_name }}</p>
             <p>Date of birth: {{ (current_user.birthdate).strftime("%d/%m/%Y") }}</p>
             <hr>
-            <h3>Contact Informations</h3>
+            <h3>Contact Information</h3>
             <p> Address: {{ current_user.address }} </p>
             <p> Phone number: {{ current_user.phone_number }}</p>
             <p> Mail: {{ current_user.mail }} </p>
             <hr>
-            <a class="download col-lg-10 col-lg-offset-1 container" style="background-color: white; height: 30px; padding:  5px; margin-top: 10px; border-radius: 5px" href="{{ url_for('modifyinformation') }}"><font {% if current_user.role.name=="User" %}color=#1e90ff{% elif current_user.role.name=="Mate" %}color=orange{% endif %}>Modify your informations</font></a>
+            <a class="download col-lg-10 col-lg-offset-1 container" style="background-color: white; height: 30px; padding:  5px; margin-top: 10px; border-radius: 5px" href="{{ url_for('modifyinformation') }}"><font {% if current_user.role.name=="User" %}color=#1e90ff{% elif current_user.role.name=="Mate" %}color=orange{% endif %}>Modify your information</font></a>
         </div>
         <div class="col-lg-9" style="text-align: center; margin-left: -15px">
             <div style="height: 80px; {% if current_user.role.name=="User" %}color: cornflowerblue{% elif current_user.role.name=="Mate" %}color: darkorange{% endif %}; padding: 10px">
