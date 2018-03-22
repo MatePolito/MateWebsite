@@ -424,14 +424,14 @@ def registeruser():
             flash('User succesfully registered', 'success')
             token = user.generate_confirmation_token()
             send_mail(form.mail.data, 'Confirm your account', 'email/confirm', user=user, token=token)
-            flash('A confirmation email has been sent to you. To validate your registration, please click on the link in the mail', 'success')
+            flash('A confirmation of your registration has been sent to you by email', 'success')
             return redirect(url_for('loginuser'))
 
         if (form.choice.data) == '2':
             flash('Mate succesfully registered', 'success')
             token = user.generate_confirmation_token()
             send_mail(form.mail.data, 'Confirm your account', 'email/confirm', user=user, token=token)
-            flash('A confirmation email has been sent to you. To validate your registration, please click on the link in the mail', 'success')
+            flash('A confirmation of your registration has been sent to you by email', 'success')
             return redirect(url_for('loginmate'))
 
     return render_template('register.html', form=form)
