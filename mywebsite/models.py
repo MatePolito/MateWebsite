@@ -47,7 +47,8 @@ class User(db.Model, UserMixin):
         s = Serializer(current_app.config['SECRET_KEY'], expiration)
         return s.dumps({'confirm': self.id})
 
-    #Verification of the token
+    '''Verification of the token: return true if the signature is okay, the expiration time isn't passed 
+    and the id from the token and the user logged in match'''
     def confirm(self, token):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:

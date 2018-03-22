@@ -12,6 +12,9 @@ from . import app, db, login_manager, mail
 
 app.config['FLASKY_MAIL_SENDER'] = 'projectworkis1@gmail.com'
 
+'''The send_mail method takes the parameter: recipients, the subject of the mail, a template depending on the mail
+and key arguments as the current_user, the service. This method send a message to the recipients, the sender being email
+adress we created'''
 def send_mail(to, subject, template, **kwargs):
     msg = Message(subject, sender=app.config['FLASKY_MAIL_SENDER'], recipients=[to])
     msg.body = render_template(template +'.txt', **kwargs)
@@ -376,6 +379,7 @@ def pickmate(idservice, idmate):
     flash('You just received an email confirming your mate choice and his/her coordinates', 'success')
     send_mail(service.mate.mail, 'You are a mate !!!', 'email/pickmate2', user=user, service=service)
 
+
     return redirect(url_for('user'))
 
 
@@ -431,6 +435,7 @@ def registeruser():
 @app.route('/confirm/<token>')
 @login_required
 def confirm(token):
+    '''This method calls the confirm() method and flash a message according to the result.'''
     if current_user.roleuser=='User':
         if current_user.confirmed:
             return redirect(url_for('loginuser'))
