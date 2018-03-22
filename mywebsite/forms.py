@@ -88,7 +88,7 @@ class CreateServiceForm(Form):
     servicedescription = TextAreaField('Service description')
     servicedate=DateField("Date of the service", validators=[DataRequired(),datep], render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
     servicecity=StringField("City of the service", validators=[DataRequired()], render_kw={"placeholder": "Torino"})
-    servicebeg=DateTimeField("Estimated Beginning (hour) ",format='%H:%M', validators=[DataRequired()], render_kw={"placeholder": "15:00"})
+    servicebeg=DateTimeField("Scheduled Start Time ",format='%H:%M', validators=[DataRequired()], render_kw={"placeholder": "15:00"})
     servicetime=IntegerField("Estimated Time (hour) ", validators=[DataRequired()], render_kw={"placeholder": "1"})
     submit = SubmitField('Create Service')
 
