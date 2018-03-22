@@ -519,7 +519,7 @@ def createservice():
                     )
         db.session.add(service)
         db.session.commit()
-        str='Service ' + service.servicename+ ' successfully created!'
+        str='Service "' + service.servicename+ '" has been successfully created!'
         flash(str, 'success')
         send_mail(current_user.mail, 'Creation of the service', 'email/servicecreation', current_user=current_user, service=service)
         flash('You just received an email confirming the creation of your service', 'success')
