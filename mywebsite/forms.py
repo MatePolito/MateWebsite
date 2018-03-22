@@ -83,7 +83,7 @@ def datep(form, field):
 
 
 class CreateServiceForm(Form):
-    servicetype = SelectField('Type of Service', choices=[('ht', 'Home task'), ('st', 'Shopping task'), ('is', 'Informatic service')])
+    servicetype = SelectField('Type of Service', choices=[('ht', 'Home task'), ('st', 'Shopping task'), ('is', 'Informatic service'), ('lt', 'Leisure time')])
     servicename = StringField("Name of the service", validators=[DataRequired()], render_kw={"placeholder": "Help in doing shopping task"})
     servicedescription = TextAreaField('Service description')
     servicedate=DateField("Date of the service", validators=[DataRequired(),datep], render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
