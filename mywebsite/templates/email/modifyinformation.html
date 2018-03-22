@@ -1,0 +1,40 @@
+<div><font  style=" font-size: 0.4cm;"> Dear <font  style=" font-size: 0.4cm;">{{current_user.username }}</font>,</font></div>
+<br><br>
+<div>
+You have successfully <font > updated </font>  your profile.
+</div>
+<br>
+<div style=" font-size: 0.4cm;">
+    <div>
+Your new personal data are :
+    </div>
+    <div>
+
+    <font  style=" text-indent: 20px;">- first name :</font>  {{current_user.first_name}} <br>
+    <font  style=" text-indent: 20px;">- last name : </font> {{current_user.last_name}}<br>
+    <font  style=" text-indent: 20px;">- phone number : </font>{{current_user.phone_number}}<br>
+    <font  style=" text-indent: 20px;">- email address :</font>  {{current_user.mail}}<br>
+    <font  style=" text-indent: 20px;">- address : </font> {{current_user.address}}<br>
+    <font  style=" text-indent: 20px;">- birthdate :</font>  {{current_user.birthdate}}<br>
+
+    </div>
+
+    <br>
+    <br>
+    <div>
+        Sincerely,
+    </div>
+
+
+The Mate team
+
+    <img class="center-block" src="{{ url_for('static', filename='static/logo_M.png') }}" width="41" height="45">
+
+
+</div>
+
+
+
+<br><br><br>
+
+Note: This email was automatically sent. Do not respond to it.
