@@ -88,7 +88,7 @@ class CreateServiceForm(Form):
     servicedescription = TextAreaField('Service description')
     servicedate=DateField("Date of the service", validators=[DataRequired(),datep], render_kw={"placeholder": "YYYY-MM-DD ('1995-11-19')"})
     servicecity=StringField("City of the service", validators=[DataRequired()], render_kw={"placeholder": "Torino"})
-    servicebeg=DateTimeField("Estimated Beginning (hour) ",format='%H:%M', validators=[DataRequired()], render_kw={"placeholder": "15:00"})
+    servicebeg=DateTimeField("Scheduled Start Time ",format='%H:%M', validators=[DataRequired()], render_kw={"placeholder": "15:00"})
     servicetime=IntegerField("Estimated Time (hour) ", validators=[DataRequired()], render_kw={"placeholder": "1"})
     submit = SubmitField('Create Service')
 
@@ -104,4 +104,4 @@ class FeedbackForm(Form):
     rank = IntegerField("Rank the service from 1 to 5", validators=[NumberRange(min=1), NumberRange(max=5) ], render_kw={"placeholder": "1 - 5"})
     com = TextAreaField('Description du service')
 
-    submit = SubmitField('Give Feedback and close the service')
+    submit = SubmitField('Give feedback and close the service')

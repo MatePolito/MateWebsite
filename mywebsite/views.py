@@ -304,7 +304,6 @@ def listservice():
                     res = Service.query.filter_by(servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=1).all()
                     res = res+Service.query.filter_by(servicename=form.servicename.data, servicedate=form.servicedate.data, servicestate=2).all()
 
-                    print form.servicedate.data
                 else:
                     print "2122"
                     res = Service.query.filter_by(servicename=form.servicename.data, servicestate=1).all()
@@ -332,17 +331,10 @@ def listservice():
                     print "2221"
                     res = Service.query.filter_by(servicedate=form.servicedate.data, servicestate=1).all()        
                     res = res + Service.query.filter_by(servicedate=form.servicedate.data,servicestate=2).all()
-
-                    print form.servicedate.data
                 else:
                     print "2222"
                     res = Service.query.filter_by(servicestate=1).all()
                     res = res + Service.query.filter_by(servicestate=2).all()
-
-
-
-
-
 
     return render_template('liste_service.html', form=form, res=res)
 
@@ -519,7 +511,7 @@ def createservice():
                     )
         db.session.add(service)
         db.session.commit()
-        str='Service ' + service.servicename+ ' successfully created!'
+        str='Service "' + service.servicename+ '" has been successfully created!'
         flash(str, 'success')
         send_mail(current_user.mail, 'Creation of the service', 'email/servicecreation', current_user=current_user, service=service)
         flash('You just received an email confirming the creation of your service', 'success')

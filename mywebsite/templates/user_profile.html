@@ -87,7 +87,17 @@ f{% extends "base.html" %}
                 <tbody>
                     {% for i in res %}
                         <tr>
-                            <td>{{ i.servicetype}}</td>
+                            <td>
+                                {% if i.servicetype=="ht" %}
+                                    Home Task
+                                {% elif i.servicetype=="st" %}
+                                    Shopping Task
+                                {% elif i.servicetype=="is" %}
+                                    Informatic Service
+
+                                {% endif %}
+
+                            </td>
                             <td>{{ i.servicename}}</td>
                             <td>{{ i.servicecity}}</td>
                             <td>{{ i.servicedate }}</td>
