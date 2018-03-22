@@ -104,4 +104,4 @@ class FeedbackForm(Form):
     rank = IntegerField("Rank the service from 1 to 5", validators=[NumberRange(min=1), NumberRange(max=5) ], render_kw={"placeholder": "1 - 5"})
     com = TextAreaField('Description du service')
 
-    submit = SubmitField('Give Feedback and close the service')
+    submit = SubmitField('Give feedback and close the service')
