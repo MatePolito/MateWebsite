@@ -18,7 +18,7 @@ f{% extends "base.html" %}
 
 {% block myContent %}
     <div class="row" style="margin-top: -20px">
-        <div class="col-lg-3" style="color: white; text-align: center; padding: 30px; {% if current_user.role.name=="User" %}background-color: skyblue{% elif current_user.role.name=="Mate" %}background-color: orange {% endif %}">
+        <div class="col-lg-3" style="color: white; text-align: center; padding: 30px; {% if current_user.role.name=="User" %}background-color: dodgerblue{% elif current_user.role.name=="Mate" %}background-color: orange {% endif %}">
             {% if current_user.role.name=="User" %}
                 <img src="{{ url_for('static', filename='logo_unknown.png') }}" style="width: 150px; height: 150px;">
             {% elif current_user.role.name=="Mate" %}
@@ -39,8 +39,32 @@ f{% extends "base.html" %}
             <a class="download col-lg-10 col-lg-offset-1 container" style="background-color: white; height: 30px; padding:  5px; margin-top: 10px; border-radius: 5px" href="{{ url_for('modifyinformation') }}"><font {% if current_user.role.name=="User" %}color=#1e90ff{% elif current_user.role.name=="Mate" %}color=orange{% endif %}>Modify your information</font></a>
         </div>
         <div class="col-lg-9" style="text-align: center; margin-left: -15px">
-            <div style="height: 80px; {% if current_user.role.name=="User" %}color: cornflowerblue{% elif current_user.role.name=="Mate" %}color: darkorange{% endif %}; padding: 10px">
-                <h1>Your previous services</h1>
+            <div>
+                <img src="{{ url_for('static', filename='cover.png') }}" style="width: 1000px; height: 285px">
+            </div>
+            <div class="row" style="padding: 15px">
+                <a class="col-lg-3" href="{{ url_for('listservice') }}" style="background-color: white;">
+                    <button  type="button" class="btn btn-default center-block">
+                        <i class="glyphicon glyphicon-list"></i>
+                        Service existing list
+                    </button>
+                </a>
+                <a class="col-lg-3 col-lg-offset-1" href="{{ url_for('listserviceuser') }}" style="background-color: white;">
+                    <button  type="button" class="btn btn-default center-block">
+                        <i class="glyphicon glyphicon-cog"></i>
+                        See your work-in progress services
+                    </button>
+                </a>
+
+                {% if current_user.role.name=="User" %}
+
+                    <a class="col-lg-3 col-lg-offset-1" href="{{ url_for('createservice') }}" style="background-color: white">
+                        <button  type="button" class="btn btn-default center-block">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                            Create a service
+                        </button>
+                    </a>
+                {% endif %}
             </div>
             <hr>
             <div style="padding: 20px">
@@ -80,30 +104,6 @@ f{% extends "base.html" %}
                     {% endfor %}
                 </tbody>
                 </table>
-            </div>
-            <div class="row" style="padding: 15px">
-                <a class="col-lg-3" href="{{ url_for('listservice') }}" style="background-color: white;">
-                    <button  type="button" class="btn btn-default center-block">
-                        <i class="glyphicon glyphicon-list"></i>
-                        Service existing list
-                    </button>
-                </a>
-                <a class="col-lg-3 col-lg-offset-1" href="{{ url_for('listserviceuser') }}" style="background-color: white;">
-                    <button  type="button" class="btn btn-default center-block">
-                        <i class="glyphicon glyphicon-cog"></i>
-                        See your work-in progress services
-                    </button>
-                </a>
-
-                {% if current_user.role.name=="User" %}
-
-                    <a class="col-lg-3 col-lg-offset-1" href="{{ url_for('createservice') }}" style="background-color: white">
-                        <button  type="button" class="btn btn-default center-block">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                            Create a service
-                        </button>
-                    </a>
-                {% endif %}
             </div>
         </div>
     </div>
