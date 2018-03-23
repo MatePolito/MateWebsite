@@ -87,13 +87,12 @@ class CreateServiceForm(Form):
 class ResearchServiceForm(Form):
     servicetype = SelectField('Type of Service', choices=[('none', '- Type of Service -'),('ht', 'Home task'), ('st', 'Shopping task'), ('cf', 'Car fare')])
     servicename = StringField("Name of the service", validators=[DataRequired()])
-    servicedescription = TextAreaField('Description du service')
     servicedate=DateField("Date of the service", validators=[DataRequired()])
     servicecity=StringField("City of the service", validators=[DataRequired()])
     submit = SubmitField('Create Service')
 
 class FeedbackForm(Form):
     rank = IntegerField("Rank the service from 1 to 5", validators=[NumberRange(min=1), NumberRange(max=5) ], render_kw={"placeholder": "1 - 5"})
-    com = TextAreaField('Description du service')
+    com = TextAreaField('Comment the service')
 
     submit = SubmitField('Give feedback and close the service')

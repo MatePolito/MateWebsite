@@ -1,0 +1,12 @@
+Dear {{user.username }},
+
+You've applied to the service: {{ service.servicename}}
+Unfortunately, an other mate was choosen by {{service.user.username}}.
+
+Many more users need your help! Go on the website if you want to propose them your help!
+
+Sincerely,
+
+The Mate team
+
+Note: This email was automatically sent. Do not respond to it.

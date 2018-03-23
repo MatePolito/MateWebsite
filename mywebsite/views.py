@@ -382,7 +382,15 @@ def pickmate(idservice, idmate):
     send_mail(current_user.mail, 'Mate chosen', 'email/pickmate', current_user=current_user,service=service)
     flash('You just received an email confirming your mate choice and his/her coordinates', 'success')
     send_mail(service.mate.mail, 'You are a mate !!!', 'email/pickmate2', user=user, service=service)
-
+    listofuser=  User.query.all()
+    res=[]
+    for i in listofuser:
+        for j in i.servicerequest:
+            if j.id==service.id:
+                res.append(i)
+    for  i in res:
+        if i.id!=service.mate.id:
+            send_mail(i.mail, 'Your proposal get declined', 'email/proposaldeclined', user=i, service=service)
 
     return redirect(url_for('user'))
 
