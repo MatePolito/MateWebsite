@@ -15,7 +15,6 @@ app.config['FLASKY_MAIL_SENDER'] = 'projectworkis1@gmail.com'
 '''The send_mail method takes the parameter: recipients, the subject of the mail, a template depending on the mail
 and key arguments as the current_user, the service. This method send a message to the recipients, the sender being email
 adress we created'''
-
 def send_mail(to, subject, template, **kwargs):
     msg = Message(subject, sender=app.config['FLASKY_MAIL_SENDER'], recipients=[to])
     msg.body = render_template(template +'.txt', **kwargs)
@@ -141,10 +140,7 @@ def feedbackuser(idservice):
 
         db.session.add(service)#we modify the service information in the DB
         db.session.commit()
-
         send_mail(service.mate.mail, 'Watch your feedbacks', 'email/feedbackmate', user=user, service=service)
-
-
         return redirect(url_for('user'))
     return render_template('serviceuserfeedbacks.html', form=form, service=service)
 
